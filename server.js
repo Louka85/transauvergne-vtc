@@ -21,6 +21,16 @@ app.use(session({
   }
 }));
 
+app.get("/test-db", async (req, res) => {
+  try {
+    const result = await db.query("SELECT NOW()");
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 /* STATIC */
 app.use(express.static(path.join(__dirname, "public")));
 
