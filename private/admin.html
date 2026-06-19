@@ -130,9 +130,13 @@ function show(tab){
 
 /* LOAD */
 async function load(){
-  convoys = await fetch("/api/convoys").then(r=>r.json());
-  team = await fetch("/api/team").then(r=>r.json());
-  render();
+  try {
+    convoys = await fetch("/api/convoys", { credentials:"include" }).then(r=>r.json());
+    team = await fetch("/api/team", { credentials:"include" }).then(r=>r.json());
+    render();
+  } catch (e) {
+    console.error("LOAD ERROR", e);
+  }
 }
 
 function render(){
@@ -140,8 +144,8 @@ function render(){
   document.getElementById("convoyList").innerHTML =
     convoys.map((c,i)=>`
       <div class="card">
-        <b>${c.title}</b><br>
-        ${c.start} → ${c.end}<br>
+        <b>${c.title || "Sans titre"}</b><br>
+        ${c.start || ""} → ${c.end || ""}<br>
         <button class="btn-danger" onclick="delConvoy(${i})">Supprimer</button>
       </div>
     `).join("");
@@ -157,13 +161,21 @@ function render(){
 
 /* CONVOY */
 function addConvoy(){
-  convoys.push({
-    title:title.value,
-    start:start.value,
-    end:end.value,
-    time:time.value,
-    date:date.value
-  });
+
+  const c = {
+    title: title.value.trim(),
+    start: start.value.trim(),
+    end: end.value.trim(),
+    time: time.value.trim(),
+    date: date.value
+  };
+
+  if(!c.title || !c.start || !c.end){
+    alert("Remplis les champs convoi");
+    return;
+  }
+
+  convoys.push(c);
   saveConvoys();
 }
 
@@ -172,17 +184,42 @@ function delConvoy(i){
   saveConvoys();
 }
 
-function saveConvoys(){
-  fetch("/api/convoys", {
-    method:"POST",
-    headers:{ "Content-Type":"application/json" },
-    body: JSON.stringify(convoys)
-  }).then(load);
+async function saveConvoys(){
+  try {
+    const res = await fetch("/api/convoys", {
+      method:"POST",
+      credentials:"include",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify(convoys)
+    });
+
+    const data = await res.json();
+    console.log("convoys:", data);
+
+    load();
+  } catch (e) {
+    console.error("CONVOY ERROR", e);
+  }
 }
 
 /* TEAM */
 function addMember(){
-  team.push({name:name.value, role:role.value});
+
+  const m = {
+    name: name.value.trim(),
+    role: role.value.trim()
+  };
+
+  if(!m.name || !m.role){
+    alert("Nom + rôle obligatoires");
+    return;
+  }
+
+  team.push(m);
+
+  name.value = "";
+  role.value = "";
+
   saveTeam();
 }
 
@@ -191,17 +228,28 @@ function delMember(i){
   saveTeam();
 }
 
-function saveTeam(){
-  fetch("/api/team", {
-    method:"POST",
-    headers:{ "Content-Type":"application/json" },
-    body: JSON.stringify(team)
-  }).then(load);
+async function saveTeam(){
+  try {
+    const res = await fetch("/api/team", {
+      method:"POST",
+      credentials:"include",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify(team)
+    });
+
+    const data = await res.json();
+    console.log("team:", data);
+
+    load();
+  } catch (e) {
+    console.error("TEAM ERROR", e);
+  }
 }
 
 /* LOGOUT */
 function logout(){
-  fetch("/logout").then(()=>location.href="/");
+  fetch("/logout", { credentials:"include" })
+    .then(()=>location.href="/");
 }
 
 load();
