@@ -192,11 +192,23 @@ async function loadTeam() {
         if (!container) return;
 
         container.innerHTML = team.map(m => `
-            <div class="card">
-                <h3>${m.name}</h3>
-                <div class="role">${m.role}</div>
-            </div>
-        `).join("");
+    <div class="card">
+        <img 
+            src="${m.avatar || 'https://via.placeholder.com/150'}" 
+            alt="${m.name}" 
+            style="
+                width: 100%;
+                height: 120px;
+                object-fit: cover;
+                border-radius: 10px;
+                margin-bottom: 10px;
+            "
+        />
+
+        <h3>${m.name}</h3>
+        <div class="role">${m.role}</div>
+    </div>
+`).join("");
 
     } catch (err) {
         console.error("Erreur load team:", err);
