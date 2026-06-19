@@ -14,30 +14,20 @@ app.use(express.urlencoded({ extended: true }));
 /* =========================
    SESSION
 ========================= */
-app.use(session({
-  secret: "vtc_secret_key_change_me",
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-    secure: true,
-    sameSite: "none"
-  }
-}));
+app.use(
+  session({
+    secret: "vtc_secret_key_change_me",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "none"
+    }
+  })
+);
 
 /* =========================
-   TEST DB
-========================= */
-app.get("/test-db", async (req, res) => {
-  try {
-    const result = await db.query("SELECT NOW()");
-    res.json(result.rows);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-/* =========================
-   STATIC
+   STATIC FILES
 ========================= */
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -60,10 +50,16 @@ CREATE TABLE IF NOT EXISTS convoys (
   date TEXT,
   status TEXT
 );
+
+CREATE TABLE IF NOT EXISTS team (
+  id SERIAL PRIMARY KEY,
+  name TEXT,
+  role TEXT
+);
 `);
 
 /* =========================
-   AUTH
+   AUTH MIDDLEWARE
 ========================= */
 function auth(req, res, next) {
   if (req.session?.user) return next();
@@ -93,7 +89,6 @@ app.post("/register", async (req, res) => {
     );
 
     res.json({ success: true });
-
   } catch (err) {
     res.json({ success: false, message: "user already exists" });
   }
@@ -120,7 +115,10 @@ app.post("/login", async (req, res) => {
 
     if (!ok) return res.json({ success: false });
 
-    req.session.user = user;
+    req.session.user = {
+      id: user.id,
+      username: user.username
+    };
 
     res.json({ success: true });
 
@@ -130,7 +128,7 @@ app.post("/login", async (req, res) => {
 });
 
 /* =========================
-   ME
+   SESSION INFO
 ========================= */
 app.get("/api/me", (req, res) => {
   if (!req.session?.user) return res.json({ logged: false });
@@ -191,6 +189,38 @@ app.post("/api/convoys", adminOnly, async (req, res) => {
 });
 
 /* =========================
+   TEAM (NOUVEAU)
+========================= */
+app.get("/api/team", async (req, res) => {
+  try {
+    const result = await db.query("SELECT * FROM team");
+    res.json(result.rows);
+  } catch (err) {
+    res.json([]);
+  }
+});
+
+app.post("/api/team", adminOnly, async (req, res) => {
+  try {
+    const team = req.body;
+
+    await db.query("DELETE FROM team");
+
+    for (const member of team) {
+      await db.query(
+        "INSERT INTO team (name, role) VALUES ($1,$2)",
+        [member.name, member.role]
+      );
+    }
+
+    res.json({ success: true });
+
+  } catch (err) {
+    res.status(500).json({ success: false });
+  }
+});
+
+/* =========================
    PARTICIPATION
 ========================= */
 app.post("/api/participate", auth, (req, res) => {
@@ -204,35 +234,35 @@ app.post("/api/participate", auth, (req, res) => {
    CREATE ADMIN AUTO
 ========================= */
 async function createAdmin() {
-  const res = await db.query(
-    "SELECT * FROM users WHERE username=$1",
-    ["Admin"]
-  );
-
-  if (res.rows.length === 0) {
-    const hash = await bcrypt.hash("Trans'Auvergne", 10);
-
-    await db.query(
-      "INSERT INTO users (username, password) VALUES ($1,$2)",
-      ["Admin", hash]
+  try {
+    const result = await db.query(
+      "SELECT * FROM users WHERE username=$1",
+      ["Admin"]
     );
 
-    console.log("Admin créé : Admin / Trans'Auvergne");
+    if (result.rows.length === 0) {
+      const hash = await bcrypt.hash("Trans'Auvergne", 10);
+
+      await db.query(
+        "INSERT INTO users (username, password) VALUES ($1,$2)",
+        ["Admin", hash]
+      );
+
+      console.log("Admin créé : Admin / Trans'Auvergne");
+    }
+  } catch (err) {
+    console.error("Admin init error:", err);
   }
 }
 
 /* =========================
-   START CLEAN
+   START SERVER
 ========================= */
 async function start() {
-  try {
-    await createAdmin();
+  await createAdmin();
 
-    const port = process.env.PORT || 3000;
-    app.listen(port, () => console.log("Server running"));
-  } catch (err) {
-    console.error("Startup error:", err);
-  }
+  const port = process.env.PORT || 3000;
+  app.listen(port, () => console.log("Server running"));
 }
 
 start();
