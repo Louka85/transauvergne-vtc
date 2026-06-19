@@ -225,3 +225,22 @@ app.post("/api/participate", auth, (req, res) => {
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log("Server running"));
+
+const bcrypt = require("bcrypt");
+
+async function createAdmin() {
+  const res = await db.query("SELECT * FROM users WHERE username=$1", ["Admin"]);
+
+  if (res.rows.length === 0) {
+    const hash = await bcrypt.hash("Trans'Auvergne", 10);
+
+    await db.query(
+      "INSERT INTO users (username, password) VALUES ($1,$2)",
+      ["Admin", hash]
+    );
+
+    console.log("Admin créé : Admin / Trans'Auvergne");
+  }
+}
+
+createAdmin();
