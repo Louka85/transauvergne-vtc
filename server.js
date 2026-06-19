@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const session = require("express-session");
 const db = require("./db");
+const bcrypt = require("bcrypt");
 
 const app = express();
 
@@ -81,9 +82,11 @@ app.post("/register", async (req, res) => {
     return res.json({ success: false, message: "missing fields" });
 
   try {
+    const hash = await bcrypt.hash(password, 10);
+
     await db.query(
       "INSERT INTO users (username, password) VALUES ($1,$2)",
-      [username, password]
+      [username, hash]
     );
 
     res.json({ success: true });
@@ -103,12 +106,19 @@ app.post("/login", async (req, res) => {
 
   try {
     const result = await db.query(
-      "SELECT * FROM users WHERE username=$1 AND password=$2",
-      [username, password]
+      "SELECT * FROM users WHERE username=$1",
+      [username]
     );
 
-    if (result.rows.length === 1) {
-      req.session.user = result.rows[0];
+    if (result.rows.length === 0)
+      return res.json({ success: false });
+
+    const user = result.rows[0];
+
+    const ok = await bcrypt.compare(password, user.password);
+
+    if (ok) {
+      req.session.user = user;
       return res.json({ success: true });
     }
 
@@ -118,6 +128,15 @@ app.post("/login", async (req, res) => {
     console.error(err);
     res.json({ success: false });
   }
+});
+
+app.get("/api/me", (req, res) => {
+  if (!req.session?.user) return res.json({ logged: false });
+
+  res.json({
+    logged: true,
+    user: req.session.user.username
+  });
 });
 
 /* =========================
