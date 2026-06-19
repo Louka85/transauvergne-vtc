@@ -97,6 +97,11 @@ app.post("/register", async (req, res) => {
   }
 });
 
+app.get("/debug-users", async (req, res) => {
+  const result = await db.query("SELECT id, username FROM users");
+  res.json(result.rows);
+});
+
 /* =========================
    LOGIN
 ========================= */
