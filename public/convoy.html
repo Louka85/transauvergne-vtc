@@ -13,7 +13,7 @@ body {
     color: white;
 }
 
-/* HEADER PRO CENTRÉ */
+/* HEADER */
 .header {
     position: fixed;
     top: 0;
@@ -28,13 +28,33 @@ body {
     box-sizing: border-box;
 }
 
-/* LOGO */
+/* LOGO PRO */
 .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: white;
     font-weight: bold;
-    font-size: 15px;
 }
 
-/* NAV CENTRÉE */
+.logo img {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+    transition: 0.2s;
+}
+
+.logo:hover img {
+    transform: scale(1.05);
+    filter: brightness(1.2);
+}
+
+.logo:hover span {
+    color: #2ecc71;
+}
+
+/* NAV */
 .nav {
     display: flex;
     justify-content: center;
@@ -52,7 +72,7 @@ body {
     color: white;
 }
 
-/* DROITE */
+/* STATUS */
 .status {
     justify-self: end;
     display: flex;
@@ -101,7 +121,7 @@ h1 {
     background: rgba(255,255,255,0.08);
 }
 
-/* TAG STATUS */
+/* TAG */
 .tag {
     display: inline-block;
     margin-top: 10px;
@@ -121,7 +141,11 @@ h1 {
 
 <header class="header">
 
-    <div class="logo">🚛 TransAuvergne VTC</div>
+    <!-- LOGO IDENTIQUE PARTOUT -->
+    <a href="index.html" class="logo">
+        <img src="logo.jpeg" alt="logo">
+        <span>TransAuvergne VTC</span>
+    </a>
 
     <nav class="nav">
         <a href="index.html">Accueil</a>

@@ -33,11 +33,23 @@ body {
     box-sizing: border-box;
 }
 
+/* LOGO GLOBAL */
 .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     font-weight: bold;
     font-size: 15px;
 }
 
+.logo img {
+    width: 32px;
+    height: 32px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+/* NAV */
 .nav a {
     color: #bdbdbd;
     margin: 0 12px;
@@ -49,6 +61,7 @@ body {
     color: white;
 }
 
+/* STATUS */
 .status {
     display: flex;
     align-items: center;
@@ -65,7 +78,7 @@ body {
     box-shadow: 0 0 10px #2ecc71;
 }
 
-/* SECTION */
+/* CONTACT */
 .contact {
     height: 100vh;
     display: flex;
@@ -84,13 +97,11 @@ body {
     backdrop-filter: blur(8px);
 }
 
-/* TITRE */
 .contact-box h1 {
     text-align: center;
     margin-bottom: 20px;
 }
 
-/* FORM */
 form {
     display: flex;
     flex-direction: column;
@@ -112,7 +123,6 @@ textarea {
     height: 120px;
 }
 
-/* BUTTON */
 button {
     padding: 12px;
     border: none;
@@ -129,7 +139,6 @@ button:hover {
     transform: scale(1.02);
 }
 
-/* INFO */
 .info {
     margin-top: 15px;
     font-size: 13px;
@@ -144,7 +153,10 @@ button:hover {
 <!-- HEADER -->
 <header class="header">
 
-    <div class="logo">🚛 TransAuvergne VTC</div>
+    <div class="logo">
+        <img src="logo.jpeg" alt="logo">
+        <span>TransAuvergne VTC</span>
+    </div>
 
     <nav class="nav">
         <a href="index.html">Accueil</a>

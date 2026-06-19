@@ -33,11 +33,33 @@ body {
     box-sizing: border-box;
 }
 
+/* LOGO */
 .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: white;
     font-weight: bold;
-    font-size: 15px;
 }
 
+.logo img {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+    transition: 0.2s ease;
+}
+
+.logo:hover img {
+    transform: scale(1.05);
+    filter: brightness(1.2);
+}
+
+.logo:hover span {
+    color: #2ecc71;
+}
+
+/* NAV */
 .nav a {
     color: #bdbdbd;
     margin: 0 12px;
@@ -49,6 +71,7 @@ body {
     color: white;
 }
 
+/* STATUS */
 .status {
     display: flex;
     align-items: center;
@@ -101,7 +124,6 @@ body {
     margin-bottom: 20px;
 }
 
-/* GRID */
 .team-grid {
     display: flex;
     flex-wrap: wrap;
@@ -154,10 +176,10 @@ body {
 <!-- HEADER -->
 <header class="header">
 
-    <div class="logo">
-    <img src="logo.jpeg" alt="logo">
-    <span>TransAuvergne VTC</span>
-</div>
+    <a href="index.html" class="logo">
+        <img src="logo.jpeg" alt="TransAuvergne VTC logo">
+        <span>TransAuvergne VTC</span>
+    </a>
 
     <nav class="nav">
         <a href="index.html">Accueil</a>
