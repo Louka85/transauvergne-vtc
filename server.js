@@ -3,13 +3,60 @@ const path = require("path");
 const session = require("express-session");
 const db = require("./db");
 const bcrypt = require("bcrypt");
-
+const axios = require("axios");
+const cheerio = require("cheerio");
 const app = express();
 
 app.set("trust proxy", 1);
 
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
+
+
+/* =========================
+   trucksbooks
+========================= */
+app.get("/api/trucksbook", async (req, res) => {
+    try {
+        const { data } = await axios.get(
+            "https://trucksbook.eu/company/219466",
+            {
+                headers: {
+                    "User-Agent": "Mozilla/5.0"
+                },
+                timeout: 10000
+            }
+        );
+
+        const $ = cheerio.load(data);
+        const text = $("body").text();
+
+        const extract = (regex) =>
+            text.match(regex)?.[1]?.replace(/\s+/g, " ").trim() || "0";
+
+        const stats = {
+            ets2: {
+                distance: extract(/ETS2[\s\S]*?Distance\s*([0-9\s,km]+)/i),
+                deliveries: extract(/ETS2[\s\S]*?livraisons\s*([0-9]+)/i)
+            },
+            ats: {
+                distance: extract(/ATS[\s\S]*?Distance\s*([0-9\s,A-Za-z]+)/i),
+                deliveries: extract(/ATS[\s\S]*?livraisons\s*([0-9]+)/i)
+            }
+        };
+
+        res.json(stats);
+
+    } catch (err) {
+        console.error("TRUCKSBOOK ERROR:", err.message);
+
+        // IMPORTANT : ne jamais crash Render
+        res.json({
+            ets2: { distance: "0", deliveries: "0" },
+            ats: { distance: "0", deliveries: "0" }
+        });
+    }
+});
 
 /* =========================
    SESSION
