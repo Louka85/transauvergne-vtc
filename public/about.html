@@ -18,7 +18,7 @@ body {
     overflow-x: hidden;
 }
 
-/* HEADER (copié identique accueil) */
+/* HEADER */
 .header {
     position: fixed;
     top: 0;
@@ -65,14 +65,14 @@ body {
     box-shadow: 0 0 10px #2ecc71;
 }
 
-/* SECTION ABOUT (style accueil) */
+/* ABOUT SECTION */
 .about {
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 40px;
+    padding: 120px 40px 60px;
     box-sizing: border-box;
 }
 
@@ -89,6 +89,41 @@ body {
     font-size: 18px;
     color: #ddd;
     line-height: 1.6;
+}
+
+/* TEAM */
+.team {
+    margin-top: 60px;
+}
+
+.team h2 {
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.team-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.card {
+    background: #1a1a1a;
+    padding: 20px;
+    border-radius: 12px;
+    width: 180px;
+    transition: 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.role {
+    color: #2ecc71;
+    margin-top: 5px;
+    font-weight: bold;
 }
 </style>
 </head>
@@ -131,6 +166,37 @@ body {
             Notre objectif est de proposer des convois organisés, une bonne activité,
             et une expérience réaliste du transport routier virtuel.
         </p>
+
+        <!-- TEAM -->
+        <div class="team">
+
+            <h2>Notre équipe</h2>
+
+            <div class="team-grid">
+
+                <div class="card">
+                    <h3>Nom PDG</h3>
+                    <div class="role">PDG</div>
+                </div>
+
+                <div class="card">
+                    <h3>Nom RH</h3>
+                    <div class="role">RH</div>
+                </div>
+
+                <div class="card">
+                    <h3>Nom Animateur</h3>
+                    <div class="role">Animateur</div>
+                </div>
+
+                <div class="card">
+                    <h3>Nom Staff</h3>
+                    <div class="role">Staff</div>
+                </div>
+
+            </div>
+
+        </div>
 
     </div>
 
