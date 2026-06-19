@@ -8,7 +8,7 @@ const app = express();
 
 app.set("trust proxy", 1);
 
-app.use(express.json({ limit: "10mb" })); // IMPORTANT pour images base64
+app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
 /* =========================
@@ -84,7 +84,8 @@ app.post("/login", async (req, res) => {
       [username]
     );
 
-    if (!result.rows.length) return res.json({ success: false });
+    if (!result.rows.length)
+      return res.json({ success: false });
 
     const user = result.rows[0];
     const ok = await bcrypt.compare(password, user.password);
@@ -177,31 +178,35 @@ app.post("/api/convoys", adminOnly, async (req, res) => {
     }
 
     res.json({ success: true });
-  } catch {
+  } catch (err) {
+    console.error("CONVOY ERROR:", err);
     res.status(500).json({ success: false });
   }
 });
 
 /* =========================
-   TEAM AJOUT AVATAR
+   TEAM (AVATAR OK)
 ========================= */
+app.get("/api/team", async (req, res) => {
+  try {
+    const result = await db.query("SELECT * FROM team ORDER BY id ASC");
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 app.post("/api/team", adminOnly, async (req, res) => {
   try {
-    console.log("BODY TEAM:", req.body);
-
     const team = Array.isArray(req.body) ? req.body : req.body.team;
 
     if (!Array.isArray(team)) {
-      return res.status(400).json({
-        success: false,
-        error: "Invalid team format"
-      });
+      return res.status(400).json({ success: false });
     }
 
     await db.query("DELETE FROM team");
 
     for (const m of team) {
-
       if (!m?.name || !m?.role) continue;
 
       await db.query(
@@ -217,7 +222,7 @@ app.post("/api/team", adminOnly, async (req, res) => {
     res.json({ success: true });
 
   } catch (err) {
-    console.error("TEAM ERROR:", err); // 👈 IMPORTANT
+    console.error("TEAM ERROR:", err);
     res.status(500).json({
       success: false,
       error: err.message
@@ -226,7 +231,7 @@ app.post("/api/team", adminOnly, async (req, res) => {
 });
 
 /* =========================
-   ADMIN AUTO CREATE
+   ADMIN AUTO
 ========================= */
 async function createAdmin() {
   const r = await db.query(
