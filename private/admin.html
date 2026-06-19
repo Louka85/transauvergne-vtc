@@ -163,11 +163,11 @@ function render(){
 function addConvoy(){
 
   const c = {
-    title: title.value.trim(),
-    start: start.value.trim(),
-    end: end.value.trim(),
-    time: time.value.trim(),
-    date: date.value
+    title: document.getElementById("title").value.trim(),
+    start: document.getElementById("start").value.trim(),
+    end: document.getElementById("end").value.trim(),
+    time: document.getElementById("time").value.trim(),
+    date: document.getElementById("date").value
   };
 
   if(!c.title || !c.start || !c.end){
@@ -206,8 +206,8 @@ async function saveConvoys(){
 function addMember(){
 
   const m = {
-    name: name.value.trim(),
-    role: role.value.trim()
+    name: document.getElementById("name").value.trim(),
+    role: document.getElementById("role").value.trim()
   };
 
   if(!m.name || !m.role){
@@ -217,8 +217,8 @@ function addMember(){
 
   team.push(m);
 
-  name.value = "";
-  role.value = "";
+  document.getElementById("name").value = "";
+  document.getElementById("role").value = "";
 
   saveTeam();
 }
