@@ -11,7 +11,9 @@ app.set("trust proxy", 1);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-/* SESSION */
+/* =========================
+   SESSION
+========================= */
 app.use(session({
   secret: "vtc_secret_key_change_me",
   resave: false,
@@ -22,23 +24,26 @@ app.use(session({
   }
 }));
 
+/* =========================
+   TEST DB
+========================= */
 app.get("/test-db", async (req, res) => {
   try {
     const result = await db.query("SELECT NOW()");
     res.json(result.rows);
   } catch (err) {
-    console.error(err);
     res.status(500).json({ error: err.message });
   }
 });
 
-/* STATIC */
+/* =========================
+   STATIC
+========================= */
 app.use(express.static(path.join(__dirname, "public")));
 
 /* =========================
-   DB INIT
+   INIT DB
 ========================= */
-
 db.query(`
 CREATE TABLE IF NOT EXISTS users (
   id SERIAL PRIMARY KEY,
@@ -58,23 +63,21 @@ CREATE TABLE IF NOT EXISTS convoys (
 `);
 
 /* =========================
-   AUTH MIDDLEWARE
+   AUTH
 ========================= */
-
 function auth(req, res, next) {
   if (req.session?.user) return next();
   return res.status(401).json({ error: "not logged in" });
 }
 
 function adminOnly(req, res, next) {
-  if (req.session?.user?.username === "admin") return next();
+  if (req.session?.user?.username?.toLowerCase() === "admin") return next();
   return res.status(403).json({ error: "forbidden" });
 }
 
 /* =========================
    REGISTER
 ========================= */
-
 app.post("/register", async (req, res) => {
   const { username, password } = req.body;
 
@@ -92,20 +95,13 @@ app.post("/register", async (req, res) => {
     res.json({ success: true });
 
   } catch (err) {
-    console.error(err);
     res.json({ success: false, message: "user already exists" });
   }
-});
-
-app.get("/debug-users", async (req, res) => {
-  const result = await db.query("SELECT id, username FROM users");
-  res.json(result.rows);
 });
 
 /* =========================
    LOGIN
 ========================= */
-
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
@@ -122,19 +118,28 @@ app.post("/login", async (req, res) => {
 
     const ok = await bcrypt.compare(password, user.password);
 
-    if (ok) {
-      req.session.user = user;
-      return res.json({ success: true });
-    }
+    if (!ok) return res.json({ success: false });
 
-    res.json({ success: false });
+    req.session.user = user;
+
+    res.json({ success: true });
 
   } catch (err) {
-    console.error(err);
     res.json({ success: false });
   }
 });
 
+/* =========================
+   DEBUG USERS (temp)
+========================= */
+app.get("/debug-users", async (req, res) => {
+  const result = await db.query("SELECT id, username FROM users");
+  res.json(result.rows);
+});
+
+/* =========================
+   ME
+========================= */
 app.get("/api/me", (req, res) => {
   if (!req.session?.user) return res.json({ logged: false });
 
@@ -147,7 +152,6 @@ app.get("/api/me", (req, res) => {
 /* =========================
    LOGOUT
 ========================= */
-
 app.get("/logout", (req, res) => {
   req.session.destroy(() => res.redirect("/"));
 });
@@ -155,15 +159,13 @@ app.get("/logout", (req, res) => {
 /* =========================
    ADMIN PAGE
 ========================= */
-
 app.get("/admin", adminOnly, (req, res) => {
   res.sendFile(path.join(__dirname, "private", "admin.html"));
 });
 
 /* =========================
-   CONVOYS API
+   CONVOYS
 ========================= */
-
 app.get("/api/convoys", async (req, res) => {
   try {
     const result = await db.query(
@@ -171,12 +173,9 @@ app.get("/api/convoys", async (req, res) => {
     );
     res.json(result.rows);
   } catch (err) {
-    console.error(err);
     res.json([]);
   }
 });
-
-/* FULL REWRITE SAVE (ADMIN ONLY) */
 
 app.post("/api/convoys", adminOnly, async (req, res) => {
   try {
@@ -188,48 +187,35 @@ app.post("/api/convoys", adminOnly, async (req, res) => {
       await db.query(
         `INSERT INTO convoys (title, start, "end", time, date, status)
          VALUES ($1,$2,$3,$4,$5,$6)`,
-        [
-          c.title,
-          c.start,
-          c.end,
-          c.time,
-          c.date,
-          c.status || "ouvert"
-        ]
+        [c.title, c.start, c.end, c.time, c.date, c.status || "ouvert"]
       );
     }
 
     res.json({ success: true });
 
   } catch (err) {
-    console.error(err);
     res.status(500).json({ success: false });
   }
 });
 
 /* =========================
-   PARTICIPATION (USER LOGGED REQUIRED)
+   PARTICIPATION
 ========================= */
-
 app.post("/api/participate", auth, (req, res) => {
-  // futur système
   res.json({
     success: true,
-    message: `User ${req.session.user.username} registered for convoy`
+    message: `User ${req.session.user.username} registered`
   });
 });
 
 /* =========================
-   START SERVER
+   CREATE ADMIN AUTO
 ========================= */
-
-const port = process.env.PORT || 3000;
-app.listen(port, () => console.log("Server running"));
-
-const bcrypt = require("bcrypt");
-
 async function createAdmin() {
-  const res = await db.query("SELECT * FROM users WHERE username=$1", ["Admin"]);
+  const res = await db.query(
+    "SELECT * FROM users WHERE username=$1",
+    ["Admin"]
+  );
 
   if (res.rows.length === 0) {
     const hash = await bcrypt.hash("Trans'Auvergne", 10);
@@ -243,4 +229,18 @@ async function createAdmin() {
   }
 }
 
-createAdmin();
+/* =========================
+   START CLEAN
+========================= */
+async function start() {
+  try {
+    await createAdmin();
+
+    const port = process.env.PORT || 3000;
+    app.listen(port, () => console.log("Server running"));
+  } catch (err) {
+    console.error("Startup error:", err);
+  }
+}
+
+start();
