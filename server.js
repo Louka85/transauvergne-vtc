@@ -183,41 +183,45 @@ app.post("/api/convoys", adminOnly, async (req, res) => {
 });
 
 /* =========================
-   TEAM (AVATAR FIXÉ)
+   TEAM AJOUT AVATAR
 ========================= */
-app.get("/api/team", async (req, res) => {
-  try {
-    const result = await db.query("SELECT * FROM team ORDER BY id ASC");
-    res.json(result.rows);
-  } catch {
-    res.json([]);
-  }
-});
-
 app.post("/api/team", adminOnly, async (req, res) => {
   try {
+    console.log("BODY TEAM:", req.body);
+
     const team = Array.isArray(req.body) ? req.body : req.body.team;
 
     if (!Array.isArray(team)) {
-      return res.status(400).json({ success: false });
+      return res.status(400).json({
+        success: false,
+        error: "Invalid team format"
+      });
     }
 
     await db.query("DELETE FROM team");
 
     for (const m of team) {
-      if (!m.name || !m.role) continue;
+
+      if (!m?.name || !m?.role) continue;
 
       await db.query(
         "INSERT INTO team (name, role, avatar) VALUES ($1,$2,$3)",
-        [m.name, m.role, m.avatar || null]
+        [
+          m.name,
+          m.role,
+          m.avatar || null
+        ]
       );
     }
 
     res.json({ success: true });
 
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ success: false });
+    console.error("TEAM ERROR:", err); // 👈 IMPORTANT
+    res.status(500).json({
+      success: false,
+      error: err.message
+    });
   }
 });
 
