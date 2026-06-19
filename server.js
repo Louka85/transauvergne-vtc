@@ -18,38 +18,27 @@ app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 ========================= */
 app.get("/api/trucksbook", async (req, res) => {
   try {
-    const ets2Res = await axios.get(
+    const { data } = await axios.get(
       "https://trucksbook.eu/components/app/company/game_overview.php?company=219466&game=1&stat=0"
     );
 
-    const atsRes = await axios.get(
-      "https://trucksbook.eu/components/app/company/game_overview.php?company=219466&game=2&stat=0"
-    );
+    const $ = cheerio.load(data);
+    const text = $("body").text().replace(/\s+/g, " ");
 
-    const parseStats = (html) => {
-      const $ = cheerio.load(html);
-      const text = $("body").text().replace(/\s+/g, " ");
-
-      const extract = (regex) =>
-        text.match(regex)?.[1]?.replace(/\s+/g, " ").trim() || "0";
-
-      return {
-        distance: extract(/Distance\s*([0-9\s,kmMiles]+)/i),
-        deliveries: extract(/livraisons\s*([0-9]+)/i)
-      };
-    };
+    const extract = (regex) =>
+      text.match(regex)?.[1]?.trim() || "0";
 
     res.json({
-      ets2: parseStats(ets2Res.data),
-      ats: parseStats(atsRes.data)
+      ets2: {
+        distance: extract(/Distance\s*([0-9\s,.]+ ?km)/i),
+        deliveries: extract(/livraisons\s*([0-9]+)/i)
+      }
     });
 
   } catch (err) {
-    console.error("TRUCKSBOOK ERROR:", err.message);
-
+    console.error(err);
     res.json({
-      ets2: { distance: "0", deliveries: "0" },
-      ats: { distance: "0", deliveries: "0" }
+      ets2: { distance: "0 km", deliveries: "0" }
     });
   }
 });
