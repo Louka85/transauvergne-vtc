@@ -71,6 +71,25 @@ app.get("/test-db", async (req, res) => {
 });
 
 /* =========================
+   DASHBOARD ADMIN (MENU DATA)
+========================= */
+
+app.get("/api/admin/dashboard", adminOnly, async (req, res) => {
+  try {
+    const convoys = await db.query("SELECT * FROM convoys ORDER BY date ASC");
+    const team = await db.query("SELECT * FROM team ORDER BY id ASC");
+
+    res.json({
+      convoys: convoys.rows,
+      team: team.rows
+    });
+
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+/* =========================
    AUTH
 ========================= */
 function auth(req, res, next) {
