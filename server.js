@@ -5,58 +5,13 @@ const db = require("./db");
 const bcrypt = require("bcrypt");
 const axios = require("axios");
 const cheerio = require("cheerio");
+
 const app = express();
 
 app.set("trust proxy", 1);
 
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
-
-
-/* =========================
-   trucksbooks
-========================= */
-app.get("/api/trucksbook", async (req, res) => {
-    try {
-        const ets2 = await axios.get(
-            "https://trucksbook.eu/game_overview.php?company=219466&game=1&stat=0"
-        );
-
-        const ats = await axios.get(
-            "https://trucksbook.eu/game_overview.php?company=219466&game=2&stat=0"
-        );
-
-        const parseText = (html) => {
-            const $ = cheerio.load(html);
-            return $("body").text().replace(/\s+/g, " ");
-        };
-
-        res.json({
-            ets2: parseText(ets2.data),
-            ats: parseText(ats.data)
-        });
-
-    } catch (err) {
-        console.error("TRUCKSBOOK ERROR:", err.message);
-
-        res.json({
-            ets2: { distance: "0", deliveries: "0" },
-            ats: { distance: "0", deliveries: "0" }
-        });
-    }
-});
-        res.json(stats);
-
-    } catch (err) {
-        console.error("TRUCKSBOOK ERROR:", err.message);
-
-        // IMPORTANT : ne jamais crash Render
-        res.json({
-            ets2: { distance: "0", deliveries: "0" },
-            ats: { distance: "0", deliveries: "0" }
-        });
-    }
-});
 
 /* =========================
    SESSION
@@ -105,6 +60,39 @@ CREATE TABLE IF NOT EXISTS team (
   avatar TEXT
 );
 `);
+
+/* =========================
+   TRUCKSBOOK API
+========================= */
+app.get("/api/trucksbook", async (req, res) => {
+  try {
+    const ets2 = await axios.get(
+      "https://trucksbook.eu/game_overview.php?company=219466&game=1&stat=0"
+    );
+
+    const ats = await axios.get(
+      "https://trucksbook.eu/game_overview.php?company=219466&game=2&stat=0"
+    );
+
+    const parseText = (html) => {
+      const $ = cheerio.load(html);
+      return $("body").text().replace(/\s+/g, " ").trim();
+    };
+
+    res.json({
+      ets2: parseText(ets2.data),
+      ats: parseText(ats.data)
+    });
+
+  } catch (err) {
+    console.error("TRUCKSBOOK ERROR:", err.message);
+
+    res.json({
+      ets2: { distance: "0", deliveries: "0" },
+      ats: { distance: "0", deliveries: "0" }
+    });
+  }
+});
 
 /* =========================
    AUTH
@@ -232,7 +220,7 @@ app.post("/api/convoys", adminOnly, async (req, res) => {
 });
 
 /* =========================
-   TEAM (AVATAR OK)
+   TEAM
 ========================= */
 app.get("/api/team", async (req, res) => {
   try {
@@ -258,11 +246,7 @@ app.post("/api/team", adminOnly, async (req, res) => {
 
       await db.query(
         "INSERT INTO team (name, role, avatar) VALUES ($1,$2,$3)",
-        [
-          m.name,
-          m.role,
-          m.avatar || null
-        ]
+        [m.name, m.role, m.avatar || null]
       );
     }
 
@@ -305,7 +289,7 @@ async function start() {
   await createAdmin();
 
   const port = process.env.PORT || 3000;
-  app.listen(port, () => console.log("Server running"));
+  app.listen(port, () => console.log("Server running on port " + port));
 }
 
 start();
