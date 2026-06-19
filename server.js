@@ -27,9 +27,27 @@ app.use(
 );
 
 /* =========================
-   STATIC FILES
+   STATIC
 ========================= */
 app.use(express.static(path.join(__dirname, "public")));
+
+/* =========================
+   TEST DB (IMPORTANT DEBUG)
+========================= */
+app.get("/test-db", async (req, res) => {
+  try {
+    const result = await db.query("SELECT NOW()");
+    res.json({
+      success: true,
+      time: result.rows
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      error: err.message
+    });
+  }
+});
 
 /* =========================
    INIT DB
@@ -59,7 +77,7 @@ CREATE TABLE IF NOT EXISTS team (
 `);
 
 /* =========================
-   AUTH MIDDLEWARE
+   AUTH
 ========================= */
 function auth(req, res, next) {
   if (req.session?.user) return next();
@@ -128,7 +146,7 @@ app.post("/login", async (req, res) => {
 });
 
 /* =========================
-   SESSION INFO
+   ME
 ========================= */
 app.get("/api/me", (req, res) => {
   if (!req.session?.user) return res.json({ logged: false });
@@ -169,7 +187,7 @@ app.get("/api/convoys", async (req, res) => {
 
 app.post("/api/convoys", adminOnly, async (req, res) => {
   try {
-    const convoys = req.body;
+    const convoys = Array.isArray(req.body) ? req.body : [];
 
     await db.query("DELETE FROM convoys");
 
@@ -177,7 +195,14 @@ app.post("/api/convoys", adminOnly, async (req, res) => {
       await db.query(
         `INSERT INTO convoys (title, start, "end", time, date, status)
          VALUES ($1,$2,$3,$4,$5,$6)`,
-        [c.title, c.start, c.end, c.time, c.date, c.status || "ouvert"]
+        [
+          c.title,
+          c.start,
+          c.end,
+          c.time,
+          c.date,
+          c.status || "ouvert"
+        ]
       );
     }
 
@@ -189,7 +214,7 @@ app.post("/api/convoys", adminOnly, async (req, res) => {
 });
 
 /* =========================
-   TEAM (NOUVEAU)
+   TEAM
 ========================= */
 app.get("/api/team", async (req, res) => {
   try {
@@ -202,7 +227,7 @@ app.get("/api/team", async (req, res) => {
 
 app.post("/api/team", adminOnly, async (req, res) => {
   try {
-    const team = req.body;
+    const team = Array.isArray(req.body) ? req.body : [];
 
     await db.query("DELETE FROM team");
 
@@ -254,6 +279,13 @@ async function createAdmin() {
     console.error("Admin init error:", err);
   }
 }
+
+/* =========================
+   ROOT CHECK
+========================= */
+app.get("/", (req, res) => {
+  res.send("Server OK");
+});
 
 /* =========================
    START SERVER
