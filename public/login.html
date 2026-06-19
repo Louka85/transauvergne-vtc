@@ -1,21 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Login Admin</title>
+<title>Connexion</title>
 </head>
+
 <body style="background:#0f0f0f;color:white;text-align:center;padding-top:100px;">
 
-<h2>Admin Login</h2>
+<h2>Connexion</h2>
 
-<input type="password" id="password" placeholder="Mot de passe">
+<input type="text" id="username" placeholder="Nom d'utilisateur"><br><br>
+<input type="password" id="password" placeholder="Mot de passe"><br><br>
+
 <button onclick="login()">Connexion</button>
+
+<p id="error" style="color:red;"></p>
 
 <script>
 function login() {
   fetch("/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
+    credentials: "include",
     body: JSON.stringify({
+      username: document.getElementById("username").value,
       password: document.getElementById("password").value
     })
   })
@@ -24,7 +31,7 @@ function login() {
     if (data.success) {
       window.location.href = "/admin";
     } else {
-      alert("Mot de passe incorrect");
+      document.getElementById("error").innerText = "Identifiants incorrects";
     }
   });
 }
