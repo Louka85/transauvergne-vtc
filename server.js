@@ -9,7 +9,6 @@ const cheerio = require("cheerio");
 const app = express();
 
 app.set("trust proxy", 1);
-
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
@@ -23,7 +22,7 @@ app.use(
     saveUninitialized: false,
     cookie: {
       secure: process.env.NODE_ENV === "production",
-      sameSite: "none"
+      sameSite: "lax"
     }
   })
 );
@@ -62,7 +61,7 @@ CREATE TABLE IF NOT EXISTS team (
 `);
 
 /* =========================
-   TRUCKSBOOK API
+   TRUCKSBOOK API (FIX PROPRE)
 ========================= */
 app.get("/api/trucksbook", async (req, res) => {
   try {
@@ -74,14 +73,22 @@ app.get("/api/trucksbook", async (req, res) => {
       "https://trucksbook.eu/game_overview.php?company=219466&game=2&stat=0"
     );
 
-    const parseText = (html) => {
+    const parse = (html) => {
       const $ = cheerio.load(html);
-      return $("body").text().replace(/\s+/g, " ").trim();
+      const text = $("body").text().replace(/\s+/g, " ");
+
+      const extract = (regex) =>
+        text.match(regex)?.[1]?.trim() || "0";
+
+      return {
+        distance: extract(/Distance\s*([0-9\s,kmMiles]+)/i),
+        deliveries: extract(/livraisons\s*([0-9]+)/i)
+      };
     };
 
     res.json({
-      ets2: parseText(ets2.data),
-      ats: parseText(ats.data)
+      ets2: parse(ets2.data),
+      ats: parse(ats.data)
     });
 
   } catch (err) {
@@ -133,7 +140,8 @@ app.post("/login", async (req, res) => {
     };
 
     res.json({ success: true });
-  } catch {
+
+  } catch (err) {
     res.json({ success: false });
   }
 });
@@ -153,6 +161,7 @@ app.post("/register", async (req, res) => {
     );
 
     res.json({ success: true });
+
   } catch {
     res.json({ success: false });
   }
@@ -178,48 +187,6 @@ app.get("/logout", (req, res) => {
 });
 
 /* =========================
-   ADMIN PAGE
-========================= */
-app.get("/admin", adminOnly, (req, res) => {
-  res.sendFile(path.join(__dirname, "private", "admin.html"));
-});
-
-/* =========================
-   CONVOYS
-========================= */
-app.get("/api/convoys", async (req, res) => {
-  try {
-    const result = await db.query(
-      "SELECT * FROM convoys ORDER BY date ASC"
-    );
-    res.json(result.rows);
-  } catch {
-    res.json([]);
-  }
-});
-
-app.post("/api/convoys", adminOnly, async (req, res) => {
-  try {
-    const convoys = req.body;
-
-    await db.query("DELETE FROM convoys");
-
-    for (const c of convoys) {
-      await db.query(
-        `INSERT INTO convoys (title, start, "end", time, date, status)
-         VALUES ($1,$2,$3,$4,$5,$6)`,
-        [c.title, c.start, c.end, c.time, c.date, c.status || "ouvert"]
-      );
-    }
-
-    res.json({ success: true });
-  } catch (err) {
-    console.error("CONVOY ERROR:", err);
-    res.status(500).json({ success: false });
-  }
-});
-
-/* =========================
    TEAM
 ========================= */
 app.get("/api/team", async (req, res) => {
@@ -235,10 +202,6 @@ app.post("/api/team", adminOnly, async (req, res) => {
   try {
     const team = Array.isArray(req.body) ? req.body : req.body.team;
 
-    if (!Array.isArray(team)) {
-      return res.status(400).json({ success: false });
-    }
-
     await db.query("DELETE FROM team");
 
     for (const m of team) {
@@ -253,11 +216,7 @@ app.post("/api/team", adminOnly, async (req, res) => {
     res.json({ success: true });
 
   } catch (err) {
-    console.error("TEAM ERROR:", err);
-    res.status(500).json({
-      success: false,
-      error: err.message
-    });
+    res.status(500).json({ success: false });
   }
 });
 
