@@ -130,14 +130,6 @@ app.post("/login", async (req, res) => {
 });
 
 /* =========================
-   DEBUG USERS (temp)
-========================= */
-app.get("/debug-users", async (req, res) => {
-  const result = await db.query("SELECT id, username FROM users");
-  res.json(result.rows);
-});
-
-/* =========================
    ME
 ========================= */
 app.get("/api/me", (req, res) => {
