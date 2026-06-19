@@ -200,7 +200,7 @@ body {
         <a href="about.html">Qui sommes-nous</a>
         <a href="convoy.html">Convois</a>
         <a href="contact.html">Contact</a>
-        <a href="/login.html">Admin</a>
+        <a href="/login.html">Connexion</a>
     </nav>
 
     <div class="status">
@@ -253,87 +253,5 @@ body {
     </div>
 
 </section>
-
-<!-- 🔐 ADMIN POPUP -->
-<div id="adminModal" style="
-display:none;
-position:fixed;
-inset:0;
-background:rgba(0,0,0,0.8);
-justify-content:center;
-align-items:center;
-z-index:9999;
-">
-
-  <div style="
-  background:#1a1a1a;
-  padding:25px;
-  border-radius:12px;
-  width:300px;
-  text-align:center;
-  ">
-
-    <h3>Admin Login</h3>
-
-    <input id="adminPass" type="password" placeholder="Mot de passe" style="
-    width:100%;
-    padding:10px;
-    margin:10px 0;
-    border:none;
-    border-radius:8px;
-    background:#222;
-    color:white;
-    ">
-
-    <button onclick="loginAdmin()" style="
-    width:100%;
-    padding:10px;
-    background:#5865F2;
-    color:white;
-    border:none;
-    border-radius:8px;
-    cursor:pointer;
-    ">
-      Connexion
-    </button>
-
-    <p id="error" style="color:red;"></p>
-
-  </div>
-</div>
-
-<script>
-function openAdmin() {
-  document.getElementById("adminModal").style.display = "flex";
-}
-
-function loginAdmin() {
-  const password = document.getElementById("adminPass").value;
-
-  fetch("/login", {
-    method: "POST",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ password })
-  })
-  .then(r => r.json())
-  .then(data => {
-    if (data.success) {
-      window.location.href = "/admin";
-
-      setTimeout(() => {
-        fetch("/logout", { credentials: "include" });
-        window.location.href = "/";
-      }, 10 * 60 * 1000);
-
-    } else {
-      document.getElementById("error").innerText = "Mot de passe incorrect";
-    }
-  });
-}
-</script>
-
 </body>
 </html>
