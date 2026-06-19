@@ -32,20 +32,7 @@ app.use(
 app.use(express.static(path.join(__dirname, "public")));
 
 /* =========================
-   AUTH MIDDLEWARE
-========================= */
-function auth(req, res, next) {
-  if (req.session?.user) return next();
-  return res.status(401).json({ error: "not logged in" });
-}
-
-function adminOnly(req, res, next) {
-  if (req.session?.user?.username?.toLowerCase() === "admin") return next();
-  return res.status(403).json({ error: "forbidden" });
-}
-
-/* =========================
-   INIT DB
+   DB INIT
 ========================= */
 db.query(`
 CREATE TABLE IF NOT EXISTS users (
@@ -72,6 +59,19 @@ CREATE TABLE IF NOT EXISTS team (
 `);
 
 /* =========================
+   AUTH
+========================= */
+function auth(req, res, next) {
+  if (req.session?.user) return next();
+  return res.status(401).json({ error: "not logged in" });
+}
+
+function adminOnly(req, res, next) {
+  if (req.session?.user?.username?.toLowerCase() === "admin") return next();
+  return res.status(403).json({ error: "forbidden" });
+}
+
+/* =========================
    TEST DB
 ========================= */
 app.get("/test-db", async (req, res) => {
@@ -84,19 +84,32 @@ app.get("/test-db", async (req, res) => {
 });
 
 /* =========================
-   ADMIN DASHBOARD DATA (OPTIONNEL)
+   LOGIN
 ========================= */
-app.get("/api/admin/dashboard", adminOnly, async (req, res) => {
-  try {
-    const convoys = await db.query("SELECT * FROM convoys ORDER BY date ASC");
-    const team = await db.query("SELECT * FROM team ORDER BY id ASC");
+app.post("/login", async (req, res) => {
+  const { username, password } = req.body;
 
-    res.json({
-      convoys: convoys.rows,
-      team: team.rows
-    });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+  try {
+    const result = await db.query(
+      "SELECT * FROM users WHERE username=$1",
+      [username]
+    );
+
+    if (!result.rows.length) return res.json({ success: false });
+
+    const user = result.rows[0];
+    const ok = await bcrypt.compare(password, user.password);
+
+    if (!ok) return res.json({ success: false });
+
+    req.session.user = {
+      id: user.id,
+      username: user.username
+    };
+
+    res.json({ success: true });
+  } catch {
+    res.json({ success: false });
   }
 });
 
@@ -105,9 +118,6 @@ app.get("/api/admin/dashboard", adminOnly, async (req, res) => {
 ========================= */
 app.post("/register", async (req, res) => {
   const { username, password } = req.body;
-
-  if (!username || !password)
-    return res.json({ success: false });
 
   try {
     const hash = await bcrypt.hash(password, 10);
@@ -124,38 +134,7 @@ app.post("/register", async (req, res) => {
 });
 
 /* =========================
-   LOGIN
-========================= */
-app.post("/login", async (req, res) => {
-  const { username, password } = req.body;
-
-  try {
-    const result = await db.query(
-      "SELECT * FROM users WHERE username=$1",
-      [username]
-    );
-
-    if (result.rows.length === 0)
-      return res.json({ success: false });
-
-    const user = result.rows[0];
-
-    const ok = await bcrypt.compare(password, user.password);
-    if (!ok) return res.json({ success: false });
-
-    req.session.user = {
-      id: user.id,
-      username: user.username
-    };
-
-    res.json({ success: true });
-  } catch {
-    res.json({ success: false });
-  }
-});
-
-/* =========================
-   SESSION INFO
+   ME
 ========================= */
 app.get("/api/me", (req, res) => {
   if (!req.session?.user) return res.json({ logged: false });
@@ -174,20 +153,18 @@ app.get("/logout", (req, res) => {
 });
 
 /* =========================
-   ADMIN PAGE
+   ADMIN
 ========================= */
 app.get("/admin", adminOnly, (req, res) => {
   res.sendFile(path.join(__dirname, "private", "admin.html"));
 });
 
 /* =========================
-   CONVOYS API
+   CONVOIS
 ========================= */
 app.get("/api/convoys", async (req, res) => {
   try {
-    const result = await db.query(
-      "SELECT * FROM convoys ORDER BY date ASC"
-    );
+    const result = await db.query("SELECT * FROM convoys ORDER BY date ASC");
     res.json(result.rows);
   } catch {
     res.json([]);
@@ -215,7 +192,7 @@ app.post("/api/convoys", adminOnly, async (req, res) => {
 });
 
 /* =========================
-   TEAM API
+   TEAM
 ========================= */
 app.get("/api/team", async (req, res) => {
   try {
@@ -228,11 +205,17 @@ app.get("/api/team", async (req, res) => {
 
 app.post("/api/team", adminOnly, async (req, res) => {
   try {
-    const team = req.body;
+    const team = Array.isArray(req.body) ? req.body : req.body.team;
+
+    if (!Array.isArray(team)) {
+      return res.status(400).json({ success: false });
+    }
 
     await db.query("DELETE FROM team");
 
     for (const m of team) {
+      if (!m.name || !m.role) continue;
+
       await db.query(
         "INSERT INTO team (name, role) VALUES ($1,$2)",
         [m.name, m.role]
@@ -240,31 +223,18 @@ app.post("/api/team", adminOnly, async (req, res) => {
     }
 
     res.json({ success: true });
-  } catch {
+  } catch (err) {
     res.status(500).json({ success: false });
   }
 });
 
 /* =========================
-   PARTICIPATION
-========================= */
-app.post("/api/participate", auth, (req, res) => {
-  res.json({
-    success: true,
-    message: `User ${req.session.user.username} registered`
-  });
-});
-
-/* =========================
-   ADMIN AUTO CREATE
+   ADMIN AUTO
 ========================= */
 async function createAdmin() {
-  const result = await db.query(
-    "SELECT * FROM users WHERE username=$1",
-    ["Admin"]
-  );
+  const r = await db.query("SELECT * FROM users WHERE username=$1", ["Admin"]);
 
-  if (result.rows.length === 0) {
+  if (!r.rows.length) {
     const hash = await bcrypt.hash("Trans'Auvergne", 10);
 
     await db.query(
@@ -276,9 +246,6 @@ async function createAdmin() {
   }
 }
 
-/* =========================
-   START SERVER
-========================= */
 async function start() {
   await createAdmin();
 
