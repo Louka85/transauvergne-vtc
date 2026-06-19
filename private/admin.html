@@ -2,184 +2,118 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Panel - TransAuvergne</title>
+<title>Admin Panel</title>
 
 <style>
 body {
-    margin: 0;
-    font-family: Arial;
-    background: #0f0f0f;
-    color: white;
-    box-sizing: border-box;
+  margin:0;
+  font-family:Arial;
+  background:#0f0f0f;
+  color:white;
 }
 
 .header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 70px;
-    padding: 0 20px;
-    display: flex;
-    align-items: center;
-    background: rgba(10,10,10,0.75);
-    backdrop-filter: blur(10px);
-    z-index: 1000;
-}
-
-.logo { font-weight: bold; }
-
-.nav {
-    margin-left: 20px;
-    display: flex;
-    gap: 10px;
-}
-
-.nav button {
-    background: #222;
-    color: white;
-    border: none;
-    padding: 6px 10px;
-    border-radius: 6px;
-    cursor: pointer;
-}
-
-.logout {
-    margin-left: auto;
-    padding: 8px 14px;
-    background: #e74c3c;
-    border: none;
-    border-radius: 8px;
-    color: white;
+  display:flex;
+  justify-content:space-between;
+  padding:15px;
+  background:#111;
+  position:fixed;
+  width:100%;
+  top:0;
 }
 
 .container {
-    padding: 100px 20px 40px;
-    max-width: 1200px;
-    margin: auto;
+  padding:100px 20px;
+  max-width:1000px;
+  margin:auto;
 }
 
-.grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
+.tabs {
+  display:flex;
+  gap:10px;
+  margin-bottom:20px;
+}
+
+.tab {
+  padding:10px 15px;
+  background:#222;
+  cursor:pointer;
+  border-radius:8px;
+}
+
+.tab.active {
+  background:#5865F2;
 }
 
 .card {
-    background: rgba(255,255,255,0.05);
-    padding: 20px;
-    border-radius: 12px;
+  background:#1a1a1a;
+  padding:15px;
+  border-radius:10px;
+  margin-bottom:15px;
 }
 
-input, select {
-    width: 100%;
-    padding: 10px;
-    margin: 6px 0;
-    border-radius: 8px;
-    border: none;
-    background: #1a1a1a;
-    color: white;
+input {
+  width:100%;
+  padding:10px;
+  margin:5px 0;
+  background:#111;
+  border:none;
+  color:white;
 }
 
 button {
-    padding: 10px;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
+  padding:10px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
 }
 
-.btn { background: #5865F2; color: white; }
-.btn-danger { background: #e74c3c; color: white; }
-
-.item {
-    background: rgba(255,255,255,0.04);
-    padding: 10px;
-    margin-top: 10px;
-    border-radius: 8px;
-}
-
-.stat {
-    display: inline-block;
-    margin-right: 10px;
-    padding: 10px;
-    background: rgba(255,255,255,0.05);
-    border-radius: 8px;
-}
+.btn { background:#5865F2; color:white; }
+.btn-danger { background:#e74c3c; color:white; }
 </style>
 </head>
 
 <body>
 
-<header class="header">
-    <div class="logo">🚛 Admin Panel</div>
-
-    <div class="nav">
-        <button onclick="show('convoy')">Convois</button>
-        <button onclick="show('team')">Équipe</button>
-    </div>
-
-    <button class="logout" onclick="logout()">Déconnexion</button>
-</header>
+<div class="header">
+  <b>Admin Panel</b>
+  <button onclick="logout()" class="btn-danger">Logout</button>
+</div>
 
 <div class="container">
 
-<!-- CONVOY -->
-<div id="convoyPage">
+<div class="tabs">
+  <div class="tab active" onclick="show('convoys')">Convois</div>
+  <div class="tab" onclick="show('team')">Équipe</div>
+</div>
 
-    <div>
-        <div class="stat" id="t"></div>
-        <div class="stat" id="o"></div>
-        <div class="stat" id="c"></div>
-    </div>
+<!-- CONVOIS -->
+<div id="convoys">
 
-    <div class="grid">
+  <div class="card">
+    <h3>Nouveau convoi</h3>
+    <input id="title" placeholder="Titre">
+    <input id="start" placeholder="Départ">
+    <input id="end" placeholder="Destination">
+    <input id="time" placeholder="Heure">
+    <input id="date" type="date">
+    <button class="btn" onclick="addConvoy()">Ajouter</button>
+  </div>
 
-        <div class="card">
-            <h3>➕ Nouveau convoi</h3>
-            <input id="title" placeholder="Titre">
-            <input id="start" placeholder="Départ">
-            <input id="end" placeholder="Destination">
-            <input id="time" placeholder="Heure">
-            <input id="date" type="date">
-
-            <select id="status">
-                <option value="ouvert">Ouvert</option>
-                <option value="complet">Complet</option>
-                <option value="annule">Annulé</option>
-            </select>
-
-            <button class="btn" onclick="addConvoy()">Ajouter</button>
-        </div>
-
-        <div class="card">
-            <h3>📦 Convois</h3>
-            <div id="convoyList"></div>
-        </div>
-
-    </div>
+  <div id="convoyList"></div>
 </div>
 
 <!-- TEAM -->
-<div id="teamPage" style="display:none">
+<div id="team" style="display:none">
 
-    <div class="grid">
+  <div class="card">
+    <h3>Ajouter membre</h3>
+    <input id="name" placeholder="Nom">
+    <input id="role" placeholder="Rôle">
+    <button class="btn" onclick="addMember()">Ajouter</button>
+  </div>
 
-        <div class="card">
-            <h3>➕ Ajouter membre</h3>
-
-            <input id="name" placeholder="Nom">
-            <input id="role" placeholder="Rôle (PDG, RH, Animateur...)">
-
-            <button class="btn" onclick="addMember()">Ajouter</button>
-        </div>
-
-        <div class="card">
-            <h3>👥 Équipe</h3>
-            <div id="teamList"></div>
-        </div>
-
-    </div>
+  <div id="teamList"></div>
 </div>
 
 </div>
@@ -189,134 +123,88 @@ button {
 let convoys = [];
 let team = [];
 
-/* SWITCH */
-function show(page){
-    document.getElementById("convoyPage").style.display = page === "convoy" ? "block" : "none";
-    document.getElementById("teamPage").style.display = page === "team" ? "block" : "none";
+function show(tab){
+  document.getElementById("convoys").style.display = tab==="convoys"?"block":"none";
+  document.getElementById("team").style.display = tab==="team"?"block":"none";
 }
 
-/* ================= CONVOY ================= */
-
-function loadConvoys(){
-    fetch("/api/convoys", { credentials:"include" })
-    .then(r => r.json())
-    .then(data => {
-        convoys = data;
-        renderConvoys();
-    });
+/* LOAD */
+async function load(){
+  convoys = await fetch("/api/convoys").then(r=>r.json());
+  team = await fetch("/api/team").then(r=>r.json());
+  render();
 }
 
-function saveConvoys(){
-    fetch("/api/convoys", {
-        method:"POST",
-        credentials:"include",
-        headers:{ "Content-Type":"application/json" },
-        body: JSON.stringify(convoys)
-    });
+function render(){
+
+  document.getElementById("convoyList").innerHTML =
+    convoys.map((c,i)=>`
+      <div class="card">
+        <b>${c.title}</b><br>
+        ${c.start} → ${c.end}<br>
+        <button class="btn-danger" onclick="delConvoy(${i})">Supprimer</button>
+      </div>
+    `).join("");
+
+  document.getElementById("teamList").innerHTML =
+    team.map((m,i)=>`
+      <div class="card">
+        <b>${m.name}</b> - ${m.role}<br>
+        <button class="btn-danger" onclick="delMember(${i})">Supprimer</button>
+      </div>
+    `).join("");
 }
 
+/* CONVOY */
 function addConvoy(){
-    convoys.push({
-        title: title.value,
-        start: start.value,
-        end: end.value,
-        time: time.value,
-        date: date.value,
-        status: status.value
-    });
-
-    saveConvoys();
-    renderConvoys();
-}
-
-function renderConvoys(){
-    convoyList.innerHTML = "";
-
-    let open = convoys.filter(c=>c.status==="ouvert").length;
-    let full = convoys.filter(c=>c.status==="complet").length;
-
-    t.innerHTML = "Total<br>"+convoys.length;
-    o.innerHTML = "Ouverts<br>"+open;
-    c.innerHTML = "Complets<br>"+full;
-
-    convoys.forEach((c,i)=>{
-        convoyList.innerHTML += `
-        <div class="item">
-            <b>${c.title}</b><br>
-            ${c.start} → ${c.end}<br>
-            ${c.time} - ${c.date}<br>
-            ${c.status}<br>
-            <button class="btn-danger" onclick="delConvoy(${i})">Supprimer</button>
-        </div>`;
-    });
+  convoys.push({
+    title:title.value,
+    start:start.value,
+    end:end.value,
+    time:time.value,
+    date:date.value
+  });
+  saveConvoys();
 }
 
 function delConvoy(i){
-    convoys.splice(i,1);
-    saveConvoys();
-    renderConvoys();
+  convoys.splice(i,1);
+  saveConvoys();
 }
 
-/* ================= TEAM ================= */
-
-function loadTeam(){
-    fetch("/api/team", { credentials:"include" })
-    .then(r => r.json())
-    .then(data => {
-        team = data;
-        renderTeam();
-    });
+function saveConvoys(){
+  fetch("/api/convoys", {
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body: JSON.stringify(convoys)
+  }).then(load);
 }
 
-function saveTeam(){
-    fetch("/api/team", {
-        method:"POST",
-        credentials:"include",
-        headers:{ "Content-Type":"application/json" },
-        body: JSON.stringify(team)
-    });
-}
-
+/* TEAM */
 function addMember(){
-    team.push({
-        name: name.value,
-        role: role.value
-    });
-
-    saveTeam();
-    renderTeam();
-}
-
-function renderTeam(){
-    teamList.innerHTML = "";
-
-    team.forEach((m,i)=>{
-        teamList.innerHTML += `
-        <div class="item">
-            <b>${m.name}</b><br>
-            ${m.role}<br>
-            <button class="btn-danger" onclick="delMember(${i})">Supprimer</button>
-        </div>`;
-    });
+  team.push({name:name.value, role:role.value});
+  saveTeam();
 }
 
 function delMember(i){
-    team.splice(i,1);
-    saveTeam();
-    renderTeam();
+  team.splice(i,1);
+  saveTeam();
 }
 
-/* ================= LOGOUT ================= */
+function saveTeam(){
+  fetch("/api/team", {
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body: JSON.stringify(team)
+  }).then(load);
+}
 
+/* LOGOUT */
 function logout(){
-    fetch("/logout", { credentials:"include" })
-    .then(()=>location.href="/");
+  fetch("/logout").then(()=>location.href="/");
 }
 
-/* INIT */
-loadConvoys();
-loadTeam();
-show("convoy");
+load();
 
 </script>
 
