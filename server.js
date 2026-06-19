@@ -8,8 +8,8 @@ const app = express();
 
 app.set("trust proxy", 1);
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: "10mb" })); // IMPORTANT pour images base64
+app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
 /* =========================
    SESSION
@@ -54,7 +54,8 @@ CREATE TABLE IF NOT EXISTS convoys (
 CREATE TABLE IF NOT EXISTS team (
   id SERIAL PRIMARY KEY,
   name TEXT,
-  role TEXT
+  role TEXT,
+  avatar TEXT
 );
 `);
 
@@ -70,18 +71,6 @@ function adminOnly(req, res, next) {
   if (req.session?.user?.username?.toLowerCase() === "admin") return next();
   return res.status(403).json({ error: "forbidden" });
 }
-
-/* =========================
-   TEST DB
-========================= */
-app.get("/test-db", async (req, res) => {
-  try {
-    const result = await db.query("SELECT NOW()");
-    res.json({ success: true, time: result.rows });
-  } catch (err) {
-    res.status(500).json({ success: false, error: err.message });
-  }
-});
 
 /* =========================
    LOGIN
@@ -153,18 +142,20 @@ app.get("/logout", (req, res) => {
 });
 
 /* =========================
-   ADMIN
+   ADMIN PAGE
 ========================= */
 app.get("/admin", adminOnly, (req, res) => {
   res.sendFile(path.join(__dirname, "private", "admin.html"));
 });
 
 /* =========================
-   CONVOIS
+   CONVOYS
 ========================= */
 app.get("/api/convoys", async (req, res) => {
   try {
-    const result = await db.query("SELECT * FROM convoys ORDER BY date ASC");
+    const result = await db.query(
+      "SELECT * FROM convoys ORDER BY date ASC"
+    );
     res.json(result.rows);
   } catch {
     res.json([]);
@@ -192,7 +183,7 @@ app.post("/api/convoys", adminOnly, async (req, res) => {
 });
 
 /* =========================
-   TEAM
+   TEAM (AVATAR FIXÉ)
 ========================= */
 app.get("/api/team", async (req, res) => {
   try {
@@ -217,22 +208,27 @@ app.post("/api/team", adminOnly, async (req, res) => {
       if (!m.name || !m.role) continue;
 
       await db.query(
-        "INSERT INTO team (name, role) VALUES ($1,$2)",
-        [m.name, m.role]
+        "INSERT INTO team (name, role, avatar) VALUES ($1,$2,$3)",
+        [m.name, m.role, m.avatar || null]
       );
     }
 
     res.json({ success: true });
+
   } catch (err) {
+    console.error(err);
     res.status(500).json({ success: false });
   }
 });
 
 /* =========================
-   ADMIN AUTO
+   ADMIN AUTO CREATE
 ========================= */
 async function createAdmin() {
-  const r = await db.query("SELECT * FROM users WHERE username=$1", ["Admin"]);
+  const r = await db.query(
+    "SELECT * FROM users WHERE username=$1",
+    ["Admin"]
+  );
 
   if (!r.rows.length) {
     const hash = await bcrypt.hash("Trans'Auvergne", 10);
@@ -246,6 +242,9 @@ async function createAdmin() {
   }
 }
 
+/* =========================
+   START
+========================= */
 async function start() {
   await createAdmin();
 
