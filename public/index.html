@@ -33,9 +33,32 @@ body {
 }
 
 .logo {
-    font-weight: bold;
-    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
     color: white;
+    font-weight: bold;
+}
+
+.logo img {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+    transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.logo span {
+    font-size: 15px;
+}
+
+.logo:hover img {
+    transform: scale(1.05);
+    filter: brightness(1.2);
+}
+
+.logo:hover span {
+    color: #2ecc71;
 }
 
 .nav a {
@@ -193,7 +216,10 @@ body {
 <!-- HEADER -->
 <header class="header">
 
-    <div class="logo">🚛 TransAuvergne VTC</div>
+    <a href="index.html" class="logo">
+    <img src="logo.jpeg" alt="TransAuvergne VTC">
+    <span>TransAuvergne VTC</span>
+</a>
 
     <nav class="nav">
         <a href="#home">Accueil</a>
