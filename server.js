@@ -26,33 +26,25 @@ app.get("/api/trucksbook", async (req, res) => {
             "https://trucksbook.eu/game_overview.php?company=219466&game=2&stat=0"
         );
 
+        const parseText = (html) => {
+            const $ = cheerio.load(html);
+            return $("body").text().replace(/\s+/g, " ");
+        };
+
         res.json({
-            ets2: ets2.data,
-            ats: ats.data
+            ets2: parseText(ets2.data),
+            ats: parseText(ats.data)
         });
 
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: "fail" });
+        console.error("TRUCKSBOOK ERROR:", err.message);
+
+        res.json({
+            ets2: { distance: "0", deliveries: "0" },
+            ats: { distance: "0", deliveries: "0" }
+        });
     }
 });
-        const $ = cheerio.load(data);
-        const text = $("body").text();
-
-        const extract = (regex) =>
-            text.match(regex)?.[1]?.replace(/\s+/g, " ").trim() || "0";
-
-        const stats = {
-            ets2: {
-                distance: extract(/ETS2[\s\S]*?Distance\s*([0-9\s,km]+)/i),
-                deliveries: extract(/ETS2[\s\S]*?livraisons\s*([0-9]+)/i)
-            },
-            ats: {
-                distance: extract(/ATS[\s\S]*?Distance\s*([0-9\s,A-Za-z]+)/i),
-                deliveries: extract(/ATS[\s\S]*?livraisons\s*([0-9]+)/i)
-            }
-        };
-
         res.json(stats);
 
     } catch (err) {
