@@ -17,7 +17,9 @@ body {
     color: white;
 }
 
-/* HEADER */
+/* =========================
+   HEADER
+========================= */
 .header {
     position: fixed;
     top: 0;
@@ -32,6 +34,7 @@ body {
     box-sizing: border-box;
 }
 
+/* LOGO */
 .logo {
     display: flex;
     align-items: center;
@@ -42,44 +45,32 @@ body {
 }
 
 .logo img {
-    height: 40px;
-    width: auto;
-    object-fit: contain;
-    transition: transform 0.2s ease, filter 0.2s ease;
+    height: 38px;
+    border-radius: 6px;
 }
 
 .logo span {
     font-size: 15px;
 }
 
-.logo:hover img {
-    transform: scale(1.05);
-    filter: brightness(1.2);
-}
-
-.logo:hover span {
-    color: #2ecc71;
-}
-
+/* NAV */
 .nav a {
     color: #bdbdbd;
     margin: 0 12px;
     text-decoration: none;
     font-size: 14px;
-    transition: 0.2s;
 }
 
 .nav a:hover {
     color: white;
-    transform: translateY(-1px);
 }
 
+/* STATUS */
 .status {
     display: flex;
     align-items: center;
     gap: 8px;
     font-size: 13px;
-    color: #bdbdbd;
 }
 
 .dot {
@@ -90,7 +81,21 @@ body {
     box-shadow: 0 0 10px #2ecc71;
 }
 
-/* HERO */
+/* =========================
+   WARNING BAR
+========================= */
+.warning {
+    margin-top: 80px;
+    text-align: center;
+    font-size: 14px;
+    color: #ffcc00;
+    background: rgba(255, 204, 0, 0.08);
+    padding: 10px 15px;
+}
+
+/* =========================
+   HERO
+========================= */
 .hero {
     height: 100vh;
     background: url("background.jpg") center/cover no-repeat;
@@ -133,42 +138,44 @@ body {
     font-size: 13px;
 }
 
-/* FOOTER */
+/* =========================
+   FOOTER
+========================= */
 .footer {
-  background: #0a0a0a;
-  padding: 40px 0;
-  display: flex;
-  flex-direction: column;
+    background: #0a0a0a;
+    padding: 40px 0;
 }
 
 .footer-container {
-  display: flex;
-  gap: 60px;
-  padding-left: 60px;
+    display: flex;
+    gap: 60px;
+    padding-left: 60px;
 }
 
 .footer-box {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 .footer-link {
-  color: #bdbdbd;
-  text-decoration: none;
+    color: #bdbdbd;
+    text-decoration: none;
 }
 
 .footer-link:hover {
-  color: white;
+    color: white;
 }
 
 .footer-bottom {
-  margin-top: 50px;
-  text-align: center;
-  font-size: 12px;
-  color: #777;
+    margin-top: 50px;
+    text-align: center;
+    font-size: 12px;
+    color: #777;
 }
 
-/* 💥 SOCIAL BUTTONS */
+/* =========================
+   SOCIAL BUTTONS
+========================= */
 .social-btn {
     display: flex;
     align-items: center;
@@ -187,7 +194,6 @@ body {
     height: 22px;
 }
 
-/* DISCORD */
 .discord {
     background: rgba(88, 101, 242, 0.15);
     color: #5865F2;
@@ -198,7 +204,6 @@ body {
     transform: translateX(5px);
 }
 
-/* YOUTUBE */
 .youtube {
     background: rgba(255, 0, 0, 0.15);
     color: #ff0000;
@@ -210,9 +215,8 @@ body {
 }
 
 /* =========================
-   RESPONSIVE MOBILE
+   RESPONSIVE
 ========================= */
-
 @media (max-width: 768px) {
 
     .header {
@@ -228,58 +232,21 @@ body {
         gap: 10px;
     }
 
-    .nav a {
-        font-size: 13px;
-        margin: 0;
+    .hero h1 {
+        font-size: 32px;
     }
 
-    .logo {
-        font-size: 14px;
+    .hero p {
+        font-size: 16px;
     }
 
-    .status {
+    .footer-container {
+        flex-direction: column;
+        padding-left: 20px;
+    }
+
+    .warning {
         font-size: 12px;
-    }
-
-    /* TITRES */
-    h1 {
-        font-size: 28px !important;
-    }
-
-    /* ABOUT / TEXT */
-    .about {
-        padding: 100px 20px 40px;
-    }
-
-    .about p {
-        font-size: 15px;
-    }
-
-    /* TEAM GRID */
-    .team-grid {
-        gap: 12px;
-    }
-
-    .card {
-        width: 100%;
-        max-width: 240px;
-    }
-
-    /* CONTACT */
-    .contact {
-        padding: 100px 15px 40px;
-    }
-
-    .contact-box {
-        padding: 20px;
-    }
-
-    input, textarea {
-        font-size: 14px;
-    }
-
-    button {
-        font-size: 14px;
     }
 }
 
@@ -292,9 +259,9 @@ body {
 <header class="header">
 
     <a href="index.html" class="logo">
-    <img src="logo.jpeg" alt="TransAuvergne VTC">
-    <span>TransAuvergne VTC</span>
-</a>
+        <img src="logo.jpeg" alt="logo">
+        <span>TransAuvergne VTC</span>
+    </a>
 
     <nav class="nav">
         <a href="#home">Accueil</a>
@@ -310,6 +277,11 @@ body {
     </div>
 
 </header>
+
+<!-- WARNING -->
+<p class="warning">
+⚠️ Site en construction active — certains liens peuvent ne pas fonctionner. Merci de votre compréhension.
+</p>
 
 <!-- HERO -->
 <section id="home" class="hero">
@@ -354,5 +326,6 @@ body {
     </div>
 
 </section>
+
 </body>
 </html>
