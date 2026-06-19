@@ -32,6 +32,19 @@ app.use(
 app.use(express.static(path.join(__dirname, "public")));
 
 /* =========================
+   AUTH MIDDLEWARE
+========================= */
+function auth(req, res, next) {
+  if (req.session?.user) return next();
+  return res.status(401).json({ error: "not logged in" });
+}
+
+function adminOnly(req, res, next) {
+  if (req.session?.user?.username?.toLowerCase() === "admin") return next();
+  return res.status(403).json({ error: "forbidden" });
+}
+
+/* =========================
    INIT DB
 ========================= */
 db.query(`
@@ -71,9 +84,8 @@ app.get("/test-db", async (req, res) => {
 });
 
 /* =========================
-   DASHBOARD ADMIN (MENU DATA)
+   ADMIN DASHBOARD DATA (OPTIONNEL)
 ========================= */
-
 app.get("/api/admin/dashboard", adminOnly, async (req, res) => {
   try {
     const convoys = await db.query("SELECT * FROM convoys ORDER BY date ASC");
@@ -83,24 +95,10 @@ app.get("/api/admin/dashboard", adminOnly, async (req, res) => {
       convoys: convoys.rows,
       team: team.rows
     });
-
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
-
-/* =========================
-   AUTH
-========================= */
-function auth(req, res, next) {
-  if (req.session?.user) return next();
-  return res.status(401).json({ error: "not logged in" });
-}
-
-function adminOnly(req, res, next) {
-  if (req.session?.user?.username?.toLowerCase() === "admin") return next();
-  return res.status(403).json({ error: "forbidden" });
-}
 
 /* =========================
    REGISTER
@@ -157,7 +155,7 @@ app.post("/login", async (req, res) => {
 });
 
 /* =========================
-   ME
+   SESSION INFO
 ========================= */
 app.get("/api/me", (req, res) => {
   if (!req.session?.user) return res.json({ logged: false });
@@ -176,14 +174,14 @@ app.get("/logout", (req, res) => {
 });
 
 /* =========================
-   ADMIN
+   ADMIN PAGE
 ========================= */
 app.get("/admin", adminOnly, (req, res) => {
   res.sendFile(path.join(__dirname, "private", "admin.html"));
 });
 
 /* =========================
-   CONVOYS
+   CONVOYS API
 ========================= */
 app.get("/api/convoys", async (req, res) => {
   try {
@@ -217,11 +215,11 @@ app.post("/api/convoys", adminOnly, async (req, res) => {
 });
 
 /* =========================
-   TEAM (MODIFIABLE PANEL)
+   TEAM API
 ========================= */
 app.get("/api/team", async (req, res) => {
   try {
-    const result = await db.query("SELECT * FROM team");
+    const result = await db.query("SELECT * FROM team ORDER BY id ASC");
     res.json(result.rows);
   } catch {
     res.json([]);
@@ -279,7 +277,7 @@ async function createAdmin() {
 }
 
 /* =========================
-   START
+   START SERVER
 ========================= */
 async function start() {
   await createAdmin();
