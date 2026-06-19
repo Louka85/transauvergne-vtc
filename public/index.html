@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TransAuvergne VTC</title>
+
+<style>
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0f0f0f;
+    color: white;
+}
+
+/* HEADER */
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 14px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(10,10,10,0.7);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    box-sizing: border-box;
+}
+
+.logo {
+    font-weight: bold;
+    font-size: 15px;
+    color: white;
+}
+
+.nav a {
+    color: #bdbdbd;
+    margin: 0 12px;
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.nav a:hover {
+    color: white;
+    transform: translateY(-1px);
+}
+
+.status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #bdbdbd;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    background: #2ecc71;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #2ecc71;
+}
+
+/* HERO */
+.hero {
+    height: 100vh;
+    background: url("background.jpg") center/cover no-repeat;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero h1 {
+    font-size: 60px;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    font-size: 20px;
+    color: #ddd;
+}
+
+.badge {
+    margin-top: 10px;
+    display: inline-block;
+    padding: 6px 12px;
+    background: rgba(46,204,113,0.15);
+    color: #2ecc71;
+    border-radius: 20px;
+    font-size: 13px;
+}
+
+/* FOOTER */
+.footer {
+  background: #0a0a0a;
+  padding: 40px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-container {
+  display: flex;
+  gap: 60px;
+  padding-left: 60px;
+}
+
+.footer-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-link {
+  color: #bdbdbd;
+  text-decoration: none;
+}
+
+.footer-link:hover {
+  color: white;
+}
+
+.footer-bottom {
+  margin-top: 50px;
+  text-align: center;
+  font-size: 12px;
+  color: #777;
+}
+
+/* 💥 SOCIAL BUTTONS */
+.social-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    margin: 8px 0;
+    width: fit-content;
+    transition: 0.2s;
+}
+
+.social-btn img {
+    width: 22px;
+    height: 22px;
+}
+
+/* DISCORD */
+.discord {
+    background: rgba(88, 101, 242, 0.15);
+    color: #5865F2;
+}
+
+.discord:hover {
+    background: rgba(88, 101, 242, 0.25);
+    transform: translateX(5px);
+}
+
+/* YOUTUBE */
+.youtube {
+    background: rgba(255, 0, 0, 0.15);
+    color: #ff0000;
+}
+
+.youtube:hover {
+    background: rgba(255, 0, 0, 0.25);
+    transform: translateX(5px);
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="header">
+
+    <div class="logo">🚛 TransAuvergne VTC</div>
+
+    <nav class="nav">
+        <a href="#home">Accueil</a>
+        <a href="about.html">Qui sommes-nous</a>
+        <a href="convoy.html">Convois</a>
+        <a href="contact.html">Contact</a>
+        <a href="#" onclick="openAdmin()">Admin</a>
+    </nav>
+
+    <div class="status">
+        <span class="dot"></span>
+        Recrutement ouvert
+    </div>
+
+</header>
+
+<!-- HERO -->
+<section id="home" class="hero">
+
+    <div class="hero-content">
+        <h1>TransAuvergne VTC</h1>
+        <p>Transport virtuel sérieux sur TruckersMP</p>
+        <span class="badge">🚛 Organisation active</span>
+    </div>
+
+</section>
+
+<!-- FOOTER -->
+<section class="footer">
+
+    <div class="footer-container">
+
+        <div class="footer-box">
+            <h3>Liens</h3>
+            <a href="https://truckersmp.com/vtc/85720" class="footer-link">TruckersMP</a>
+        </div>
+
+        <div class="footer-box">
+            <h3>Réseaux</h3>
+
+            <a href="https://discord.gg/tA7fWf3BPH" target="_blank" class="social-btn discord">
+                <img src="https://www.svgrepo.com/show/331368/discord-v2.svg">
+                Discord
+            </a>
+
+            <a href="https://youtube.com/@trans-auvergne?si=8uXbCNWgOu95a_79" target="_blank" class="social-btn youtube">
+                <img src="https://www.svgrepo.com/show/475700/youtube-color.svg">
+                YouTube
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        © 2026 TransAuvergne VTC
+    </div>
+
+</section>
+
+<!-- 🔐 ADMIN POPUP -->
+<div id="adminModal" style="
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.8);
+justify-content:center;
+align-items:center;
+z-index:9999;
+">
+
+  <div style="
+  background:#1a1a1a;
+  padding:25px;
+  border-radius:12px;
+  width:300px;
+  text-align:center;
+  ">
+
+    <h3>Admin Login</h3>
+
+    <input id="adminPass" type="password" placeholder="Mot de passe" style="
+    width:100%;
+    padding:10px;
+    margin:10px 0;
+    border:none;
+    border-radius:8px;
+    background:#222;
+    color:white;
+    ">
+
+    <button onclick="loginAdmin()" style="
+    width:100%;
+    padding:10px;
+    background:#5865F2;
+    color:white;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    ">
+      Connexion
+    </button>
+
+    <p id="error" style="color:red;"></p>
+
+  </div>
+</div>
+
+<script>
+function openAdmin() {
+  document.getElementById("adminModal").style.display = "flex";
+}
+
+function loginAdmin() {
+  const password = document.getElementById("adminPass").value;
+
+  fetch("/login", {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ password })
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data.success) {
+      window.location.href = "/admin";
+
+      setTimeout(() => {
+        fetch("/logout", { credentials: "include" });
+        window.location.href = "/";
+      }, 10 * 60 * 1000);
+
+    } else {
+      document.getElementById("error").innerText = "Mot de passe incorrect";
+    }
+  });
+}
+</script>
+
+</body>
+</html>

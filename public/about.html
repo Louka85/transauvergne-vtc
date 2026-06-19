@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Qui sommes-nous - TransAuvergne VTC</title>
+
+<style>
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0f0f0f;
+    color: white;
+    overflow-x: hidden;
+}
+
+/* HEADER (copié identique accueil) */
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 14px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(10,10,10,0.7);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    box-sizing: border-box;
+}
+
+.logo {
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.nav a {
+    color: #bdbdbd;
+    margin: 0 12px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.nav a:hover {
+    color: white;
+}
+
+.status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    background: #2ecc71;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #2ecc71;
+}
+
+/* SECTION ABOUT (style accueil) */
+.about {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 40px;
+    box-sizing: border-box;
+}
+
+.about-content {
+    max-width: 800px;
+}
+
+.about h1 {
+    font-size: 50px;
+    margin-bottom: 20px;
+}
+
+.about p {
+    font-size: 18px;
+    color: #ddd;
+    line-height: 1.6;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="header">
+
+    <div class="logo">🚛 TransAuvergne VTC</div>
+
+    <nav class="nav">
+        <a href="index.html">Accueil</a>
+        <a href="about.html">Qui sommes-nous</a>
+        <a href="convoy.html">Convois</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+    <div class="status">
+        <span class="dot"></span>
+        Recrutement ouvert
+    </div>
+
+</header>
+
+<!-- ABOUT -->
+<section class="about">
+
+    <div class="about-content">
+
+        <h1>Qui sommes-nous ?</h1>
+
+        <p>
+            TransAuvergne VTC est une organisation virtuelle active sur TruckersMP.
+            Nous réunissons des chauffeurs passionnés de simulation de transport,
+            avec une ambiance sérieuse mais conviviale.
+        </p>
+
+        <p>
+            Notre objectif est de proposer des convois organisés, une bonne activité,
+            et une expérience réaliste du transport routier virtuel.
+        </p>
+
+    </div>
+
+</section>
+
+</body>
+</html>

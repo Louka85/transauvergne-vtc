@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Convois - TransAuvergne VTC</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0f0f0f;
+    color: white;
+}
+
+/* HEADER PRO CENTRÉ */
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 14px 30px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    background: rgba(10,10,10,0.7);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    box-sizing: border-box;
+}
+
+/* LOGO */
+.logo {
+    font-weight: bold;
+    font-size: 15px;
+}
+
+/* NAV CENTRÉE */
+.nav {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+}
+
+.nav a {
+    color: #bdbdbd;
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.nav a:hover {
+    color: white;
+}
+
+/* DROITE */
+.status {
+    justify-self: end;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    background: #2ecc71;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #2ecc71;
+}
+
+/* PAGE */
+.container {
+    padding: 120px 30px 60px;
+    max-width: 1000px;
+    margin: auto;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+/* GRID */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+/* CARD */
+.card {
+    background: rgba(255,255,255,0.05);
+    padding: 20px;
+    border-radius: 12px;
+    transition: 0.2s;
+}
+
+.card:hover {
+    background: rgba(255,255,255,0.08);
+}
+
+/* TAG STATUS */
+.tag {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.tag.ouvert { background: rgba(46,204,113,0.15); color:#2ecc71; }
+.tag.complet { background: rgba(241,196,15,0.15); color:#f1c40f; }
+.tag.annule { background: rgba(231,76,60,0.15); color:#e74c3c; }
+
+</style>
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="logo">🚛 TransAuvergne VTC</div>
+
+    <nav class="nav">
+        <a href="index.html">Accueil</a>
+        <a href="about.html">Qui sommes-nous</a>
+        <a href="convoy.html">Convois</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+    <div class="status">
+        <span class="dot"></span>
+        Recrutement ouvert
+    </div>
+
+</header>
+
+<div class="container">
+    <h1>Nos convois</h1>
+    <div id="convoyList" class="grid"></div>
+</div>
+
+<script>
+function loadConvoys() {
+    fetch("/api/convoys", { credentials: "include" })
+    .then(r => r.json())
+    .then(data => {
+
+        if (!Array.isArray(data)) data = [];
+
+        const container = document.getElementById("convoyList");
+        container.innerHTML = "";
+
+        data.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+        if (data.length === 0) {
+            container.innerHTML = "<p style='text-align:center;color:#777'>Aucun convoi</p>";
+            return;
+        }
+
+        data.forEach(c => {
+            container.innerHTML += `
+            <div class="card">
+                <h2>${c.title}</h2>
+                <p>📍 Départ : ${c.start}</p>
+                <p>🎯 Destination : ${c.end}</p>
+                <p>⏰ ${c.time}</p>
+                <p>📅 ${c.date || "non défini"}</p>
+
+                <span class="tag ${c.status || "ouvert"}">
+                    ${c.status || "ouvert"}
+                </span>
+            </div>
+            `;
+        });
+
+    })
+    .catch(err => {
+        console.log(err);
+        document.getElementById("convoyList").innerHTML =
+            "<p style='color:red;text-align:center'>Erreur API</p>";
+    });
+}
+
+loadConvoys();
+</script>
+
+</body>
+</html>
