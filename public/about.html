@@ -65,7 +65,7 @@ body {
     box-shadow: 0 0 10px #2ecc71;
 }
 
-/* ABOUT SECTION */
+/* ABOUT */
 .about {
     min-height: 100vh;
     display: flex;
@@ -172,35 +172,39 @@ body {
 
             <h2>Notre équipe</h2>
 
-            <div class="team-grid">
-
-                <div class="card">
-                    <h3>Nom PDG</h3>
-                    <div class="role">PDG</div>
-                </div>
-
-                <div class="card">
-                    <h3>Nom RH</h3>
-                    <div class="role">RH</div>
-                </div>
-
-                <div class="card">
-                    <h3>Nom Animateur</h3>
-                    <div class="role">Animateur</div>
-                </div>
-
-                <div class="card">
-                    <h3>Nom Staff</h3>
-                    <div class="role">Staff</div>
-                </div>
-
-            </div>
+            <!-- IMPORTANT: ID FIX -->
+            <div class="team-grid" id="team"></div>
 
         </div>
 
     </div>
 
 </section>
+
+<script>
+async function loadTeam() {
+    try {
+        const res = await fetch("/api/team");
+        const team = await res.json();
+
+        const container = document.getElementById("team");
+
+        if (!container) return;
+
+        container.innerHTML = team.map(m => `
+            <div class="card">
+                <h3>${m.name}</h3>
+                <div class="role">${m.role}</div>
+            </div>
+        `).join("");
+
+    } catch (err) {
+        console.error("Erreur load team:", err);
+    }
+}
+
+loadTeam();
+</script>
 
 </body>
 </html>
