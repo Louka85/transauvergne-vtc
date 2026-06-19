@@ -1,0 +1,29 @@
+<header class="header">
+
+    <a href="index.html" class="logo">
+        <img src="logo.jpeg" alt="TransAuvergne VTC">
+        <span>TransAuvergne VTC</span>
+    </a>
+
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+
+    <nav class="nav" id="nav">
+        <a href="index.html">Accueil</a>
+        <a href="about.html">Qui sommes-nous</a>
+        <a href="convoy.html">Convois</a>
+        <a href="contact.html">Contact</a>
+        <a href="/login.html">Connexion</a>
+    </nav>
+
+    <div class="status">
+        <span class="dot"></span>
+        Recrutement ouvert
+    </div>
+
+</header>
+
+<script>
+function toggleMenu() {
+    document.getElementById("nav").classList.toggle("open");
+}
+</script>

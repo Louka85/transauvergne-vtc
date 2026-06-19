@@ -6,16 +6,11 @@
 <title>Contact - TransAuvergne VTC</title>
 
 <style>
-html {
-    scroll-behavior: smooth;
-}
-
 body {
     margin: 0;
     font-family: Arial, sans-serif;
     background: #0f0f0f;
     color: white;
-    overflow-x: hidden;
 }
 
 /* HEADER */
@@ -23,36 +18,40 @@ body {
     position: fixed;
     top: 0;
     width: 100%;
-    padding: 14px 30px;
+    padding: 14px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: rgba(10,10,10,0.7);
+    background: rgba(10,10,10,0.75);
     backdrop-filter: blur(10px);
     z-index: 1000;
     box-sizing: border-box;
 }
 
-/* LOGO GLOBAL */
+/* LOGO */
 .logo {
     display: flex;
     align-items: center;
     gap: 10px;
     font-weight: bold;
-    font-size: 15px;
+    text-decoration: none;
+    color: white;
 }
 
 .logo img {
-    width: 32px;
-    height: 32px;
-    object-fit: cover;
+    width: 34px;
+    height: 34px;
     border-radius: 6px;
 }
 
 /* NAV */
+.nav {
+    display: flex;
+    gap: 15px;
+}
+
 .nav a {
     color: #bdbdbd;
-    margin: 0 12px;
     text-decoration: none;
     font-size: 14px;
 }
@@ -61,21 +60,36 @@ body {
     color: white;
 }
 
-/* STATUS */
-.status {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 13px;
-    white-space: nowrap;
+/* BURGER */
+.mobile-btn {
+    display: none;
+    font-size: 28px;
+    cursor: pointer;
 }
 
-.dot {
-    width: 8px;
-    height: 8px;
-    background: #2ecc71;
-    border-radius: 50%;
-    box-shadow: 0 0 10px #2ecc71;
+/* MOBILE MENU */
+.mobile-menu {
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    top: 65px;
+    right: 15px;
+    background: rgba(15,15,15,0.95);
+    padding: 15px;
+    border-radius: 12px;
+    width: 200px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.mobile-menu a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.mobile-menu a:hover {
+    background: rgba(255,255,255,0.08);
 }
 
 /* CONTACT */
@@ -115,12 +129,11 @@ input, textarea {
     background: rgba(255,255,255,0.08);
     color: white;
     outline: none;
-    font-size: 14px;
 }
 
 textarea {
-    resize: none;
     height: 120px;
+    resize: none;
 }
 
 button {
@@ -129,7 +142,6 @@ button {
     border-radius: 8px;
     background: #5865F2;
     color: white;
-    font-size: 15px;
     cursor: pointer;
     transition: 0.2s;
 }
@@ -146,92 +158,27 @@ button:hover {
     text-align: center;
 }
 
-/* =========================
-   RESPONSIVE MOBILE
-========================= */
-
+/* RESPONSIVE */
 @media (max-width: 768px) {
-
-    .header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-        padding: 12px 15px;
-    }
-
     .nav {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
+        display: none;
     }
 
-    .nav a {
-        font-size: 13px;
-        margin: 0;
-    }
-
-    .logo {
-        font-size: 14px;
-    }
-
-    .status {
-        font-size: 12px;
-    }
-
-    /* TITRES */
-    h1 {
-        font-size: 28px !important;
-    }
-
-    /* ABOUT / TEXT */
-    .about {
-        padding: 100px 20px 40px;
-    }
-
-    .about p {
-        font-size: 15px;
-    }
-
-    /* TEAM GRID */
-    .team-grid {
-        gap: 12px;
-    }
-
-    .card {
-        width: 100%;
-        max-width: 240px;
-    }
-
-    /* CONTACT */
-    .contact {
-        padding: 100px 15px 40px;
-    }
-
-    .contact-box {
-        padding: 20px;
-    }
-
-    input, textarea {
-        font-size: 14px;
-    }
-
-    button {
-        font-size: 14px;
+    .mobile-btn {
+        display: block;
     }
 }
-
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
 <header class="header">
 
-    <div class="logo">
+    <a href="index.html" class="logo">
         <img src="logo.jpeg" alt="logo">
         <span>TransAuvergne VTC</span>
-    </div>
+    </a>
 
     <nav class="nav">
         <a href="index.html">Accueil</a>
@@ -240,12 +187,17 @@ button:hover {
         <a href="contact.html">Contact</a>
     </nav>
 
-    <div class="status">
-        <span class="dot"></span>
-        Recrutement ouvert
-    </div>
+    <div class="mobile-btn" onclick="toggleMenu()">☰</div>
 
 </header>
+
+<!-- MOBILE MENU -->
+<div id="mobileMenu" class="mobile-menu">
+    <a href="index.html" onclick="toggleMenu()">Accueil</a>
+    <a href="about.html" onclick="toggleMenu()">Qui sommes-nous</a>
+    <a href="convoy.html" onclick="toggleMenu()">Convois</a>
+    <a href="contact.html" onclick="toggleMenu()">Contact</a>
+</div>
 
 <!-- CONTACT -->
 <section class="contact">
@@ -268,6 +220,13 @@ button:hover {
     </div>
 
 </section>
+
+<script>
+function toggleMenu() {
+    const menu = document.getElementById("mobileMenu");
+    menu.style.display = (menu.style.display === "flex") ? "none" : "flex";
+}
+</script>
 
 </body>
 </html>
