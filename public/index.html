@@ -53,7 +53,7 @@ body {
     font-size: 15px;
 }
 
-/* NAV */
+/* NAV PC */
 .nav a {
     color: #bdbdbd;
     margin: 0 12px;
@@ -82,7 +82,7 @@ body {
 }
 
 /* =========================
-   WARNING BAR
+   WARNING
 ========================= */
 .warning {
     margin-top: 80px;
@@ -173,9 +173,7 @@ body {
     color: #777;
 }
 
-/* =========================
-   SOCIAL BUTTONS
-========================= */
+/* SOCIAL */
 .social-btn {
     display: flex;
     align-items: center;
@@ -215,21 +213,57 @@ body {
 }
 
 /* =========================
+   MOBILE MENU
+========================= */
+
+.mobile-btn {
+    display: none;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.mobile-menu {
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    top: 65px;
+    right: 15px;
+    background: rgba(10,10,10,0.95);
+    backdrop-filter: blur(10px);
+    padding: 15px;
+    border-radius: 12px;
+    width: 200px;
+    z-index: 2000;
+}
+
+.mobile-menu a {
+    color: white;
+    text-decoration: none;
+    padding: 8px;
+    border-radius: 8px;
+}
+
+.mobile-menu a:hover {
+    background: rgba(255,255,255,0.08);
+}
+
+/* =========================
    RESPONSIVE
 ========================= */
+
 @media (max-width: 768px) {
 
-    .header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-        padding: 12px 15px;
+    .nav {
+        display: none;
     }
 
-    .nav {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
+    .mobile-btn {
+        display: block;
+        color: white;
+    }
+
+    .header {
+        padding: 12px 15px;
     }
 
     .hero h1 {
@@ -276,11 +310,22 @@ body {
         Recrutement ouvert
     </div>
 
+    <div class="mobile-btn" onclick="toggleMenu()">☰</div>
+
 </header>
+
+<!-- MOBILE MENU -->
+<div id="mobileMenu" class="mobile-menu">
+    <a href="#home" onclick="toggleMenu()">Accueil</a>
+    <a href="about.html" onclick="toggleMenu()">Qui sommes-nous</a>
+    <a href="convoy.html" onclick="toggleMenu()">Convois</a>
+    <a href="contact.html" onclick="toggleMenu()">Contact</a>
+    <a href="/login.html" onclick="toggleMenu()">Connexion</a>
+</div>
 
 <!-- WARNING -->
 <p class="warning">
-⚠️ Site en construction active — certains liens peuvent ne pas fonctionner. Merci de votre compréhension.
+⚠️ Site en construction active — certains liens risque d'être suprimer ou peuvent ne pas fonctionner.
 </p>
 
 <!-- HERO -->
@@ -307,12 +352,12 @@ body {
         <div class="footer-box">
             <h3>Réseaux</h3>
 
-            <a href="https://discord.gg/tA7fWf3BPH" target="_blank" class="social-btn discord">
+            <a href="https://discord.gg/tA7fWf3BPH" class="social-btn discord">
                 <img src="https://www.svgrepo.com/show/331368/discord-v2.svg">
                 Discord
             </a>
 
-            <a href="https://youtube.com/@trans-auvergne?si=8uXbCNWgOu95a_79" target="_blank" class="social-btn youtube">
+            <a href="https://youtube.com/@trans-auvergne?si=8uXbCNWgOu95a_79" class="social-btn youtube">
                 <img src="https://www.svgrepo.com/show/475700/youtube-color.svg">
                 YouTube
             </a>
@@ -326,6 +371,13 @@ body {
     </div>
 
 </section>
+
+<script>
+function toggleMenu() {
+    const menu = document.getElementById("mobileMenu");
+    menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+}
+</script>
 
 </body>
 </html>
