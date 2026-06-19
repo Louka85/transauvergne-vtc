@@ -25,71 +25,65 @@ body {
     background: rgba(10,10,10,0.75);
     backdrop-filter: blur(10px);
     z-index: 1000;
-    box-sizing: border-box;
 }
 
-/* LOGO */
 .logo {
     display: flex;
     align-items: center;
     gap: 10px;
-    font-weight: bold;
     text-decoration: none;
     color: white;
+    font-weight: bold;
 }
 
-.logo img {
-    width: 34px;
-    height: 34px;
-    border-radius: 6px;
-}
-
-/* NAV */
-.nav {
-    display: flex;
-    gap: 15px;
-}
+.logo img { height: 38px; }
 
 .nav a {
     color: #bdbdbd;
+    margin: 0 10px;
     text-decoration: none;
-    font-size: 14px;
 }
 
-.nav a:hover {
-    color: white;
+.nav a:hover { color: white; }
+
+.status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
 }
 
-/* BURGER */
+.dot {
+    width: 8px;
+    height: 8px;
+    background: #2ecc71;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #2ecc71;
+}
+
+/* MOBILE */
 .mobile-btn {
     display: none;
     font-size: 28px;
     cursor: pointer;
 }
 
-/* MOBILE MENU */
 .mobile-menu {
     display: none;
     flex-direction: column;
     position: fixed;
     top: 65px;
     right: 15px;
-    background: rgba(15,15,15,0.95);
+    background: rgba(10,10,10,0.95);
     padding: 15px;
     border-radius: 12px;
     width: 200px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
 .mobile-menu a {
     color: white;
+    padding: 8px;
     text-decoration: none;
-    padding: 10px;
-    border-radius: 8px;
-}
-
-.mobile-menu a:hover {
-    background: rgba(255,255,255,0.08);
 }
 
 /* CONTACT */
@@ -99,7 +93,6 @@ body {
     justify-content: center;
     align-items: center;
     padding: 40px;
-    box-sizing: border-box;
 }
 
 .contact-box {
@@ -151,22 +144,10 @@ button:hover {
     transform: scale(1.02);
 }
 
-.info {
-    margin-top: 15px;
-    font-size: 13px;
-    color: #aaa;
-    text-align: center;
-}
-
 /* RESPONSIVE */
-@media (max-width: 768px) {
-    .nav {
-        display: none;
-    }
-
-    .mobile-btn {
-        display: block;
-    }
+@media (max-width:768px){
+    .nav { display:none; }
+    .mobile-btn { display:block; }
 }
 </style>
 </head>
@@ -176,7 +157,7 @@ button:hover {
 <header class="header">
 
     <a href="index.html" class="logo">
-        <img src="logo.jpeg" alt="logo">
+        <img src="logo.jpeg">
         <span>TransAuvergne VTC</span>
     </a>
 
@@ -187,11 +168,14 @@ button:hover {
         <a href="contact.html">Contact</a>
     </nav>
 
-    <div class="mobile-btn" onclick="toggleMenu()">☰</div>
+    <div class="status">
+        <span class="dot"></span>
+        Recrutement ouvert
+    </div>
 
+    <div class="mobile-btn" onclick="toggleMenu()">☰</div>
 </header>
 
-<!-- MOBILE MENU -->
 <div id="mobileMenu" class="mobile-menu">
     <a href="index.html" onclick="toggleMenu()">Accueil</a>
     <a href="about.html" onclick="toggleMenu()">Qui sommes-nous</a>
@@ -199,7 +183,6 @@ button:hover {
     <a href="contact.html" onclick="toggleMenu()">Contact</a>
 </div>
 
-<!-- CONTACT -->
 <section class="contact">
 
     <div class="contact-box">
@@ -213,18 +196,18 @@ button:hover {
             <button type="submit">Envoyer</button>
         </form>
 
-        <div class="info">
+        <p style="text-align:center;color:#aaa;font-size:13px;margin-top:15px;">
             Réponse via Discord : discord.gg/tA7fWf3BPH
-        </div>
+        </p>
 
     </div>
 
 </section>
 
 <script>
-function toggleMenu() {
-    const menu = document.getElementById("mobileMenu");
-    menu.style.display = (menu.style.display === "flex") ? "none" : "flex";
+function toggleMenu(){
+    const m = document.getElementById("mobileMenu");
+    m.style.display = m.style.display === "flex" ? "none" : "flex";
 }
 </script>
 

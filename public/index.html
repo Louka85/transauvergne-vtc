@@ -6,9 +6,7 @@
 <title>TransAuvergne VTC</title>
 
 <style>
-html {
-    scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 body {
     margin: 0;
@@ -17,24 +15,21 @@ body {
     color: white;
 }
 
-/* =========================
-   HEADER
-========================= */
+/* HEADER */
 .header {
     position: fixed;
     top: 0;
     width: 100%;
-    padding: 14px 30px;
+    padding: 14px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: rgba(10,10,10,0.7);
+    background: rgba(10,10,10,0.75);
     backdrop-filter: blur(10px);
     z-index: 1000;
     box-sizing: border-box;
 }
 
-/* LOGO */
 .logo {
     display: flex;
     align-items: center;
@@ -44,28 +39,17 @@ body {
     font-weight: bold;
 }
 
-.logo img {
-    height: 38px;
-    border-radius: 6px;
-}
+.logo img { height: 38px; }
 
-.logo span {
-    font-size: 15px;
-}
-
-/* NAV PC */
 .nav a {
     color: #bdbdbd;
-    margin: 0 12px;
+    margin: 0 10px;
     text-decoration: none;
     font-size: 14px;
 }
 
-.nav a:hover {
-    color: white;
-}
+.nav a:hover { color: white; }
 
-/* STATUS */
 .status {
     display: flex;
     align-items: center;
@@ -81,29 +65,51 @@ body {
     box-shadow: 0 0 10px #2ecc71;
 }
 
-/* =========================
-   WARNING
-========================= */
+/* MOBILE */
+.mobile-btn {
+    display: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: white;
+}
+
+.mobile-menu {
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    top: 65px;
+    right: 15px;
+    background: rgba(10,10,10,0.95);
+    padding: 15px;
+    border-radius: 12px;
+    width: 200px;
+}
+
+.mobile-menu a {
+    color: white;
+    text-decoration: none;
+    padding: 8px;
+}
+
+/* WARNING */
 .warning {
     margin-top: 80px;
     text-align: center;
     font-size: 14px;
     color: #ffcc00;
     background: rgba(255, 204, 0, 0.08);
-    padding: 10px 15px;
+    padding: 10px;
 }
 
-/* =========================
-   HERO
-========================= */
+/* HERO */
 .hero {
     height: 100vh;
     background: url("background.jpg") center/cover no-repeat;
-    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
+    position: relative;
 }
 
 .hero::before {
@@ -118,182 +124,52 @@ body {
     z-index: 2;
 }
 
-.hero h1 {
-    font-size: 60px;
-    margin-bottom: 10px;
-}
-
-.hero p {
-    font-size: 20px;
-    color: #ddd;
-}
+.hero h1 { font-size: 50px; }
+.hero p { font-size: 18px; color: #ddd; }
 
 .badge {
-    margin-top: 10px;
     display: inline-block;
+    margin-top: 10px;
     padding: 6px 12px;
     background: rgba(46,204,113,0.15);
     color: #2ecc71;
     border-radius: 20px;
-    font-size: 13px;
 }
 
-/* =========================
-   FOOTER
-========================= */
+/* FOOTER */
 .footer {
     background: #0a0a0a;
-    padding: 40px 0;
+    padding: 40px;
 }
 
 .footer-container {
     display: flex;
-    gap: 60px;
-    padding-left: 60px;
-}
-
-.footer-box {
-    display: flex;
-    flex-direction: column;
-}
-
-.footer-link {
-    color: #bdbdbd;
-    text-decoration: none;
-}
-
-.footer-link:hover {
-    color: white;
+    gap: 40px;
 }
 
 .footer-bottom {
-    margin-top: 50px;
     text-align: center;
     font-size: 12px;
     color: #777;
+    margin-top: 30px;
 }
 
-/* SOCIAL */
-.social-btn {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 14px;
-    border-radius: 10px;
-    text-decoration: none;
-    font-weight: bold;
-    margin: 8px 0;
-    width: fit-content;
-    transition: 0.2s;
+/* RESPONSIVE */
+@media (max-width:768px){
+    .nav { display:none; }
+    .mobile-btn { display:block; }
+    .footer-container { flex-direction: column; }
+    .hero h1 { font-size: 32px; }
 }
-
-.social-btn img {
-    width: 22px;
-    height: 22px;
-}
-
-.discord {
-    background: rgba(88, 101, 242, 0.15);
-    color: #5865F2;
-}
-
-.discord:hover {
-    background: rgba(88, 101, 242, 0.25);
-    transform: translateX(5px);
-}
-
-.youtube {
-    background: rgba(255, 0, 0, 0.15);
-    color: #ff0000;
-}
-
-.youtube:hover {
-    background: rgba(255, 0, 0, 0.25);
-    transform: translateX(5px);
-}
-
-/* =========================
-   MOBILE MENU
-========================= */
-
-.mobile-btn {
-    display: none;
-    font-size: 28px;
-    cursor: pointer;
-}
-
-.mobile-menu {
-    display: none;
-    flex-direction: column;
-    position: fixed;
-    top: 65px;
-    right: 15px;
-    background: rgba(10,10,10,0.95);
-    backdrop-filter: blur(10px);
-    padding: 15px;
-    border-radius: 12px;
-    width: 200px;
-    z-index: 2000;
-}
-
-.mobile-menu a {
-    color: white;
-    text-decoration: none;
-    padding: 8px;
-    border-radius: 8px;
-}
-
-.mobile-menu a:hover {
-    background: rgba(255,255,255,0.08);
-}
-
-/* =========================
-   RESPONSIVE
-========================= */
-
-@media (max-width: 768px) {
-
-    .nav {
-        display: none;
-    }
-
-    .mobile-btn {
-        display: block;
-        color: white;
-    }
-
-    .header {
-        padding: 12px 15px;
-    }
-
-    .hero h1 {
-        font-size: 32px;
-    }
-
-    .hero p {
-        font-size: 16px;
-    }
-
-    .footer-container {
-        flex-direction: column;
-        padding-left: 20px;
-    }
-
-    .warning {
-        font-size: 12px;
-    }
-}
-
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
 <header class="header">
 
     <a href="index.html" class="logo">
-        <img src="logo.jpeg" alt="logo">
+        <img src="logo.jpeg">
         <span>TransAuvergne VTC</span>
     </a>
 
@@ -311,10 +187,8 @@ body {
     </div>
 
     <div class="mobile-btn" onclick="toggleMenu()">☰</div>
-
 </header>
 
-<!-- MOBILE MENU -->
 <div id="mobileMenu" class="mobile-menu">
     <a href="#home" onclick="toggleMenu()">Accueil</a>
     <a href="about.html" onclick="toggleMenu()">Qui sommes-nous</a>
@@ -323,59 +197,38 @@ body {
     <a href="/login.html" onclick="toggleMenu()">Connexion</a>
 </div>
 
-<!-- WARNING -->
 <p class="warning">
-⚠️ Site en construction active — certains liens risque d'être suprimer ou peuvent ne pas fonctionner.
+⚠️ Transport virtuel sérieux sur TruckersMP — Site en construction active
 </p>
 
-<!-- HERO -->
 <section id="home" class="hero">
-
     <div class="hero-content">
         <h1>TransAuvergne VTC</h1>
         <p>Transport virtuel sérieux sur TruckersMP</p>
-        <span class="badge">🚛 Organisation active</span>
+        <span class="badge">Organisation active</span>
     </div>
-
 </section>
 
-<!-- FOOTER -->
 <section class="footer">
-
     <div class="footer-container">
-
-        <div class="footer-box">
+        <div>
             <h3>Liens</h3>
-            <a href="https://truckersmp.com/vtc/85720" class="footer-link">TruckersMP</a>
+            <a href="https://truckersmp.com/vtc/85720">TruckersMP</a>
         </div>
 
-        <div class="footer-box">
-            <h3>Réseaux</h3>
-
-            <a href="https://discord.gg/tA7fWf3BPH" class="social-btn discord">
-                <img src="https://www.svgrepo.com/show/331368/discord-v2.svg">
-                Discord
-            </a>
-
-            <a href="https://youtube.com/@trans-auvergne?si=8uXbCNWgOu95a_79" class="social-btn youtube">
-                <img src="https://www.svgrepo.com/show/475700/youtube-color.svg">
-                YouTube
-            </a>
-
+        <div>
+            <h3>Discord</h3>
+            <a href="https://discord.gg/tA7fWf3BPH">Rejoindre</a>
         </div>
-
     </div>
 
-    <div class="footer-bottom">
-        © 2026 TransAuvergne VTC
-    </div>
-
+    <div class="footer-bottom">© 2026 TransAuvergne VTC</div>
 </section>
 
 <script>
-function toggleMenu() {
-    const menu = document.getElementById("mobileMenu");
-    menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+function toggleMenu(){
+    const m = document.getElementById("mobileMenu");
+    m.style.display = m.style.display === "flex" ? "none" : "flex";
 }
 </script>
 

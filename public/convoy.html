@@ -25,10 +25,8 @@ body {
     background: rgba(10,10,10,0.75);
     backdrop-filter: blur(10px);
     z-index: 1000;
-    box-sizing: border-box;
 }
 
-/* LOGO */
 .logo {
     display: flex;
     align-items: center;
@@ -38,75 +36,72 @@ body {
     font-weight: bold;
 }
 
-.logo img {
-    height: 38px;
-    border-radius: 6px;
-}
-
-/* NAV */
-.nav {
-    display: flex;
-    gap: 15px;
-}
+.logo img { height: 38px; }
 
 .nav a {
     color: #bdbdbd;
+    margin: 0 10px;
     text-decoration: none;
-    font-size: 14px;
 }
 
-.nav a:hover {
-    color: white;
+.nav a:hover { color: white; }
+
+.status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
 }
 
-/* BURGER */
+.dot {
+    width: 8px;
+    height: 8px;
+    background: #2ecc71;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #2ecc71;
+}
+
+/* MOBILE */
 .mobile-btn {
     display: none;
     font-size: 28px;
     cursor: pointer;
 }
 
-/* MOBILE MENU */
 .mobile-menu {
     display: none;
     flex-direction: column;
     position: fixed;
     top: 65px;
     right: 15px;
-    background: rgba(15,15,15,0.95);
+    background: rgba(10,10,10,0.95);
     padding: 15px;
     border-radius: 12px;
     width: 200px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
 .mobile-menu a {
     color: white;
+    padding: 8px;
     text-decoration: none;
-    padding: 10px;
-    border-radius: 8px;
-}
-
-.mobile-menu a:hover {
-    background: rgba(255,255,255,0.08);
 }
 
 /* PAGE */
 .container {
-    padding: 120px 20px 60px;
+    padding: 120px 20px;
     max-width: 1000px;
     margin: auto;
 }
 
 h1 {
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 }
 
 /* GRID */
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 20px;
 }
 
@@ -136,14 +131,9 @@ h1 {
 .tag.annule { background: rgba(231,76,60,0.15); color:#e74c3c; }
 
 /* RESPONSIVE */
-@media (max-width: 768px) {
-    .nav {
-        display: none;
-    }
-
-    .mobile-btn {
-        display: block;
-    }
+@media (max-width:768px){
+    .nav { display:none; }
+    .mobile-btn { display:block; }
 }
 </style>
 </head>
@@ -153,7 +143,7 @@ h1 {
 <header class="header">
 
     <a href="index.html" class="logo">
-        <img src="logo.jpeg" alt="logo">
+        <img src="logo.jpeg">
         <span>TransAuvergne VTC</span>
     </a>
 
@@ -164,11 +154,14 @@ h1 {
         <a href="contact.html">Contact</a>
     </nav>
 
-    <div class="mobile-btn" onclick="toggleMenu()">☰</div>
+    <div class="status">
+        <span class="dot"></span>
+        Recrutement ouvert
+    </div>
 
+    <div class="mobile-btn" onclick="toggleMenu()">☰</div>
 </header>
 
-<!-- MOBILE MENU -->
 <div id="mobileMenu" class="mobile-menu">
     <a href="index.html" onclick="toggleMenu()">Accueil</a>
     <a href="about.html" onclick="toggleMenu()">Qui sommes-nous</a>
@@ -176,16 +169,15 @@ h1 {
     <a href="contact.html" onclick="toggleMenu()">Contact</a>
 </div>
 
-<!-- CONTENT -->
 <div class="container">
     <h1>Nos convois</h1>
     <div id="convoyList" class="grid"></div>
 </div>
 
 <script>
-function toggleMenu() {
-    const menu = document.getElementById("mobileMenu");
-    menu.style.display = (menu.style.display === "flex") ? "none" : "flex";
+function toggleMenu(){
+    const m = document.getElementById("mobileMenu");
+    m.style.display = m.style.display === "flex" ? "none" : "flex";
 }
 
 function loadConvoys() {
