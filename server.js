@@ -18,16 +18,24 @@ app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 ========================= */
 app.get("/api/trucksbook", async (req, res) => {
     try {
-        const { data } = await axios.get(
-            "https://trucksbook.eu/company/219466",
-            {
-                headers: {
-                    "User-Agent": "Mozilla/5.0"
-                },
-                timeout: 10000
-            }
+        const ets2 = await axios.get(
+            "https://trucksbook.eu/game_overview.php?company=219466&game=1&stat=0"
         );
 
+        const ats = await axios.get(
+            "https://trucksbook.eu/game_overview.php?company=219466&game=2&stat=0"
+        );
+
+        res.json({
+            ets2: ets2.data,
+            ats: ats.data
+        });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "fail" });
+    }
+});
         const $ = cheerio.load(data);
         const text = $("body").text();
 
