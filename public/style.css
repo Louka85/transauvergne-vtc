@@ -369,6 +369,25 @@ body {
     padding: 40px;
 }
 
+.header,
+.nav,
+.nav-links,
+.nav-inline {
+    background: rgba(10,10,10,0.65) !important;
+    color: white !important;
+}
+
+.nav a,
+.nav-links a,
+a {
+    color: rgba(255,255,255,0.6) !important;
+}
+
+.nav a:hover,
+.nav-links a:hover {
+    color: white !important;
+}
+
 /* =========================
    RESPONSIVE
 ========================= */
