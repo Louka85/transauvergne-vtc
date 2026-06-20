@@ -1,240 +1,10 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="style.css">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contact - TransAuvergne VTC</title>
-
-<style>
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #0f0f0f;
-    color: white;
-}
-
-/* CONTACT (SaaS CLEAN VERSION) */
-
-.contact {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 120px 20px 60px;
-}
-
-.contact-box {
-    width: 100%;
-    max-width: 600px;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.08);
-    padding: 30px;
-    border-radius: 14px;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
-    transition: 0.25s ease;
-}
-
-.contact-box:hover {
-    transform: translateY(-5px);
-    border-color: rgba(46,204,113,0.3);
-}
-
-.contact-box h1 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 28px;
-}
-
-.contact-box form {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-}
-
-.contact-box input,
-.contact-box textarea {
-    padding: 12px;
-    border: none;
-    border-radius: 10px;
-    background: rgba(255,255,255,0.08);
-    color: white;
-    outline: none;
-    transition: 0.2s ease;
-}
-
-.contact-box input:focus,
-.contact-box textarea:focus {
-    background: rgba(255,255,255,0.12);
-    transform: translateY(-1px);
-}
-
-.contact-box textarea {
-    height: 120px;
-    resize: none;
-}
-
-.contact-box button {
-    padding: 12px;
-    border: none;
-    border-radius: 10px;
-    background: #5865F2;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.25s ease;
-}
-
-.contact-box button:hover {
-    background: #4752C4;
-    transform: translateY(-3px);
-}
-
-.contact-info {
-    text-align: center;
-    color: #aaa;
-    font-size: 13px;
-    margin-top: 15px;
-}
-    
-/* HEADER */
-.header {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    padding: 14px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: rgba(10,10,10,0.75);
-    backdrop-filter: blur(10px);
-    z-index: 1000;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-    color: white;
-    font-weight: bold;
-}
-
-.logo img { height: 38px; }
-
-.nav a {
-    color: #bdbdbd;
-    margin: 0 10px;
-    text-decoration: none;
-}
-
-.nav a:hover { color: white; }
-
-.status {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 13px;
-}
-
-.dot {
-    width: 8px;
-    height: 8px;
-    background: #2ecc71;
-    border-radius: 50%;
-    box-shadow: 0 0 10px #2ecc71;
-}
-
-/* MOBILE */
-.mobile-btn {
-    display: none;
-    font-size: 28px;
-    cursor: pointer;
-}
-
-.mobile-menu {
-    display: none;
-    flex-direction: column;
-    position: fixed;
-    top: 65px;
-    right: 15px;
-    background: rgba(10,10,10,0.95);
-    padding: 15px;
-    border-radius: 12px;
-    width: 200px;
-}
-
-.mobile-menu a {
-    color: white;
-    padding: 8px;
-    text-decoration: none;
-}
-
-/* CONTACT */
-.contact {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 40px;
-}
-
-.contact-box {
-    width: 100%;
-    max-width: 600px;
-    background: rgba(255,255,255,0.05);
-    padding: 30px;
-    border-radius: 12px;
-    backdrop-filter: blur(8px);
-}
-
-.contact-box h1 {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-input, textarea {
-    padding: 12px;
-    border: none;
-    border-radius: 8px;
-    background: rgba(255,255,255,0.08);
-    color: white;
-    outline: none;
-}
-
-textarea {
-    height: 120px;
-    resize: none;
-}
-
-button {
-    padding: 12px;
-    border: none;
-    border-radius: 8px;
-    background: #5865F2;
-    color: white;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-button:hover {
-    background: #4752C4;
-    transform: scale(1.02);
-}
-
-/* RESPONSIVE */
-@media (max-width:768px){
-    .nav { display:none; }
-    .mobile-btn { display:block; }
-}
-</style>
 </head>
 
 <body>
@@ -246,27 +16,23 @@ button:hover {
         <span>TransAuvergne VTC</span>
     </a>
 
-    <nav class="nav">
-        <a href="index.html">Accueil</a>
-        <a href="about.html">Qui sommes-nous</a>
-        <a href="convoy.html">Convois</a>
-        <a href="contact.html">Contact</a>
-    </nav>
+    <div class="nav-inline">
+        <span class="nav-title">Navigation :</span>
+
+        <div class="nav-links">
+            <a href="index.html">Accueil</a>
+            <a href="about.html">Qui sommes-nous</a>
+            <a href="convoy.html">Convois</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </div>
 
     <div class="status">
         <span class="dot"></span>
         Recrutement ouvert
     </div>
 
-    <div class="mobile-btn" onclick="toggleMenu()">☰</div>
 </header>
-
-<div id="mobileMenu" class="mobile-menu">
-    <a href="index.html" onclick="toggleMenu()">Accueil</a>
-    <a href="about.html" onclick="toggleMenu()">Qui sommes-nous</a>
-    <a href="convoy.html" onclick="toggleMenu()">Convois</a>
-    <a href="contact.html" onclick="toggleMenu()">Contact</a>
-</div>
 
 <section class="contact">
 
@@ -281,20 +47,13 @@ button:hover {
             <button type="submit">Envoyer</button>
         </form>
 
-        <p style="text-align:center;color:#aaa;font-size:13px;margin-top:15px;">
+        <p class="contact-info">
             Réponse via Discord : discord.gg/tA7fWf3BPH
         </p>
 
     </div>
 
 </section>
-
-<script>
-function toggleMenu(){
-    const m = document.getElementById("mobileMenu");
-    m.style.display = m.style.display === "flex" ? "none" : "flex";
-}
-</script>
 
 </body>
 </html>
