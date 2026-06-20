@@ -1,0 +1,236 @@
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0f0f0f;
+    color: white;
+}
+
+/* HEADER */
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 14px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(10,10,10,0.75);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    box-sizing: border-box;
+}
+
+/* LOGO */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
+.logo img {
+    height: 38px;
+}
+
+/* NAV */
+.nav-inline {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.nav-title {
+    font-weight: bold;
+    font-size: 14px;
+    color: white;
+}
+
+/* LINKS */
+.nav-links {
+    display: flex;
+    gap: 14px;
+}
+
+.nav-links a {
+    position: relative;
+    color: #bdbdbd;
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.25s ease;
+}
+
+/* hover animation */
+.nav-links a:hover {
+    color: white;
+    transform: translateY(3px);
+}
+
+/* underline animation */
+.nav-links a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0%;
+    height: 2px;
+    background: #2ecc71;
+    transition: 0.25s ease;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+/* STATUS */
+.status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    background: #2ecc71;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #2ecc71;
+}
+
+/* WARNING */
+.warning {
+    margin-top: 80px;
+    text-align: center;
+    font-size: 14px;
+    color: #ffcc00;
+    background: rgba(255, 204, 0, 0.08);
+    padding: 10px;
+}
+
+/* HERO */
+.hero {
+    height: 100vh;
+    background: url("background.jpg") center/cover no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero h1 {
+    font-size: 50px;
+}
+
+.hero p {
+    font-size: 18px;
+    color: #ddd;
+}
+
+.badge {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 6px 12px;
+    background: rgba(46,204,113,0.15);
+    color: #2ecc71;
+    border-radius: 20px;
+}
+
+/* FOOTER */
+.footer {
+    background: #0a0a0a;
+    padding: 40px;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+.footer-box {
+    display: flex;
+    flex-direction: column;
+}
+
+/* SOCIAL */
+.social-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    width: fit-content;
+    transition: 0.25s ease;
+}
+
+.social-btn img {
+    width: 22px;
+}
+
+/* DISCORD */
+.discord {
+    background: rgba(88, 101, 242, 0.12);
+    color: #5865F2;
+}
+
+.discord:hover {
+    background: rgba(88, 101, 242, 0.25);
+    transform: translateY(-3px);
+}
+
+/* YOUTUBE */
+.youtube {
+    background: rgba(255, 0, 0, 0.12);
+    color: #ff3b3b;
+}
+
+.youtube:hover {
+    background: rgba(255, 0, 0, 0.25);
+    transform: translateY(-3px);
+}
+
+/* FOOTER BOTTOM */
+.footer-bottom {
+    text-align: center;
+    font-size: 12px;
+    color: #777;
+    margin-top: 30px;
+}
+
+/* RESPONSIVE */
+@media (max-width:768px) {
+    .nav-inline {
+        display: none;
+    }
+
+    .hero h1 {
+        font-size: 32px;
+    }
+
+    .footer-container {
+        flex-direction: column;
+        align-items: center;
+    }
+}
