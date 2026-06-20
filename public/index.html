@@ -128,8 +128,10 @@ body {
 
 .footer-box {
     display: flex;
-    flex-direction: flex;
+    flex-direction: column;
+    align-items: center;
     gap: 10px;
+    text-align: center;
 }
 
 /* NAV HORIZONTALE */
@@ -143,6 +145,14 @@ body {
     color: #bdbdbd;
     text-decoration: none;
     transition: 0.2s;
+}
+
+.nav-inline {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
 }
 
 .footer-link:hover {
@@ -226,7 +236,7 @@ body {
         <span>TransAuvergne VTC</span>
     </a>
 
-   <div class="footer-box">
+   <div class="footer-box nav-inline">
     <h3>Navigation :</h3>
 
     <div class="footer-links">
