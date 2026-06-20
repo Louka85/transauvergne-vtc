@@ -9,6 +9,10 @@ body {
     color: white;
 }
 
+body {
+    background: red !important;
+}
+
 /* HEADER */
 .header {
     position: fixed;
