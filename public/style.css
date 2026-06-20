@@ -1,7 +1,3 @@
-/* =========================
-   GLOBAL
-========================= */
-
 html {
     scroll-behavior: smooth;
 }
@@ -13,164 +9,8 @@ body {
     color: white;
 }
 
-.container {
-    padding: 120px 20px 60px;
-    max-width: 900px;
-    margin: 0 auto;
-    text-align: center;
-}
-
-.container h1 {
-    font-size: 40px;
-    margin-bottom: 10px;
-}
-
-.container p {
-    color: rgba(255,255,255,0.7);
-    font-size: 16px;
-    line-height: 1.6;
-}
-
 /* =========================
-   CONTACT WRAPPER (CENTER BOX)
-========================= */
-
-.container {
-    padding-top: 120px;
-}
-
-.contact {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 120px 20px 60px;
-}
-
-/* cadre extérieur (optionnel mais clean) */
-.contact-wrapper {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
-
-.card h2 {
-    font-size: 18px;
-    margin-bottom: 10px;
-}
-
-.card p {
-    margin: 6px 0;
-    color: rgba(255,255,255,0.75);
-}
-
-.tag {
-    margin-top: 12px;
-}
-
-.mobile-btn {
-    display: none !important;
-}
-
-@media (max-width:768px){
-    .mobile-btn {
-        display: block !important;
-    }
-}
-
-/* BOÎTE PRINCIPALE */
-.contact-box {
-    width: 100%;
-    max-width: 550px;
-
-    padding: 35px;
-
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.10);
-
-    border-radius: 16px;
-
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-
-    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-
-    transition: 0.25s ease;
-}
-
-.contact-box:hover {
-    transform: translateY(-5px);
-    border-color: rgba(46,204,113,0.35);
-}
-
-/* TITRE */
-.contact-box h1 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 28px;
-}
-
-/* FORM */
-.contact-box form {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-}
-
-/* INPUTS */
-.contact-box input,
-.contact-box textarea {
-    padding: 12px;
-    border: none;
-    border-radius: 10px;
-
-    background: rgba(255,255,255,0.08);
-    color: white;
-
-    outline: none;
-    transition: 0.2s ease;
-}
-
-.contact-box input:focus,
-.contact-box textarea:focus {
-    background: rgba(255,255,255,0.12);
-    transform: translateY(-1px);
-}
-
-/* TEXTAREA */
-.contact-box textarea {
-    height: 130px;
-    resize: none;
-}
-
-/* BUTTON */
-.contact-box button {
-    padding: 12px;
-    border: none;
-    border-radius: 10px;
-
-    background: #5865F2;
-    color: white;
-    font-weight: bold;
-
-    cursor: pointer;
-    transition: 0.25s ease;
-}
-
-.contact-box button:hover {
-    background: #4752C4;
-    transform: translateY(-3px);
-}
-
-/* INFO */
-.contact-info {
-    text-align: center;
-    margin-top: 15px;
-    font-size: 13px;
-    color: rgba(255,255,255,0.6);
-}
-/* =========================
-   HEADER GLOBAL SAAS CLEAN
+   HEADER GLOBAL
 ========================= */
 
 .header {
@@ -189,8 +29,8 @@ body {
     -webkit-backdrop-filter: blur(14px);
 
     border-bottom: 1px solid rgba(255,255,255,0.06);
-    box-sizing: border-box;
     z-index: 1000;
+    box-sizing: border-box;
 }
 
 /* LOGO */
@@ -208,40 +48,26 @@ body {
 }
 
 /* NAV */
-.nav-inline {
+.nav {
     display: flex;
     align-items: center;
-    gap: 14px;
-    white-space: nowrap;
+    gap: 18px;
 }
 
-.nav-title {
-    font-size: 13px;
-    font-weight: 600;
-    color: rgba(255,255,255,0.75);
-}
-
-.nav-links {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-}
-
-.nav-links a {
-    position: relative;
+.nav a {
     text-decoration: none;
     font-size: 14px;
     color: rgba(255,255,255,0.6);
-    transition: all 0.25s ease;
-    padding: 4px 0;
+    transition: 0.2s ease;
+    position: relative;
 }
 
-.nav-links a:hover {
+.nav a:hover {
     color: #fff;
     transform: translateY(2px);
 }
 
-.nav-links a::after {
+.nav a::after {
     content: "";
     position: absolute;
     left: 0;
@@ -249,11 +75,10 @@ body {
     width: 0%;
     height: 2px;
     background: #2ecc71;
-    border-radius: 2px;
-    transition: width 0.25s ease;
+    transition: 0.25s ease;
 }
 
-.nav-links a:hover::after {
+.nav a:hover::after {
     width: 100%;
 }
 
@@ -275,17 +100,29 @@ body {
 }
 
 /* =========================
+   LAYOUT GLOBAL
+========================= */
+
+.container {
+    padding: 120px 20px 60px;
+    max-width: 1000px;
+    margin: auto;
+    text-align: center;
+}
+
+/* =========================
    HERO
 ========================= */
 
 .hero {
     height: 100vh;
-    background: url("background.jpg") center/cover no-repeat;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     position: relative;
+
+    background: url("background.jpg") center/cover no-repeat;
 }
 
 .hero::before {
@@ -308,32 +145,14 @@ body {
     color: #ddd;
 }
 
-/* PAGE ABOUT */
-.about-page .container {
-    text-align: left;
-}
-
-/* PAGE CONTACT */
-.contact-page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* PAGE CONVOY */
-.convoy-page .container {
-    max-width: 1100px;
-}
-
 /* =========================
-   TEAM / CARDS
+   CARDS (TEAM / CONVOY)
 ========================= */
 
-.team-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px;
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
 }
 
 .card {
@@ -341,8 +160,6 @@ body {
     border: 1px solid rgba(255,255,255,0.08);
     padding: 15px;
     border-radius: 14px;
-    width: 180px;
-    text-align: center;
     backdrop-filter: blur(10px);
     transition: 0.25s ease;
 }
@@ -352,40 +169,108 @@ body {
     border-color: rgba(46,204,113,0.4);
 }
 
-.card img {
+/* =========================
+   TAGS
+========================= */
+
+.tag {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.tag.ouvert { background: rgba(46,204,113,0.15); color:#2ecc71; }
+.tag.complet { background: rgba(241,196,15,0.15); color:#f1c40f; }
+.tag.annule { background: rgba(231,76,60,0.15); color:#e74c3c; }
+
+/* =========================
+   CONTACT BOX
+========================= */
+
+.contact {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contact-box {
     width: 100%;
-    height: 150px;
-    object-fit: cover;
+    max-width: 550px;
+
+    padding: 35px;
+
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.10);
+
+    border-radius: 16px;
+
+    backdrop-filter: blur(14px);
+}
+
+.contact-box form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+input, textarea {
+    padding: 12px;
+    border: none;
     border-radius: 10px;
-    margin-bottom: 10px;
+    background: rgba(255,255,255,0.08);
+    color: white;
+    outline: none;
+}
+
+textarea {
+    height: 130px;
+    resize: none;
+}
+
+button {
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: #5865F2;
+    color: white;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover {
+    background: #4752C4;
+    transform: translateY(-2px);
 }
 
 /* =========================
-   FOOTER (simple)
+   MOBILE MENU
 ========================= */
 
-.footer {
-    background: #0a0a0a;
-    padding: 40px;
+.mobile-btn {
+    display: none;
+    font-size: 28px;
+    cursor: pointer;
 }
 
-.header,
-.nav,
-.nav-links,
-.nav-inline {
-    background: rgba(10,10,10,0.65) !important;
-    color: white !important;
+.mobile-menu {
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    top: 70px;
+    right: 15px;
+    background: rgba(10,10,10,0.95);
+    padding: 15px;
+    border-radius: 12px;
+    width: 200px;
 }
 
-.nav a,
-.nav-links a,
-a {
-    color: rgba(255,255,255,0.6) !important;
-}
-
-.nav a:hover,
-.nav-links a:hover {
-    color: white !important;
+.mobile-menu a {
+    color: white;
+    padding: 8px;
+    text-decoration: none;
 }
 
 /* =========================
@@ -393,8 +278,13 @@ a {
 ========================= */
 
 @media (max-width:768px) {
-    .nav-inline {
+
+    .nav {
         display: none;
+    }
+
+    .mobile-btn {
+        display: block;
     }
 
     .hero h1 {
