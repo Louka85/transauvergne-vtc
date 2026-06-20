@@ -13,22 +13,16 @@
 <header class="header">
 
     <a href="index.html" class="logo">
-        <img src="logo.jpeg">
+        <img src="logo.jpeg" alt="logo">
         <span>TransAuvergne VTC</span>
     </a>
 
-    <div class="nav-inline">
-
-        <span class="nav-title">Navigation :</span>
-
-        <div class="nav-links">
-            <a href="index.html">Accueil</a>
-            <a href="about.html">Qui sommes-nous</a>
-            <a href="convoy.html">Convois</a>
-            <a href="contact.html">Contact</a>
-        </div>
-
-    </div>
+    <nav class="nav">
+        <a href="index.html">Accueil</a>
+        <a href="about.html">Qui sommes-nous</a>
+        <a href="convoy.html">Convois</a>
+        <a href="contact.html">Contact</a>
+    </nav>
 
     <div class="status">
         <span class="dot"></span>
@@ -38,6 +32,13 @@
     <div class="mobile-btn" onclick="toggleMenu()">☰</div>
 
 </header>
+
+<div id="mobileMenu" class="mobile-menu">
+    <a href="index.html" onclick="toggleMenu()">Accueil</a>
+    <a href="about.html" onclick="toggleMenu()">Qui sommes-nous</a>
+    <a href="convoy.html" onclick="toggleMenu()">Convois</a>
+    <a href="contact.html" onclick="toggleMenu()">Contact</a>
+</div>
 
 <div id="mobileMenu" class="mobile-menu">
     <a href="index.html" onclick="toggleMenu()">Accueil</a>
