@@ -298,6 +298,23 @@ body {
     color: #ddd;
 }
 
+/* PAGE ABOUT */
+.about-page .container {
+    text-align: left;
+}
+
+/* PAGE CONTACT */
+.contact-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* PAGE CONVOY */
+.convoy-page .container {
+    max-width: 1100px;
+}
+
 /* =========================
    TEAM / CARDS
 ========================= */
