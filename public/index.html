@@ -46,10 +46,10 @@ body {
 .nav-inline {
     display: flex;
     align-items: center;
-    gap: 14px;
-    white-space: nowrap;
+    gap: 12px;
 }
 
+/* TITRE NAV */
 .nav-title {
     font-weight: bold;
     font-size: 14px;
@@ -60,24 +60,25 @@ body {
 .nav-links {
     display: flex;
     gap: 14px;
-    align-items: center;
 }
 
-.footer-link {
+/* LIENS CLEAN */
+.nav-links a {
     position: relative;
     color: #bdbdbd;
     text-decoration: none;
     font-size: 14px;
-    transition: all 0.25s ease;
+    transition: 0.25s ease;
 }
 
-/* 🔥 effet "slide vers le bas" */
-.footer-link:hover {
+/* hover slide bas + blanc */
+.nav-links a:hover {
     color: white;
     transform: translateY(3px);
 }
 
-.footer-link::after {
+/* underline animé */
+.nav-links a::after {
     content: "";
     position: absolute;
     left: 0;
@@ -85,10 +86,10 @@ body {
     width: 0%;
     height: 2px;
     background: #2ecc71;
-    transition: width 0.25s ease;
+    transition: 0.25s ease;
 }
 
-.footer-link:hover::after {
+.nav-links a:hover::after {
     width: 100%;
 }
 
@@ -169,7 +170,6 @@ body {
 .footer-box {
     display: flex;
     flex-direction: column;
-    gap: 10px;
 }
 
 /* SOCIAL */
@@ -188,7 +188,6 @@ body {
 .social-btn img {
     width: 22px;
     height: 22px;
-    transition: 0.25s ease;
 }
 
 /* DISCORD */
@@ -240,17 +239,15 @@ body {
     </a>
 
     <div class="nav-inline">
-
         <span class="nav-title">Navigation :</span>
 
         <div class="nav-links">
-            <a class="footer-link" href="index.html">Accueil</a>
-            <a class="footer-link" href="about.html">Qui sommes-nous</a>
-            <a class="footer-link" href="convoy.html">Convois</a>
-            <a class="footer-link" href="contact.html">Contact</a>
-            <a class="footer-link" href="login.html">Connexion</a>
+            <a href="index.html">Accueil</a>
+            <a href="about.html">Qui sommes-nous</a>
+            <a href="convoy.html">Convois</a>
+            <a href="contact.html">Contact</a>
+            <a href="login.html">Connexion</a>
         </div>
-
     </div>
 
     <div class="status">
