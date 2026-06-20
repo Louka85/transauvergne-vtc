@@ -1,3 +1,7 @@
+/* =========================
+   GLOBAL
+========================= */
+
 html {
     scroll-behavior: smooth;
 }
@@ -7,19 +11,29 @@ body {
     font-family: Arial, sans-serif;
     background: #0f0f0f;
     color: white;
-    }
+}
 
-/* HEADER */
+/* =========================
+   HEADER GLOBAL SAAS CLEAN
+========================= */
+
 .header {
     position: fixed;
     top: 0;
+    left: 0;
     width: 100%;
-    padding: 14px 20px;
+    padding: 14px 22px;
+
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: rgba(10,10,10,0.75);
+
+    background: rgba(10,10,10,0.65);
     backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    box-sizing: border-box;
     z-index: 1000;
 }
 
@@ -28,9 +42,9 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
-    color: white;
     text-decoration: none;
-    font-weight: bold;
+    color: white;
+    font-weight: 600;
 }
 
 .logo img {
@@ -41,36 +55,36 @@ body {
 .nav-inline {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 14px;
+    white-space: nowrap;
 }
 
 .nav-title {
-    font-weight: bold;
-    font-size: 14px;
-    color: white;
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.75);
 }
 
-/* LINKS */
 .nav-links {
     display: flex;
-    gap: 14px;
+    align-items: center;
+    gap: 16px;
 }
 
 .nav-links a {
     position: relative;
-    color: #bdbdbd;
     text-decoration: none;
     font-size: 14px;
-    transition: 0.25s ease;
+    color: rgba(255,255,255,0.6);
+    transition: all 0.25s ease;
+    padding: 4px 0;
 }
 
-/* hover premium */
 .nav-links a:hover {
-    color: white;
-    transform: translateY(3px);
+    color: #fff;
+    transform: translateY(2px);
 }
 
-/* underline animé */
 .nav-links a::after {
     content: "";
     position: absolute;
@@ -79,7 +93,8 @@ body {
     width: 0%;
     height: 2px;
     background: #2ecc71;
-    transition: 0.25s ease;
+    border-radius: 2px;
+    transition: width 0.25s ease;
 }
 
 .nav-links a:hover::after {
@@ -92,6 +107,7 @@ body {
     align-items: center;
     gap: 8px;
     font-size: 13px;
+    color: rgba(255,255,255,0.75);
 }
 
 .dot {
@@ -102,7 +118,10 @@ body {
     box-shadow: 0 0 10px #2ecc71;
 }
 
-/* HERO */
+/* =========================
+   HERO
+========================= */
+
 .hero {
     height: 100vh;
     background: url("background.jpg") center/cover no-repeat;
@@ -133,38 +152,9 @@ body {
     color: #ddd;
 }
 
-/* FOOTER */
-.footer {
-    background: #0a0a0a;
-    padding: 40px;
-}
-
-.footer-container {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    gap: 40px;
-}
-
-.footer-box {
-    display: flex;
-    flex-direction: column;
-}
-
-/* LINKS FOOTER */
-.footer-link {
-    color: #bdbdbd;
-    text-decoration: none;
-}
-
-/* SOCIAL */
-.social-btn {
-    display: flex;
-    gap: 10px;
-    padding: 10px 14px;
-    border-radius: 10px;
-    text-decoration: none;
-}
+/* =========================
+   TEAM / CARDS
+========================= */
 
 .team-grid {
     display: flex;
@@ -197,7 +187,19 @@ body {
     margin-bottom: 10px;
 }
 
-/* RESPONSIVE */
+/* =========================
+   FOOTER (simple)
+========================= */
+
+.footer {
+    background: #0a0a0a;
+    padding: 40px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
 @media (max-width:768px) {
     .nav-inline {
         display: none;
