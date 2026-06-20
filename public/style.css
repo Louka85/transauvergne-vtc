@@ -17,6 +17,10 @@ body {
    CONTACT WRAPPER (CENTER BOX)
 ========================= */
 
+.container {
+    padding-top: 120px;
+}
+
 .contact {
     min-height: 100vh;
     display: flex;
