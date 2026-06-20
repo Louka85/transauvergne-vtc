@@ -30,6 +30,7 @@ body {
     box-sizing: border-box;
 }
 
+/* LOGO */
 .logo {
     display: flex;
     align-items: center;
@@ -41,6 +42,7 @@ body {
 
 .logo img { height: 38px; }
 
+/* NAV */
 .nav a {
     color: #bdbdbd;
     margin: 0 10px;
@@ -50,6 +52,7 @@ body {
 
 .nav a:hover { color: white; }
 
+/* STATUS */
 .status {
     display: flex;
     align-items: center;
@@ -63,32 +66,6 @@ body {
     background: #2ecc71;
     border-radius: 50%;
     box-shadow: 0 0 10px #2ecc71;
-}
-
-/* MOBILE */
-.mobile-btn {
-    display: none;
-    font-size: 28px;
-    cursor: pointer;
-    color: white;
-}
-
-.mobile-menu {
-    display: none;
-    flex-direction: column;
-    position: fixed;
-    top: 65px;
-    right: 15px;
-    background: rgba(10,10,10,0.95);
-    padding: 15px;
-    border-radius: 12px;
-    width: 200px;
-}
-
-.mobile-menu a {
-    color: white;
-    text-decoration: none;
-    padding: 8px;
 }
 
 /* WARNING */
@@ -144,9 +121,84 @@ body {
 
 .footer-container {
     display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
     gap: 40px;
 }
 
+.footer-box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 180px;
+}
+
+.footer-box h3 {
+    margin-bottom: 10px;
+}
+
+.footer-link {
+    color: #bdbdbd;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.footer-link:hover {
+    color: white;
+    transform: translateX(5px);
+}
+
+/* SOCIAL */
+.social-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    width: fit-content;
+    transition: 0.25s ease;
+}
+
+.social-btn img {
+    width: 22px;
+    height: 22px;
+    border-radius: 4px;
+    transition: 0.25s ease;
+}
+
+/* DISCORD */
+.discord {
+    background: rgba(88, 101, 242, 0.12);
+    color: #5865F2;
+}
+
+.discord:hover {
+    background: rgba(88, 101, 242, 0.25);
+    transform: translateY(-3px);
+}
+
+.discord:hover img {
+    transform: rotate(-8deg) scale(1.1);
+}
+
+/* YOUTUBE */
+.youtube {
+    background: rgba(255, 0, 0, 0.12);
+    color: #ff3b3b;
+}
+
+.youtube:hover {
+    background: rgba(255, 0, 0, 0.25);
+    transform: translateY(-3px);
+}
+
+.youtube:hover img {
+    transform: rotate(8deg) scale(1.1);
+}
+
+/* FOOTER BOTTOM */
 .footer-bottom {
     text-align: center;
     font-size: 12px;
@@ -154,18 +206,11 @@ body {
     margin-top: 30px;
 }
 
-.social-btn img {
-    width: 22px;
-    height: 22px;
-    border-radius: 4px;
-}
-
 /* RESPONSIVE */
 @media (max-width:768px){
     .nav { display:none; }
-    .mobile-btn { display:block; }
-    .footer-container { flex-direction: column; }
     .hero h1 { font-size: 32px; }
+    .footer-container { flex-direction: column; align-items: center; }
 }
 </style>
 </head>
@@ -192,19 +237,10 @@ body {
         Recrutement ouvert
     </div>
 
-    <div class="mobile-btn" onclick="toggleMenu()">☰</div>
 </header>
 
-<div id="mobileMenu" class="mobile-menu">
-    <a href="#home" onclick="toggleMenu()">Accueil</a>
-    <a href="about.html" onclick="toggleMenu()">Qui sommes-nous</a>
-    <a href="convoy.html" onclick="toggleMenu()">Convois</a>
-    <a href="contact.html" onclick="toggleMenu()">Contact</a>
-    <a href="/login.html" onclick="toggleMenu()">Connexion</a>
-</div>
-
 <p class="warning">
-⚠️ Site en construction active — certains liens et pages peuvent être modifiés ou temporairement indisponibles ⚠️
+⚠️ Site en construction active — certaines pages ou fonctionnalités peuvent être modifiées ou supprimées ⚠️
 </p>
 
 <section id="home" class="hero">
@@ -215,37 +251,44 @@ body {
     </div>
 </section>
 
-<!-- FOOTER -->
 <section class="footer">
 
     <div class="footer-container">
 
         <div class="footer-box">
+            <h3>TransAuvergne VTC</h3>
+            <p>Organisation virtuelle TruckersMP</p>
+        </div>
+
+        <div class="footer-box">
+            <h3>Navigation</h3>
+            <a class="footer-link" href="index.html">Accueil</a>
+            <a class="footer-link" href="about.html">Qui sommes-nous</a>
+            <a class="footer-link" href="convoy.html">Convois</a>
+            <a class="footer-link" href="contact.html">Contact</a>
+        </div>
+
+        <div class="footer-box">
             <h3>Réseaux</h3>
 
-            <a href="https://discord.gg/tA7fWf3BPH" class="social-btn discord" target="_blank">
+            <a href="https://discord.gg/tA7fWf3BPH" class="social-btn discord">
                 <img src="https://www.svgrepo.com/show/331368/discord-v2.svg">
                 Discord
             </a>
 
-            <a href="https://youtube.com/@trans-auvergne?si=8uXbCNWgOu95a_79" class="social-btn youtube" target="_blank">
+            <a href="https://youtube.com/@trans-auvergne?si=8uXbCNWgOu95a_79" class="social-btn youtube">
                 <img src="https://www.svgrepo.com/show/475700/youtube-color.svg">
                 YouTube
             </a>
-
         </div>
 
     </div>
 
-    <div class="footer-bottom">© 2026 TransAuvergne VTC</div>
-</section>
+    <div class="footer-bottom">
+        © 2026 TransAuvergne VTC — Tous droits réservés
+    </div>
 
-<script>
-function toggleMenu(){
-    const m = document.getElementById("mobileMenu");
-    m.style.display = m.style.display === "flex" ? "none" : "flex";
-}
-</script>
+</section>
 
 </body>
 </html>
