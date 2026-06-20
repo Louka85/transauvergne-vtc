@@ -166,6 +166,37 @@ body {
     text-decoration: none;
 }
 
+.team-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+
+.card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 15px;
+    border-radius: 14px;
+    width: 180px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    transition: 0.25s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(46,204,113,0.4);
+}
+
+.card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
 /* RESPONSIVE */
 @media (max-width:768px) {
     .nav-inline {
