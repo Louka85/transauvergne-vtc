@@ -42,15 +42,55 @@ body {
 
 .logo img { height: 38px; }
 
-/* NAV */
-.nav a {
-    color: #bdbdbd;
-    margin: 0 10px;
-    text-decoration: none;
-    font-size: 14px;
+/* NAV HEADER */
+.nav-inline {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    white-space: nowrap;
 }
 
-.nav a:hover { color: white; }
+.nav-title {
+    font-weight: bold;
+    font-size: 14px;
+    color: white;
+}
+
+/* LINKS */
+.nav-links {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+}
+
+.footer-link {
+    position: relative;
+    color: #bdbdbd;
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.25s ease;
+}
+
+/* 🔥 effet "slide vers le bas" */
+.footer-link:hover {
+    color: white;
+    transform: translateY(3px);
+}
+
+.footer-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0%;
+    height: 2px;
+    background: #2ecc71;
+    transition: width 0.25s ease;
+}
+
+.footer-link:hover::after {
+    width: 100%;
+}
 
 /* STATUS */
 .status {
@@ -129,35 +169,7 @@ body {
 .footer-box {
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: 10px;
-    text-align: center;
-}
-
-/* NAV HORIZONTALE */
-.footer-box .footer-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-}
-
-.footer-link {
-    color: #bdbdbd;
-    text-decoration: none;
-    transition: 0.2s;
-}
-
-.nav-inline {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
-}
-
-.footer-link:hover {
-    color: white;
-    transform: translateX(5px);
 }
 
 /* SOCIAL */
@@ -176,7 +188,6 @@ body {
 .social-btn img {
     width: 22px;
     height: 22px;
-    border-radius: 4px;
     transition: 0.25s ease;
 }
 
@@ -191,10 +202,6 @@ body {
     transform: translateY(-3px);
 }
 
-.discord:hover img {
-    transform: rotate(-8deg) scale(1.1);
-}
-
 /* YOUTUBE */
 .youtube {
     background: rgba(255, 0, 0, 0.12);
@@ -204,10 +211,6 @@ body {
 .youtube:hover {
     background: rgba(255, 0, 0, 0.25);
     transform: translateY(-3px);
-}
-
-.youtube:hover img {
-    transform: rotate(8deg) scale(1.1);
 }
 
 /* FOOTER BOTTOM */
@@ -220,7 +223,7 @@ body {
 
 /* RESPONSIVE */
 @media (max-width:768px){
-    .nav { display:none; }
+    .nav-inline { display: none; }
     .hero h1 { font-size: 32px; }
     .footer-container { flex-direction: column; align-items: center; }
 }
@@ -236,17 +239,19 @@ body {
         <span>TransAuvergne VTC</span>
     </a>
 
-   <div class="footer-box nav-inline">
-    <h3>Navigation :</h3>
+    <div class="nav-inline">
 
-    <div class="footer-links">
-        <a class="footer-link" href="index.html">Accueil</a>
-        <a class="footer-link" href="about.html">Qui sommes-nous</a>
-        <a class="footer-link" href="convoy.html">Convois</a>
-        <a class="footer-link" href="contact.html">Contact</a>
-        <a class="footer-link" href="login.html">Connexion</a>
+        <span class="nav-title">Navigation :</span>
+
+        <div class="nav-links">
+            <a class="footer-link" href="index.html">Accueil</a>
+            <a class="footer-link" href="about.html">Qui sommes-nous</a>
+            <a class="footer-link" href="convoy.html">Convois</a>
+            <a class="footer-link" href="contact.html">Contact</a>
+            <a class="footer-link" href="login.html">Connexion</a>
+        </div>
+
     </div>
-</div>
 
     <div class="status">
         <span class="dot"></span>
@@ -288,6 +293,7 @@ body {
                 <img src="https://www.svgrepo.com/show/475700/youtube-color.svg">
                 YouTube
             </a>
+
         </div>
 
     </div>
