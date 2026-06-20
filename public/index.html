@@ -130,11 +130,13 @@ body {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    min-width: 180px;
 }
 
-.footer-box h3 {
-    margin-bottom: 10px;
+/* NAV HORIZONTALE */
+.footer-box .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
 }
 
 .footer-link {
@@ -224,13 +226,17 @@ body {
         <span>TransAuvergne VTC</span>
     </a>
 
-    <nav class="nav">
-        <a href="#home">Accueil</a>
-        <a href="about.html">Qui sommes-nous</a>
-        <a href="convoy.html">Convois</a>
-        <a href="contact.html">Contact</a>
-        <a href="/login.html">Connexion</a>
-    </nav>
+   <div class="footer-box">
+    <h3>Navigation</h3>
+
+    <div class="footer-links">
+        <a class="footer-link" href="index.html">Accueil</a>
+        <a class="footer-link" href="about.html">Qui sommes-nous</a>
+        <a class="footer-link" href="convoy.html">Convois</a>
+        <a class="footer-link" href="contact.html">Contact</a>
+        <a class="footer-link" href="login.html">Connexion</a>
+    </div>
+</div>
 
     <div class="status">
         <span class="dot"></span>
@@ -258,14 +264,6 @@ body {
         <div class="footer-box">
             <h3>TransAuvergne VTC</h3>
             <p>Organisation virtuelle TruckersMP</p>
-        </div>
-
-        <div class="footer-box">
-            <h3>Navigation</h3>
-            <a class="footer-link" href="index.html">Accueil</a>
-            <a class="footer-link" href="about.html">Qui sommes-nous</a>
-            <a class="footer-link" href="convoy.html">Convois</a>
-            <a class="footer-link" href="contact.html">Contact</a>
         </div>
 
         <div class="footer-box">
