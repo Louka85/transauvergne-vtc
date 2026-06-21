@@ -13,7 +13,6 @@ body{
     color:white;
 }
 
-/* HEADER */
 .header{
     position:fixed;
     top:0;
@@ -29,14 +28,12 @@ body{
     box-sizing:border-box;
 }
 
-/* CONTAINER */
 .container{
     padding:100px 20px;
     max-width:1000px;
     margin:auto;
 }
 
-/* TABS */
 .tabs{
     display:flex;
     gap:10px;
@@ -48,25 +45,21 @@ body{
     background:#1a1a1a;
     border-radius:8px;
     cursor:pointer;
-    transition:0.2s;
 }
 
 .tab.active{
     background:#2ecc71;
-    color:#000;
+    color:black;
 }
 
-/* CARDS */
 .card{
     background:#161616;
     padding:15px;
     border-radius:12px;
     margin-bottom:15px;
-    border:1px solid rgba(255,255,255,0.05);
 }
 
-/* INPUT */
-input{
+input, textarea{
     width:100%;
     padding:10px;
     margin:5px 0;
@@ -74,10 +67,8 @@ input{
     border:1px solid rgba(255,255,255,0.08);
     color:white;
     border-radius:8px;
-    outline:none;
 }
 
-/* BUTTONS */
 button{
     padding:10px 12px;
     border:none;
@@ -87,7 +78,7 @@ button{
 
 .btn{
     background:#2ecc71;
-    color:#000;
+    color:black;
     font-weight:bold;
 }
 
@@ -96,7 +87,6 @@ button{
     color:white;
 }
 
-/* GRID */
 .grid{
     display:grid;
     grid-template-columns:repeat(2, 1fr);
@@ -104,9 +94,7 @@ button{
 }
 
 @media(max-width:700px){
-    .grid{
-        grid-template-columns:1fr;
-    }
+    .grid{ grid-template-columns:1fr; }
 }
 </style>
 </head>
@@ -120,53 +108,56 @@ button{
 
 <div class="container">
 
-    <div class="tabs">
-        <div class="tab active" onclick="show('convoys')">Convois</div>
-        <div class="tab" onclick="show('team')">Équipe</div>
-    </div>
+<!-- TABS -->
+<div class="tabs">
+    <div class="tab active" onclick="show('convoys')">Convois</div>
+    <div class="tab" onclick="show('team')">Équipe</div>
+</div>
 
-    <!-- CONVOYS -->
-    <div id="convoys">
+<!-- ================= CONVOYS ================= -->
+<div id="convoys">
 
-        <div class="card">
-            <h3>Nouveau convoi</h3>
+<div class="card">
+<h3>Nouveau convoi</h3>
 
-            <input id="title" placeholder="Titre">
-            <input id="start" placeholder="Départ">
-            <input id="end" placeholder="Destination">
-            <input id="time" placeholder="Heure">
-            <input id="date" type="date">
-            <input id="server" placeholder="Serveur TMP">
-            <input id="meeting" placeholder="Ville de rassemblement">
-            <input id="meetingTime" placeholder="Heure rassemblement">
-            <input id="distance" placeholder="Distance (km)">
-            <input id="cargo" placeholder="Fret">
-            <input id="dlc" placeholder="DLC requis">
-            <textarea id="description" placeholder="Description du convoi"></textarea>
-            
-            <button class="btn" onclick="addConvoy()">Ajouter</button>
-        </div>
+<input id="title" placeholder="Titre">
+<input id="start" placeholder="Départ">
+<input id="end" placeholder="Destination">
+<input id="time" placeholder="Heure">
+<input id="date" type="date">
 
-        <div id="convoyList" class="grid"></div>
-    </div>
+<input id="server" placeholder="Serveur TMP">
+<input id="meeting" placeholder="Rassemblement">
+<input id="meetingTime" placeholder="Heure rassemblement">
+<input id="distance" placeholder="Distance (km)">
+<input id="cargo" placeholder="Fret">
+<input id="dlc" placeholder="DLC">
+<textarea id="description" placeholder="Description"></textarea>
 
-    <!-- TEAM -->
-    <div id="team" style="display:none">
+<button class="btn" onclick="addConvoy()">Ajouter convoi</button>
+</div>
 
-        <div class="card">
-            <h3>Ajouter membre</h3>
+<div id="convoyList" class="grid"></div>
 
-            <input id="name" placeholder="Nom">
-            <input id="role" placeholder="Rôle">
-            <input type="file" id="avatarFile" accept="image/*">
-            <input id="avatarUrl" placeholder="Lien Discord (optionnel)">
+</div>
 
-            
-            <button class="btn" onclick="addMember()">Ajouter</button>
-        </div>
+<!-- ================= TEAM ================= -->
+<div id="team" style="display:none">
 
-        <div id="teamList" class="grid"></div>
-    </div>
+<div class="card">
+<h3>Ajouter membre</h3>
+
+<input id="name" placeholder="Nom">
+<input id="role" placeholder="Rôle">
+<input type="file" id="avatarFile">
+<input id="avatarUrl" placeholder="Lien image (optionnel)">
+
+<button class="btn" onclick="addMember()">Ajouter membre</button>
+</div>
+
+<div id="teamList" class="grid"></div>
+
+</div>
 
 </div>
 
@@ -184,202 +175,189 @@ function logout(){
     .then(()=>location.href="/");
 }
 
-/* ===================== CONVOY ===================== */
+/* ================= CONVOYS ================= */
 async function addConvoy(){
 
     const c = {
-    title: document.getElementById("title").value.trim(),
-    start: document.getElementById("start").value.trim(),
-    end: document.getElementById("end").value.trim(),
-    time: document.getElementById("time").value.trim(),
-    date: document.getElementById("date").value,
+        id: Date.now(),
 
-    server: document.getElementById("server").value.trim(),
-    meeting: document.getElementById("meeting").value.trim(),
-    meetingTime: document.getElementById("meetingTime").value.trim(),
-    distance: document.getElementById("distance").value.trim(),
-    cargo: document.getElementById("cargo").value.trim(),
-    dlc: document.getElementById("dlc").value.trim(),
-    description: document.getElementById("description").value.trim()
-};
+        title: title.value.trim(),
+        start: start.value.trim(),
+        end: end.value.trim(),
+        time: time.value.trim(),
+        date: date.value,
 
-    if(!c.title || !c.start || !c.end){
-        alert("Remplis les champs");
-        return;
-    }
+        server: server.value.trim(),
+        meeting: meeting.value.trim(),
+        meetingTime: meetingTime.value.trim(),
+        distance: distance.value.trim(),
+        cargo: cargo.value.trim(),
+        dlc: dlc.value.trim(),
+        description: description.value.trim()
+    };
 
-    const convoys = await fetch("/api/convoys", {
-        credentials:"include"
-    }).then(r => r.json());
-
-    const safe = Array.isArray(convoys) ? convoys : [];
+    const res = await fetch("/api/convoys",{credentials:"include"});
+    const data = await res.json();
+    const safe = Array.isArray(data) ? data : [];
 
     safe.push(c);
 
-    await fetch("/api/convoys", {
+    await fetch("/api/convoys",{
         method:"POST",
         headers:{"Content-Type":"application/json"},
         credentials:"include",
-        body: JSON.stringify(safe)
+        body:JSON.stringify(safe)
     });
 
     loadConvoys();
 }
 
-/* ===================== TEAM LOAD ===================== */
-async function loadTeam(){
-
-    const res = await fetch("/api/team", { credentials:"include" });
-    const team = await res.json();
-
-    const el = document.getElementById("teamList");
-
-    if (!Array.isArray(team) || team.length === 0){
-        el.innerHTML = "<p>Aucun membre</p>";
-        return;
-    }
-
-    el.innerHTML = team.map((m, i) => `
-        <div class="card">
-            <div style="text-align:center">
-                <img src="${m.avatar || 'https://via.placeholder.com/120'}"
-                     style="width:80px;height:80px;border-radius:50%;object-fit:cover">
-
-                <h3>${m.name}</h3>
-                <p>${m.role}</p>
-
-                <button class="btn-danger" onclick="deleteMember(${i})">
-                    Supprimer
-                </button>
-            </div>
-        </div>
-    `).join("");
-}
-
-/* ===================== ADD MEMBER ===================== */
-async function addMember(){
-
-    const name = document.getElementById("name").value.trim();
-    const role = document.getElementById("role").value.trim();
-
-    const file = document.getElementById("avatarFile").files[0];
-    const url = document.getElementById("avatarUrl").value.trim();
-
-    if(!name || !role){
-        alert("Nom + rôle requis");
-        return;
-    }
-
-    let avatar = "";
-
-    if(file){
-        avatar = await fileToBase64(file);
-    } else if(url){
-        avatar = url;
-    }
-
-    const res = await fetch("/api/team", { credentials:"include" });
-    const team = await res.json();
-
-    const safe = Array.isArray(team) ? team : [];
-
-    safe.push({
-        id: Date.now(),
-        name,
-        role,
-        avatar
-    });
-
-    await fetch("/api/team", {
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        credentials:"include",
-        body: JSON.stringify(safe)
-    });
-
-    loadTeam();
-}
-
-/* ===================== DELETE MEMBER ===================== */
-async function deleteMember(index){
-
-    const res = await fetch("/api/team", { credentials:"include" });
-    const team = await res.json();
-
-    const safe = Array.isArray(team) ? team : [];
-
-    safe.splice(index, 1);
-
-    await fetch("/api/team", {
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        credentials:"include",
-        body: JSON.stringify(safe)
-    });
-
-    loadTeam();
-}
-
-/* ===================== IMAGE ===================== */
-function fileToBase64(file){
-    return new Promise((resolve, reject)=>{
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-    });
-}
-
-/* ===================== LOAD CONVOYS ===================== */
+/* LOAD CONVOYS */
 async function loadConvoys(){
 
-    const res = await fetch("/api/convoys", { credentials:"include" });
-    const convoys = await res.json();
+    const res = await fetch("/api/convoys",{credentials:"include"});
+    const data = await res.json();
 
     const el = document.getElementById("convoyList");
+    if(!Array.isArray(data)) return;
 
-    if (!Array.isArray(convoys) || convoys.length === 0){
-        el.innerHTML = "<p>Aucun convoi</p>";
-        return;
-    }
-
-    el.innerHTML = convoys.map((c, i) => `
+    el.innerHTML = data.map(c=>`
         <div class="card">
-            <h3>${c.title || "Sans titre"}</h3>
-            <p>📍 ${c.start || "-"} → ${c.end || "-"}</p>
-            <p>⏰ ${c.time || "-"}</p>
-            <p>📅 ${c.date || "-"}</p>
+            <h3>${c.title}</h3>
+            <p>${c.start} → ${c.end}</p>
+            <p>${c.date} - ${c.time}</p>
 
-            <button class="btn-danger" onclick="deleteConvoy(${i})">
+            <p>🖥️ ${c.server || "-"}</p>
+            <p>🚛 ${c.cargo || "-"}</p>
+            <p>📏 ${c.distance || "-"} km</p>
+            <p>🏁 ${c.meeting || "-"}</p>
+            <p>🕒 ${c.meetingTime || "-"}</p>
+            <p>🗺️ ${c.dlc || "-"}</p>
+            <p>${c.description || ""}</p>
+
+            <button class="btn-danger" onclick="deleteConvoy(${c.id})">
                 Supprimer
             </button>
         </div>
     `).join("");
 }
 
-/* ===================== DELETE CONVOY ===================== */
-async function deleteConvoy(index){
+/* DELETE CONVOY */
+async function deleteConvoy(id){
 
-    const res = await fetch("/api/convoys", { credentials:"include" });
-    const convoys = await res.json();
+    const res = await fetch("/api/convoys",{credentials:"include"});
+    const data = await res.json();
 
-    const safe = Array.isArray(convoys) ? convoys : [];
+    const safe = Array.isArray(data) ? data : [];
 
-    safe.splice(index, 1);
+    const updated = safe.filter(c => c.id !== id);
 
-    await fetch("/api/convoys", {
+    await fetch("/api/convoys",{
         method:"POST",
         headers:{"Content-Type":"application/json"},
         credentials:"include",
-        body: JSON.stringify(safe)
+        body:JSON.stringify(updated)
     });
 
     loadConvoys();
 }
-    
+
+/* ================= TEAM ================= */
+async function addMember(){
+
+    const file = avatarFile.files[0];
+    const url = avatarUrl.value.trim();
+
+    let avatar = "";
+
+    if(file){
+        avatar = await toBase64(file);
+    } else if(url){
+        avatar = url;
+    }
+
+    const member = {
+        id: Date.now(),
+        name: name.value.trim(),
+        role: role.value.trim(),
+        avatar
+    };
+
+    const res = await fetch("/api/team",{credentials:"include"});
+    const data = await res.json();
+
+    const safe = Array.isArray(data) ? data : [];
+
+    safe.push(member);
+
+    await fetch("/api/team",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        credentials:"include",
+        body:JSON.stringify(safe)
+    });
+
+    loadTeam();
+}
+
+/* LOAD TEAM */
+async function loadTeam(){
+
+    const res = await fetch("/api/team",{credentials:"include"});
+    const data = await res.json();
+
+    const el = document.getElementById("teamList");
+
+    if(!Array.isArray(data)) return;
+
+    el.innerHTML = data.map(m=>`
+        <div class="card">
+            <img src="${m.avatar || 'https://via.placeholder.com/100'}"
+                 style="width:80px;height:80px;border-radius:50%">
+
+            <h3>${m.name}</h3>
+            <p>${m.role}</p>
+
+            <button class="btn-danger" onclick="deleteMember(${m.id})">
+                Supprimer
+            </button>
+        </div>
+    `).join("");
+}
+
+/* DELETE TEAM */
+async function deleteMember(id){
+
+    const res = await fetch("/api/team",{credentials:"include"});
+    const data = await res.json();
+
+    const safe = Array.isArray(data) ? data : [];
+
+    const updated = safe.filter(m => m.id !== id);
+
+    await fetch("/api/team",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        credentials:"include",
+        body:JSON.stringify(updated)
+    });
+
+    loadTeam();
+}
+
+/* BASE64 */
+function toBase64(file){
+    return new Promise((res,rej)=>{
+        const r = new FileReader();
+        r.onload = ()=>res(r.result);
+        r.onerror = rej;
+        r.readAsDataURL(file);
+    });
+}
+
 /* INIT */
-loadTeam();
 loadConvoys();
+loadTeam();
 
 </script>
 
