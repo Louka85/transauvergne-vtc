@@ -62,11 +62,27 @@ function loadConvoys(){
     data.forEach(c=>{
       el.innerHTML += `
       <div class="card">
-        <h3>${c.title || ""}</h3>
-        <p>${c.start || ""} → ${c.end || ""}</p>
-        <p>${c.time || ""}</p>
-        <p>${c.date || ""}</p>
-      </div>`;
+    <h2>${c.title}</h2>
+
+    <p>📍 ${c.start} → ${c.end}</p>
+
+    <p>📅 ${c.date}</p>
+    <p>⏰ ${c.time}</p>
+
+    <p>🖥️ Serveur : ${c.server}</p>
+
+    <p>🚛 Fret : ${c.cargo}</p>
+
+    <p>📏 Distance : ${c.distance} km</p>
+
+    <p>🏁 Rassemblement : ${c.meeting}</p>
+
+    <p>🕒 Heure rassemblement : ${c.meetingTime}</p>
+
+    <p>🗺️ DLC : ${c.dlc}</p>
+
+    <p>${c.description}</p>
+</div>`;
     });
   });
 }
