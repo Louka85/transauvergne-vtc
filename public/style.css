@@ -15,6 +15,25 @@ body {
 
 /* ================= HEADER ================= */
 
+.team-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px;
+}
+
+@media(max-width:700px){
+  .team-grid{
+    grid-template-columns:1fr;
+  }
+}
+
+.card{
+  background:#161616;
+  border:1px solid rgba(255,255,255,0.06);
+  padding:15px;
+  border-radius:12px;
+}
+
 .header {
   position: fixed;
   top: 0;
