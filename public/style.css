@@ -19,6 +19,83 @@
     --blur: 14px;
 }
 
+/* ================= LOGIN PAGE ================= */
+
+.login-page {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle at top, #1a1a1a, #0f0f0f);
+}
+
+.login-box {
+    width: 100%;
+    max-width: 380px;
+
+    padding: 35px;
+
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.10);
+
+    border-radius: 16px;
+
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+
+    text-align: center;
+}
+
+.login-box h2 {
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+
+.login-box input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 12px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: rgba(255,255,255,0.08);
+    color: white;
+    outline: none;
+}
+
+.login-box input:focus {
+    background: rgba(255,255,255,0.12);
+}
+
+.login-box button {
+    width: 100%;
+    padding: 12px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: #5865F2;
+    color: white;
+    font-weight: bold;
+
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.login-box button:hover {
+    background: #4752C4;
+    transform: translateY(-2px);
+}
+
+#error {
+    margin-top: 10px;
+    color: #ff4d4d;
+    font-size: 14px;
+}
+
 /* =========================
    BASE
 ========================= */
