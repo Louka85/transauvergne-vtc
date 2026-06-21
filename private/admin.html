@@ -6,196 +6,107 @@
 <title>Admin Panel</title>
 
 <style>
-* {
-  box-sizing: border-box;
+body{
+    margin:0;
+    font-family:Arial;
+    background:#0f0f0f;
+    color:white;
 }
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: radial-gradient(circle at top, #151515, #0f0f0f);
-  color: white;
+/* HEADER */
+.header{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:60px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 20px;
+    background:rgba(15,15,15,0.9);
+    border-bottom:1px solid rgba(255,255,255,0.08);
+    box-sizing:border-box;
 }
 
-/* =========================
-   HEADER
-========================= */
-
-.header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 64px;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  padding: 0 22px;
-
-  background: rgba(20, 20, 20, 0.85);
-  backdrop-filter: blur(14px);
-
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-
-  z-index: 1000;
+/* CONTAINER */
+.container{
+    padding:100px 20px;
+    max-width:1000px;
+    margin:auto;
 }
 
-.header b {
-  font-size: 16px;
+/* TABS */
+.tabs{
+    display:flex;
+    gap:10px;
+    margin-bottom:20px;
 }
 
-/* =========================
-   CONTAINER
-========================= */
-
-.container {
-  padding: 110px 20px 50px;
-  max-width: 1100px;
-  margin: auto;
+.tab{
+    padding:10px 15px;
+    background:#1a1a1a;
+    border-radius:8px;
+    cursor:pointer;
+    transition:0.2s;
 }
 
-/* =========================
-   TABS
-========================= */
-
-.tabs {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 22px;
+.tab.active{
+    background:#2ecc71;
+    color:#000;
 }
 
-.tab {
-  padding: 10px 16px;
-
-  border-radius: 12px;
-
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.08);
-
-  cursor: pointer;
-
-  color: rgba(255,255,255,0.7);
-
-  transition: 0.2s ease;
+/* CARDS */
+.card{
+    background:#161616;
+    padding:15px;
+    border-radius:12px;
+    margin-bottom:15px;
+    border:1px solid rgba(255,255,255,0.05);
 }
 
-.tab:hover {
-  transform: translateY(-2px);
-  color: white;
+/* INPUT */
+input{
+    width:100%;
+    padding:10px;
+    margin:5px 0;
+    background:#111;
+    border:1px solid rgba(255,255,255,0.08);
+    color:white;
+    border-radius:8px;
+    outline:none;
 }
 
-.tab.active {
-  background: linear-gradient(135deg, #2ecc71, #27ae60);
-  color: #0f0f0f;
-  font-weight: bold;
+/* BUTTONS */
+button{
+    padding:10px 12px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
 }
 
-/* =========================
-   CARDS
-========================= */
-
-.card {
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.08);
-
-  padding: 18px;
-  border-radius: 16px;
-
-  margin-bottom: 15px;
-
-  transition: 0.25s ease;
+.btn{
+    background:#2ecc71;
+    color:#000;
+    font-weight:bold;
 }
 
-.card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(46,204,113,0.35);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+.btn-danger{
+    background:#e74c3c;
+    color:white;
 }
 
-/* =========================
-   INPUTS
-========================= */
-
-input {
-  width: 100%;
-  padding: 11px;
-  margin: 6px 0;
-
-  border-radius: 10px;
-
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.08);
-
-  color: white;
-  outline: none;
+/* GRID */
+.grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:15px;
 }
 
-input:focus {
-  border-color: #2ecc71;
-  background: rgba(255,255,255,0.08);
-}
-
-/* =========================
-   BUTTONS
-========================= */
-
-button {
-  padding: 10px 14px;
-  border: none;
-  border-radius: 10px;
-
-  cursor: pointer;
-
-  transition: 0.2s ease;
-  font-weight: bold;
-}
-
-.btn {
-  background: #2ecc71;
-  color: #0f0f0f;
-}
-
-.btn:hover {
-  transform: translateY(-2px);
-}
-
-.btn-danger {
-  background: #e74c3c;
-  color: white;
-}
-
-.btn-danger:hover {
-  transform: translateY(-2px);
-}
-
-/* =========================
-   GRID
-========================= */
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 14px;
-}
-
-/* =========================
-   TEAM IMAGE
-========================= */
-
-.card img {
-  border-radius: 50%;
-}
-
-/* =========================
-   RESPONSIVE
-========================= */
-
-@media (max-width: 768px) {
-  .tabs {
-    flex-direction: column;
-  }
+@media(max-width:700px){
+    .grid{
+        grid-template-columns:1fr;
+    }
 }
 </style>
 </head>
@@ -203,57 +114,108 @@ button {
 <body>
 
 <div class="header">
-  <b>Admin Panel</b>
-  <button onclick="logout()" class="btn-danger">Logout</button>
+    <b>Admin Panel</b>
+    <button class="btn-danger" onclick="logout()">Logout</button>
 </div>
 
 <div class="container">
 
-<div class="tabs">
-  <div class="tab active" onclick="show('convoys')">Convois</div>
-  <div class="tab" onclick="show('team')">Équipe</div>
-</div>
+    <div class="tabs">
+        <div class="tab active" onclick="show('convoys')">Convois</div>
+        <div class="tab" onclick="show('team')">Équipe</div>
+    </div>
 
-<!-- ===================== CONVOIS ===================== -->
-<div id="convoys">
+    <!-- CONVOYS -->
+    <div id="convoys">
 
-  <div class="card">
-    <h3>Nouveau convoi</h3>
+        <div class="card">
+            <h3>Nouveau convoi</h3>
 
-    <input id="title" placeholder="Titre">
-    <input id="start" placeholder="Départ">
-    <input id="end" placeholder="Destination">
-    <input id="time" placeholder="Heure">
-    <input id="date" type="date">
+            <input id="title" placeholder="Titre">
+            <input id="start" placeholder="Départ">
+            <input id="end" placeholder="Destination">
+            <input id="time" placeholder="Heure">
+            <input id="date" type="date">
 
-    <button class="btn" onclick="addConvoy()">Ajouter</button>
-  </div>
+            <button class="btn" onclick="addConvoy()">Ajouter</button>
+        </div>
 
-  <div id="convoyList" class="grid"></div>
-</div>
+        <div id="convoyList" class="grid"></div>
+    </div>
 
-<!-- ===================== TEAM ===================== -->
-<div id="team" style="display:none">
+    <!-- TEAM -->
+    <div id="team" style="display:none">
 
-  <div class="card">
-    <h3>Ajouter membre</h3>
+        <div class="card">
+            <h3>Ajouter membre</h3>
 
-    <input id="name" placeholder="Nom">
-    <input id="role" placeholder="Rôle">
+            <input id="name" placeholder="Nom">
+            <input id="role" placeholder="Rôle">
 
-    <button class="btn" onclick="addMember()">Ajouter</button>
-  </div>
+            <button class="btn" onclick="addMember()">Ajouter</button>
+        </div>
 
-  <div id="teamList" class="grid"></div>
-</div>
+        <div id="teamList" class="grid"></div>
+    </div>
 
 </div>
 
 <script>
+
+/* NAV */
 function show(tab){
-  document.getElementById("convoys").style.display = tab==="convoys"?"block":"none";
-  document.getElementById("team").style.display = tab==="team"?"block":"none";
+    document.getElementById("convoys").style.display = tab==="convoys"?"block":"none";
+    document.getElementById("team").style.display = tab==="team"?"block":"none";
 }
+
+/* LOGOUT */
+function logout(){
+    fetch("/logout",{credentials:"include"})
+    .then(()=>location.href="/");
+}
+
+/* CONVOY */
+function addConvoy(){
+
+    const c = {
+        title: document.getElementById("title").value.trim(),
+        start: document.getElementById("start").value.trim(),
+        end: document.getElementById("end").value.trim(),
+        time: document.getElementById("time").value.trim(),
+        date: document.getElementById("date").value
+    };
+
+    if(!c.title || !c.start || !c.end){
+        alert("Remplis les champs");
+        return;
+    }
+
+    fetch("/api/convoys",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        credentials:"include",
+        body:JSON.stringify([c])
+    }).then(()=>location.reload());
+}
+
+/* DELETE SAFE (placeholder simple) */
+function addMember(){
+    const name = document.getElementById("name").value.trim();
+    const role = document.getElementById("role").value.trim();
+
+    if(!name || !role){
+        alert("Nom + rôle requis");
+        return;
+    }
+
+    fetch("/api/team",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        credentials:"include",
+        body:JSON.stringify([{name,role}])
+    }).then(()=>location.reload());
+}
+
 </script>
 
 </body>
