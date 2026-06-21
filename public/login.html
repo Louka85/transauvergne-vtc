@@ -1,16 +1,114 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-<title>Connexion</title>
-<link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Connexion Admin</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#0a0a0a,#141414);
+    color:white;
+}
+
+.login-box{
+    width:100%;
+    max-width:420px;
+    background:#161616;
+    padding:35px;
+    border-radius:18px;
+    border:1px solid rgba(255,255,255,0.08);
+    box-shadow:0 0 30px rgba(0,0,0,0.4);
+}
+
+.logo{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.logo img{
+    width:90px;
+    height:90px;
+    object-fit:contain;
+    margin-bottom:10px;
+}
+
+.logo h2{
+    margin-bottom:5px;
+}
+
+.logo p{
+    color:#999;
+    font-size:14px;
+}
+
+input{
+    width:100%;
+    padding:14px;
+    margin-bottom:15px;
+    background:#111;
+    border:1px solid rgba(255,255,255,0.08);
+    color:white;
+    border-radius:10px;
+    outline:none;
+}
+
+input:focus{
+    border-color:#2ecc71;
+}
+
+button{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:#2ecc71;
+    color:black;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.2s;
+}
+
+button:hover{
+    transform:translateY(-2px);
+}
+
+#error{
+    text-align:center;
+    margin-top:15px;
+    color:#ff5c5c;
+}
+
+.footer{
+    margin-top:20px;
+    text-align:center;
+    color:#777;
+    font-size:13px;
+}
+</style>
+
 </head>
 
-<body class="login-page">
+<body>
 
 <div class="login-box">
 
-    <h2>Connexion</h2>
+    <div class="logo">
+        <img src="logo.jpeg" alt="Logo">
+        <h2>Espace Administrateur</h2>
+        <p>TransAuvergne VTC</p>
+    </div>
 
     <input type="text" id="username" placeholder="Nom d'utilisateur">
     <input type="password" id="password" placeholder="Mot de passe">
@@ -18,6 +116,10 @@
     <button onclick="login()">Connexion</button>
 
     <p id="error"></p>
+
+    <div class="footer">
+        Accès réservé au staff
+    </div>
 
 </div>
 
