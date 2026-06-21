@@ -2,372 +2,66 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin Panel</title>
 
-<style>
-/* =========================
-   BASE
-========================= */
-
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #0f0f0f;
-  color: white;
-}
-
-/* =========================
-   HEADER
-========================= */
-
-.header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 65px;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  padding: 0 20px;
-  background: rgba(20,20,20,0.85);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  z-index: 1000;
-}
-
-.header b {
-  font-size: 16px;
-  letter-spacing: 0.5px;
-}
-
-.btn-danger {
-  background: #e74c3c;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 10px;
-  color: white;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.btn-danger:hover {
-  transform: translateY(-2px);
-}
-
-/* =========================
-   CONTAINER
-========================= */
-
-.container {
-  max-width: 1100px;
-  margin: auto;
-  padding: 100px 20px 40px;
-}
-
-/* =========================
-   TABS
-========================= */
-
-.tabs {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 20px;
-}
-
-.tab {
-  padding: 10px 14px;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 12px;
-  cursor: pointer;
-  transition: 0.2s;
-  color: rgba(255,255,255,0.7);
-}
-
-.tab:hover {
-  transform: translateY(-2px);
-  color: white;
-}
-
-.tab.active {
-  background: #2ecc71;
-  color: black;
-  font-weight: bold;
-}
-
-/* =========================
-   GRID CARDS
-========================= */
-
-.card {
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.08);
-  padding: 16px;
-  border-radius: 16px;
-  margin-bottom: 15px;
-  transition: 0.2s;
-}
-
-.card:hover {
-  transform: translateY(-3px);
-  border-color: rgba(46,204,113,0.4);
-}
-
-/* =========================
-   INPUTS
-========================= */
-
-input {
-  width: 100%;
-  padding: 10px;
-  margin: 6px 0;
-
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 10px;
-  color: white;
-  outline: none;
-}
-
-input:focus {
-  border-color: #2ecc71;
-}
-
-/* =========================
-   BUTTON
-========================= */
-
-button {
-  padding: 10px 12px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.btn {
-  background: #2ecc71;
-  color: black;
-  font-weight: bold;
-}
-
-.btn:hover {
-  transform: translateY(-2px);
-}
-
-/* =========================
-   TEAM AVATAR
-========================= */
-
-.card img {
-  border-radius: 50%;
-  margin-bottom: 10px;
-}
-
-/* =========================
-   RESPONSIVE
-========================= */
-
-@media (max-width:768px) {
-  .tabs {
-    flex-direction: column;
-  }
-}
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 <div class="header">
-  <b>Admin Panel</b>
-  <button onclick="logout()" class="btn-danger">Logout</button>
+    <div class="logo">Admin Panel</div>
+    <button class="btn-danger" onclick="logout()">Logout</button>
 </div>
 
 <div class="container">
 
-<div class="tabs">
-  <div class="tab active" onclick="show('convoys')">Convois</div>
-  <div class="tab" onclick="show('team')">Équipe</div>
-</div>
+    <div class="tabs">
+        <div class="tab active" onclick="show('convoys')">Convois</div>
+        <div class="tab" onclick="show('team')">Équipe</div>
+    </div>
 
-<!-- ===================== CONVOIS ===================== -->
-<div id="convoys">
+    <!-- CONVOYS -->
+    <div id="convoys">
 
-  <div class="card">
-    <h3>Nouveau convoi</h3>
+        <div class="card">
+            <h3>Nouveau convoi</h3>
 
-    <input id="title" placeholder="Titre">
-    <input id="start" placeholder="Départ">
-    <input id="end" placeholder="Destination">
-    <input id="time" placeholder="Heure">
-    <input id="date" type="date">
+            <input id="title" placeholder="Titre">
+            <input id="start" placeholder="Départ">
+            <input id="end" placeholder="Destination">
+            <input id="time" placeholder="Heure">
+            <input id="date" type="date">
 
-    <button class="btn" onclick="addConvoy()">Ajouter</button>
-  </div>
+            <button class="btn" onclick="addConvoy()">Ajouter</button>
+        </div>
 
-  <div id="convoyList"></div>
-</div>
+        <div id="convoyList" class="grid"></div>
+    </div>
 
-<!-- ===================== TEAM ===================== -->
-<div id="team" style="display:none">
+    <!-- TEAM -->
+    <div id="team" style="display:none">
 
-  <div class="card">
-    <h3>Ajouter membre</h3>
+        <div class="card">
+            <h3>Ajouter membre</h3>
 
-    <input id="name" placeholder="Nom">
-    <input id="role" placeholder="Rôle">
+            <input id="name" placeholder="Nom">
+            <input id="role" placeholder="Rôle">
 
-    <input type="file" id="avatarFile">
-    <input id="avatarUrl" placeholder="URL avatar">
+            <button class="btn" onclick="addMember()">Ajouter</button>
+        </div>
 
-    <button class="btn" onclick="addMember()">Ajouter</button>
-  </div>
-
-  <div id="teamList"></div>
-</div>
+        <div id="teamList" class="grid"></div>
+    </div>
 
 </div>
 
 <script>
-
-let convoys = [];
-let team = [];
-
 function show(tab){
-  document.getElementById("convoys").style.display = tab==="convoys"?"block":"none";
-  document.getElementById("team").style.display = tab==="team"?"block":"none";
+    document.getElementById("convoys").style.display = tab==="convoys"?"block":"none";
+    document.getElementById("team").style.display = tab==="team"?"block":"none";
 }
-
-/* LOAD */
-async function load(){
-  convoys = await fetch("/api/convoys", { credentials:"include" }).then(r=>r.json());
-  team = await fetch("/api/team", { credentials:"include" }).then(r=>r.json());
-  render();
-}
-
-/* RENDER */
-function render(){
-
-  document.getElementById("convoyList").innerHTML =
-    convoys.map((c,i)=>`
-      <div class="card">
-        <b>${c.title || "Sans titre"}</b><br>
-        ${c.start || ""} → ${c.end || ""}<br><br>
-        <button class="btn-danger" onclick="delConvoy(${i})">Supprimer</button>
-      </div>
-    `).join("");
-
-  document.getElementById("teamList").innerHTML =
-    team.map((m,i)=>`
-      <div class="card">
-        <img src="${m.avatar || 'https://via.placeholder.com/80'}" width="60" height="60"><br>
-        <b>${m.name}</b><br>
-        ${m.role}<br><br>
-        <button class="btn-danger" onclick="delMember(${i})">Supprimer</button>
-      </div>
-    `).join("");
-}
-
-/* CONVOY */
-function addConvoy(){
-  const c = {
-    title: title.value.trim(),
-    start: start.value.trim(),
-    end: end.value.trim(),
-    time: time.value.trim(),
-    date: date.value
-  };
-
-  if(!c.title || !c.start || !c.end){
-    alert("Remplis tout");
-    return;
-  }
-
-  convoys.push(c);
-  saveConvoys();
-}
-
-function delConvoy(i){
-  convoys.splice(i,1);
-  saveConvoys();
-}
-
-async function saveConvoys(){
-  await fetch("/api/convoys", {
-    method:"POST",
-    credentials:"include",
-    headers:{ "Content-Type":"application/json" },
-    body: JSON.stringify(convoys)
-  });
-  load();
-}
-
-/* TEAM */
-async function addMember(){
-
-  let avatar = "";
-
-  const file = avatarFile.files[0];
-  if(file){
-    const r = new FileReader();
-    r.onload = () => {
-      saveMember(r.result);
-    };
-    r.readAsDataURL(file);
-    return;
-  }
-
-  avatar = avatarUrl.value.trim();
-  saveMember(avatar);
-}
-
-function saveMember(avatar){
-
-  const m = {
-    name: name.value.trim(),
-    role: role.value.trim(),
-    avatar
-  };
-
-  if(!m.name || !m.role){
-    alert("Nom + rôle obligatoires");
-    return;
-  }
-
-  team.push(m);
-  saveTeam();
-}
-
-function delMember(i){
-  team.splice(i,1);
-  saveTeam();
-}
-
-async function saveTeam(){
-  await fetch("/api/team", {
-    method:"POST",
-    credentials:"include",
-    headers:{ "Content-Type":"application/json" },
-    body: JSON.stringify(team)
-  });
-  load();
-}
-
-/* LOGOUT */
-function logout(){
-  fetch("/logout", { credentials:"include" })
-    .then(()=>location.href="/");
-}
-
-load();
-
 </script>
 
 </body>
