@@ -211,31 +211,33 @@ async function addConvoy(){
 /* DELETE SAFE (placeholder simple) */
 async function addMember(){
 
-    const name = document.getElementById("name").value.trim();
-    const role = document.getElementById("role").value.trim();
+  const name = document.getElementById("name").value.trim();
+  const role = document.getElementById("role").value.trim();
 
-    if(!name || !role){
-        alert("Nom + rôle requis");
-        return;
-    }
+  if(!name || !role){
+    alert("Nom + rôle requis");
+    return;
+  }
 
-    // récupérer la liste existante
-    const team = await fetch("/api/team", {
-        credentials:"include"
-    }).then(r => r.json());
+  const res = await fetch("/api/team", { credentials:"include" });
+  const team = await res.json();
 
-    const safe = Array.isArray(team) ? team : [];
+  const safe = Array.isArray(team) ? team : [];
 
-    safe.push({ name, role });
+  safe.push({
+    name,
+    role,
+    avatar: null
+  });
 
-    await fetch("/api/team", {
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        credentials:"include",
-        body: JSON.stringify(safe)
-    });
+  await fetch("/api/team", {
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    credentials:"include",
+    body: JSON.stringify(safe)
+  });
 
-    location.reload();
+  location.reload();
 }
 
 </script>
