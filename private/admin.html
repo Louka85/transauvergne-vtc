@@ -177,7 +177,7 @@ function logout(){
     .then(()=>location.href="/");
 }
 
-/* CONVOY */
+/* ===================== CONVOY ===================== */
 async function addConvoy(){
 
     const c = {
@@ -211,7 +211,37 @@ async function addConvoy(){
     location.reload();
 }
 
-/* ADD MEMBER */
+/* ===================== TEAM LOAD ===================== */
+async function loadTeam(){
+
+    const res = await fetch("/api/team", { credentials:"include" });
+    const team = await res.json();
+
+    const el = document.getElementById("teamList");
+
+    if (!Array.isArray(team) || team.length === 0){
+        el.innerHTML = "<p>Aucun membre</p>";
+        return;
+    }
+
+    el.innerHTML = team.map((m, i) => `
+        <div class="card">
+            <div style="text-align:center">
+                <img src="${m.avatar || 'https://via.placeholder.com/120'}"
+                     style="width:80px;height:80px;border-radius:50%;object-fit:cover">
+
+                <h3>${m.name}</h3>
+                <p>${m.role}</p>
+
+                <button class="btn-danger" onclick="deleteMember(${i})">
+                    Supprimer
+                </button>
+            </div>
+        </div>
+    `).join("");
+}
+
+/* ===================== ADD MEMBER ===================== */
 async function addMember(){
 
     const name = document.getElementById("name").value.trim();
@@ -227,12 +257,9 @@ async function addMember(){
 
     let avatar = "";
 
-    // 📁 PRIORITÉ 1 : fichier upload
     if(file){
         avatar = await fileToBase64(file);
-    }
-    // 🔗 sinon lien Discord
-    else if(url){
+    } else if(url){
         avatar = url;
     }
 
@@ -242,11 +269,11 @@ async function addMember(){
     const safe = Array.isArray(team) ? team : [];
 
     safe.push({
-    id: Date.now(),
-    name,
-    role,
-    avatar
-});
+        id: Date.now(),
+        name,
+        role,
+        avatar
+    });
 
     await fetch("/api/team", {
         method:"POST",
@@ -255,9 +282,30 @@ async function addMember(){
         body: JSON.stringify(safe)
     });
 
-    location.reload();
+    loadTeam();
 }
 
+/* ===================== DELETE MEMBER ===================== */
+async function deleteMember(index){
+
+    const res = await fetch("/api/team", { credentials:"include" });
+    const team = await res.json();
+
+    const safe = Array.isArray(team) ? team : [];
+
+    safe.splice(index, 1);
+
+    await fetch("/api/team", {
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        credentials:"include",
+        body: JSON.stringify(safe)
+    });
+
+    loadTeam();
+}
+
+/* ===================== IMAGE ===================== */
 function fileToBase64(file){
     return new Promise((resolve, reject)=>{
         const reader = new FileReader();
@@ -266,7 +314,10 @@ function fileToBase64(file){
         reader.readAsDataURL(file);
     });
 }
-    
+
+/* INIT */
+loadTeam();
+
 </script>
 
 </body>
