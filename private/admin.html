@@ -136,7 +136,14 @@ button{
             <input id="end" placeholder="Destination">
             <input id="time" placeholder="Heure">
             <input id="date" type="date">
-
+            <input id="server" placeholder="Serveur TMP">
+            <input id="meeting" placeholder="Ville de rassemblement">
+            <input id="meetingTime" placeholder="Heure rassemblement">
+            <input id="distance" placeholder="Distance (km)">
+            <input id="cargo" placeholder="Fret">
+            <input id="dlc" placeholder="DLC requis">
+            <textarea id="description" placeholder="Description du convoi"></textarea>
+            
             <button class="btn" onclick="addConvoy()">Ajouter</button>
         </div>
 
@@ -181,12 +188,20 @@ function logout(){
 async function addConvoy(){
 
     const c = {
-        title: document.getElementById("title").value.trim(),
-        start: document.getElementById("start").value.trim(),
-        end: document.getElementById("end").value.trim(),
-        time: document.getElementById("time").value.trim(),
-        date: document.getElementById("date").value
-    };
+    title: document.getElementById("title").value.trim(),
+    start: document.getElementById("start").value.trim(),
+    end: document.getElementById("end").value.trim(),
+    time: document.getElementById("time").value.trim(),
+    date: document.getElementById("date").value,
+
+    server: document.getElementById("server").value.trim(),
+    meeting: document.getElementById("meeting").value.trim(),
+    meetingTime: document.getElementById("meetingTime").value.trim(),
+    distance: document.getElementById("distance").value.trim(),
+    cargo: document.getElementById("cargo").value.trim(),
+    dlc: document.getElementById("dlc").value.trim(),
+    description: document.getElementById("description").value.trim()
+};
 
     if(!c.title || !c.start || !c.end){
         alert("Remplis les champs");
