@@ -211,7 +211,7 @@ async function addConvoy(){
     location.reload();
 }
 
-/* DELETE SAFE (placeholder simple) */
+/* ADD MEMBER */
 async function addMember(){
 
     const name = document.getElementById("name").value.trim();
@@ -242,10 +242,11 @@ async function addMember(){
     const safe = Array.isArray(team) ? team : [];
 
     safe.push({
-        name,
-        role,
-        avatar
-    });
+    id: Date.now(),
+    name,
+    role,
+    avatar
+});
 
     await fetch("/api/team", {
         method:"POST",
@@ -257,6 +258,15 @@ async function addMember(){
     location.reload();
 }
 
+function fileToBase64(file){
+    return new Promise((resolve, reject)=>{
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+    });
+}
+    
 </script>
 
 </body>
