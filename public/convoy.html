@@ -45,49 +45,60 @@
 </div>
 
 <script>
+
 function toggleMenu(){
   const m = document.getElementById("mobileMenu");
   m.style.display = m.style.display === "flex" ? "none" : "flex";
 }
 
+/* ================= LOAD CONVOYS ================= */
 function loadConvoys(){
+
   fetch("/api/convoys", { credentials:"include" })
-  .then(r=>r.json())
-  .then(data=>{
-    console.log(data);
-    if(!Array.isArray(data)) data = [];
+  .then(r => r.json())
+  .then(data => {
+
+    if (!Array.isArray(data)) data = [];
 
     const el = document.getElementById("convoyList");
     el.innerHTML = "";
 
-    data.forEach(c=>{
+    data.forEach(c => {
+
       el.innerHTML += `
-      <div class="card">
-    <h2>${c.title}</h2>
+        <div class="card">
 
-    <p>📍 ${c.start} → ${c.end}</p>
+          <h2>${c.title ?? "Sans titre"}</h2>
 
-    <p>📅 ${c.date}</p>
-    <p>⏰ ${c.time}</p>
+          <p>📍 ${c.start ?? "?"} → ${c.end ?? "?"}</p>
 
-    <p>🖥️ Serveur : ${c.server}</p>
+          <p>📅 ${c.date ?? "?"}</p>
+          <p>⏰ ${c.time ?? "?"}</p>
 
-    <p>🚛 Fret : ${c.cargo}</p>
+          <hr>
 
-    <p>📏 Distance : ${c.distance} km</p>
+          <p>🖥️ Serveur : ${c.server ?? "Non défini"}</p>
+          <p>🚛 Fret : ${c.cargo ?? "Non défini"}</p>
+          <p>📏 Distance : ${c.distance ?? "Non définie"} km</p>
+          <p>🏁 Rassemblement : ${c.meeting ?? "Non défini"}</p>
+          <p>🕒 Heure rassemblement : ${c.meetingTime ?? "Non définie"}</p>
+          <p>🗺️ DLC : ${c.dlc ?? "Aucun"}</p>
 
-    <p>🏁 Rassemblement : ${c.meeting}</p>
+          <p>${c.description ?? ""}</p>
 
-    <p>🕒 Heure rassemblement : ${c.meetingTime}</p>
-
-    <p>🗺️ DLC : ${c.dlc}</p>
-
-    <p>${c.description}</p>
-</div>`;
+        </div>
+      `;
     });
+  })
+  .catch(err => {
+    console.error("Erreur API convoys :", err);
   });
-}  
+}
+
+/* INIT */
+loadConvoys();
+
 </script>
-  
+
 </body>
 </html>
