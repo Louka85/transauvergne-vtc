@@ -1,3 +1,7 @@
+/* =========================
+   GLOBAL
+========================= */
+
 html {
     scroll-behavior: smooth;
 }
@@ -10,7 +14,7 @@ body {
 }
 
 /* =========================
-   HEADER GLOBAL
+   HEADER
 ========================= */
 
 .header {
@@ -33,7 +37,6 @@ body {
     box-sizing: border-box;
 }
 
-/* LOGO */
 .logo {
     display: flex;
     align-items: center;
@@ -47,7 +50,6 @@ body {
     height: 38px;
 }
 
-/* NAV */
 .nav {
     display: flex;
     align-items: center;
@@ -83,6 +85,7 @@ body {
 }
 
 /* STATUS */
+
 .status {
     display: flex;
     align-items: center;
@@ -100,7 +103,7 @@ body {
 }
 
 /* =========================
-   LAYOUT GLOBAL
+   CONTAINER
 ========================= */
 
 .container {
@@ -146,7 +149,7 @@ body {
 }
 
 /* =========================
-   CARDS (TEAM / CONVOY)
+   GRID (2 PAR LIGNE PROPRE)
 ========================= */
 
 .grid {
@@ -155,15 +158,20 @@ body {
     gap: 20px;
 }
 
+/* CARDS */
+
 .card {
     background: rgba(255,255,255,0.05);
     border: 1px solid rgba(255,255,255,0.08);
     padding: 15px;
     border-radius: 14px;
-    backdrop-filter: blur(10px);
-    transition: 0.25s ease;
 
-    width: 220px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    transition: 0.25s ease;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .card:hover {
@@ -188,7 +196,7 @@ body {
 .tag.annule { background: rgba(231,76,60,0.15); color:#e74c3c; }
 
 /* =========================
-   CONTACT BOX
+   CONTACT
 ========================= */
 
 .contact {
@@ -201,12 +209,10 @@ body {
 .contact-box {
     width: 100%;
     max-width: 550px;
-
     padding: 35px;
 
     background: rgba(255,255,255,0.06);
     border: 1px solid rgba(255,255,255,0.10);
-
     border-radius: 16px;
 
     backdrop-filter: blur(14px);
@@ -280,6 +286,10 @@ button:hover {
 ========================= */
 
 @media (max-width:768px) {
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
 
     .nav {
         display: none;
