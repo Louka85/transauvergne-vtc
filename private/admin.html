@@ -151,7 +151,10 @@ button{
 
             <input id="name" placeholder="Nom">
             <input id="role" placeholder="Rôle">
+            <input type="file" id="avatarFile" accept="image/*">
+            <input id="avatarUrl" placeholder="Lien Discord (optionnel)">
 
+            
             <button class="btn" onclick="addMember()">Ajouter</button>
         </div>
 
@@ -211,33 +214,47 @@ async function addConvoy(){
 /* DELETE SAFE (placeholder simple) */
 async function addMember(){
 
-  const name = document.getElementById("name").value.trim();
-  const role = document.getElementById("role").value.trim();
+    const name = document.getElementById("name").value.trim();
+    const role = document.getElementById("role").value.trim();
 
-  if(!name || !role){
-    alert("Nom + rôle requis");
-    return;
-  }
+    const file = document.getElementById("avatarFile").files[0];
+    const url = document.getElementById("avatarUrl").value.trim();
 
-  const res = await fetch("/api/team", { credentials:"include" });
-  const team = await res.json();
+    if(!name || !role){
+        alert("Nom + rôle requis");
+        return;
+    }
 
-  const safe = Array.isArray(team) ? team : [];
+    let avatar = "";
 
-  safe.push({
-    name,
-    role,
-    avatar: null
-  });
+    // 📁 PRIORITÉ 1 : fichier upload
+    if(file){
+        avatar = await fileToBase64(file);
+    }
+    // 🔗 sinon lien Discord
+    else if(url){
+        avatar = url;
+    }
 
-  await fetch("/api/team", {
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    credentials:"include",
-    body: JSON.stringify(safe)
-  });
+    const res = await fetch("/api/team", { credentials:"include" });
+    const team = await res.json();
 
-  location.reload();
+    const safe = Array.isArray(team) ? team : [];
+
+    safe.push({
+        name,
+        role,
+        avatar
+    });
+
+    await fetch("/api/team", {
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        credentials:"include",
+        body: JSON.stringify(safe)
+    });
+
+    location.reload();
 }
 
 </script>
