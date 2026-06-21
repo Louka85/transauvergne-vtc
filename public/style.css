@@ -1,10 +1,8 @@
 /* =========================
-   GLOBAL RESET
+   BASE
 ========================= */
 
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
 }
 
@@ -13,9 +11,21 @@ html {
 }
 
 body {
+    margin: 0;
     font-family: Arial, sans-serif;
     background: #0f0f0f;
     color: white;
+}
+
+/* =========================
+   LAYOUT
+========================= */
+
+.container {
+    padding: 120px 20px 60px;
+    max-width: 1100px;
+    margin: auto;
+    text-align: center;
 }
 
 /* =========================
@@ -27,14 +37,16 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    padding: 14px 20px;
+    padding: 14px 22px;
 
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    background: rgba(10,10,10,0.75);
+    background: rgba(10,10,10,0.65);
     backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+
     border-bottom: 1px solid rgba(255,255,255,0.06);
     z-index: 1000;
 }
@@ -45,7 +57,7 @@ body {
     gap: 10px;
     text-decoration: none;
     color: white;
-    font-weight: bold;
+    font-weight: 600;
 }
 
 .logo img {
@@ -53,36 +65,26 @@ body {
 }
 
 /* NAV */
-.nav-inline {
+.nav, .nav-inline {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 18px;
 }
 
-.nav-title {
-    font-size: 13px;
-    opacity: 0.7;
-}
-
-.nav-links {
-    display: flex;
-    gap: 14px;
-}
-
-.nav-links a {
+.nav a, .nav-links a {
     text-decoration: none;
-    color: #bdbdbd;
     font-size: 14px;
-    transition: 0.2s;
+    color: rgba(255,255,255,0.6);
+    transition: 0.2s ease;
     position: relative;
 }
 
-.nav-links a:hover {
-    color: white;
+.nav a:hover, .nav-links a:hover {
+    color: #fff;
     transform: translateY(2px);
 }
 
-.nav-links a::after {
+.nav a::after, .nav-links a::after {
     content: "";
     position: absolute;
     left: 0;
@@ -90,10 +92,10 @@ body {
     width: 0%;
     height: 2px;
     background: #2ecc71;
-    transition: 0.25s;
+    transition: 0.25s ease;
 }
 
-.nav-links a:hover::after {
+.nav a:hover::after, .nav-links a:hover::after {
     width: 100%;
 }
 
@@ -103,6 +105,7 @@ body {
     align-items: center;
     gap: 8px;
     font-size: 13px;
+    color: rgba(255,255,255,0.75);
 }
 
 .dot {
@@ -111,16 +114,6 @@ body {
     background: #2ecc71;
     border-radius: 50%;
     box-shadow: 0 0 10px #2ecc71;
-}
-
-/* =========================
-   LAYOUT
-========================= */
-
-.container {
-    padding: 120px 20px 60px;
-    max-width: 1100px;
-    margin: auto;
 }
 
 /* =========================
@@ -151,7 +144,7 @@ body {
 }
 
 .hero h1 {
-    font-size: 48px;
+    font-size: 50px;
 }
 
 .hero p {
@@ -160,29 +153,37 @@ body {
 
 /* =========================
    GRID (IMPORTANT FIX)
-   => 2 à 4 cards par ligne propre
+   → 2 COLONNES MAX FIXES + RESPONSIVE
 ========================= */
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 20px;
+    margin-top: 20px;
+}
+
+/* mobile -> 1 colonne */
+@media (max-width: 768px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* =========================
-   CARD (FIX IMPORTANT)
+   CARDS (PROPRE + UNIFORME)
 ========================= */
 
 .card {
-    width: 100%; /* IMPORTANT: enlève ton problème de serré */
     background: rgba(255,255,255,0.05);
     border: 1px solid rgba(255,255,255,0.08);
     padding: 15px;
     border-radius: 14px;
 
     backdrop-filter: blur(10px);
-    transition: 0.25s;
-    text-align: center;
+    transition: 0.25s ease;
+
+    text-align: left;
 }
 
 .card:hover {
@@ -207,56 +208,37 @@ body {
 .tag.annule { background: rgba(231,76,60,0.15); color:#e74c3c; }
 
 /* =========================
-   CONTACT
+   FORMS
 ========================= */
 
-.contact {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.contact-box {
-    width: 100%;
-    max-width: 550px;
-    padding: 35px;
-
-    background: rgba(255,255,255,0.06);
-    border-radius: 16px;
-    border: 1px solid rgba(255,255,255,0.10);
-
-    backdrop-filter: blur(14px);
-}
-
-.contact-box form {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
 input, textarea {
+    width: 100%;
     padding: 12px;
-    border-radius: 10px;
+    margin: 6px 0;
+
     border: none;
+    border-radius: 10px;
+
     background: rgba(255,255,255,0.08);
     color: white;
+
     outline: none;
 }
 
 textarea {
-    height: 120px;
+    height: 130px;
     resize: none;
 }
 
 button {
-    padding: 12px;
-    border-radius: 10px;
+    padding: 10px 14px;
     border: none;
+    border-radius: 10px;
+    cursor: pointer;
+
     background: #5865F2;
     color: white;
-    cursor: pointer;
-    transition: 0.2s;
+    transition: 0.2s ease;
 }
 
 button:hover {
@@ -265,12 +247,37 @@ button:hover {
 }
 
 /* =========================
-   MOBILE FIX
+   MOBILE MENU (si tu utilises)
+========================= */
+
+.mobile-btn {
+    display: none;
+}
+
+.mobile-menu {
+    display: none;
+    flex-direction: column;
+
+    position: fixed;
+    top: 70px;
+    right: 15px;
+
+    background: rgba(10,10,10,0.95);
+    padding: 15px;
+    border-radius: 12px;
+}
+
+/* =========================
+   RESPONSIVE HEADER
 ========================= */
 
 @media (max-width: 768px) {
-    .nav-inline {
+    .nav, .nav-inline {
         display: none;
+    }
+
+    .mobile-btn {
+        display: block;
     }
 
     .hero h1 {
