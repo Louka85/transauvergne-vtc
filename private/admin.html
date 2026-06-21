@@ -5,74 +5,180 @@
 <title>Admin Panel</title>
 
 <style>
-body {
-  margin:0;
-  font-family:Arial;
-  background:#0f0f0f;
-  color:white;
+/* =========================
+   GLOBAL
+========================= */
+
+* {
+  box-sizing: border-box;
 }
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0f0f0f;
+  color: white;
+}
+
+/* =========================
+   HEADER
+========================= */
 
 .header {
-  display:flex;
-  justify-content:space-between;
-  padding:15px;
-  background:#111;
-  position:fixed;
-  width:100%;
-  top:0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 65px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 0 20px;
+  background: rgba(17,17,17,0.9);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  z-index: 1000;
 }
+
+.header b {
+  font-size: 16px;
+}
+
+.btn-danger {
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-danger:hover {
+  transform: translateY(-2px);
+}
+
+/* =========================
+   LAYOUT
+========================= */
 
 .container {
-  padding:100px 20px;
-  max-width:1000px;
-  margin:auto;
+  max-width: 1000px;
+  margin: auto;
+  padding: 100px 20px 40px;
 }
 
+/* =========================
+   TABS
+========================= */
+
 .tabs {
-  display:flex;
-  gap:10px;
-  margin-bottom:20px;
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
 .tab {
-  padding:10px 15px;
-  background:#222;
-  cursor:pointer;
-  border-radius:8px;
+  padding: 10px 14px;
+  background: #1c1c1c;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+  color: rgba(255,255,255,0.7);
+}
+
+.tab:hover {
+  transform: translateY(-2px);
+  color: white;
 }
 
 .tab.active {
-  background:#5865F2;
+  background: #2ecc71;
+  color: black;
+  font-weight: bold;
 }
+
+/* =========================
+   CARDS
+========================= */
 
 .card {
-  background:#1a1a1a;
-  padding:15px;
-  border-radius:10px;
-  margin-bottom:15px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 16px;
+  border-radius: 14px;
+  margin-bottom: 15px;
+  backdrop-filter: blur(10px);
+  transition: 0.25s ease;
 }
+
+.card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(46,204,113,0.4);
+}
+
+/* =========================
+   INPUTS
+========================= */
 
 input {
-  width:100%;
-  padding:10px;
-  margin:5px 0;
-  background:#111;
-  border:none;
-  color:white;
+  width: 100%;
+  padding: 10px;
+  margin: 6px 0;
+
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  color: white;
+  outline: none;
 }
+
+input:focus {
+  border-color: #2ecc71;
+}
+
+/* =========================
+   BUTTONS
+========================= */
 
 button {
-  padding:10px;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.2s;
 }
 
-.btn { background:#5865F2; color:white; }
-.btn-danger { background:#e74c3c; color:white; }
+.btn {
+  background: #2ecc71;
+  color: black;
+  font-weight: bold;
+}
 
-img {
-  object-fit:cover;
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+/* =========================
+   TEAM IMAGE
+========================= */
+
+.card img {
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width:768px) {
+  .tabs {
+    flex-direction: column;
+  }
 }
 </style>
 </head>
@@ -119,7 +225,7 @@ img {
     <input id="role" placeholder="Rôle">
 
     <input type="file" id="avatarFile" accept="image/*">
-    <input id="avatarUrl" placeholder="Ou URL Discord (optionnel)">
+    <input id="avatarUrl" placeholder="URL avatar">
 
     <button class="btn" onclick="addMember()">Ajouter</button>
   </div>
@@ -161,13 +267,9 @@ function render(){
   document.getElementById("teamList").innerHTML =
     team.map((m,i)=>`
       <div class="card">
-        <img src="${m.avatar || 'https://via.placeholder.com/80'}"
-             width="60" height="60"
-             style="border-radius:50%;margin-bottom:10px;"><br>
-
+        <img src="${m.avatar || 'https://via.placeholder.com/80'}" width="60" height="60"><br>
         <b>${m.name}</b><br>
         ${m.role}<br><br>
-
         <button class="btn-danger" onclick="delMember(${i})">Supprimer</button>
       </div>
     `).join("");
@@ -210,15 +312,6 @@ async function saveConvoys(){
 }
 
 /* ===================== TEAM ===================== */
-function fileToBase64(file){
-  return new Promise((res, rej)=>{
-    const reader = new FileReader();
-    reader.onload = () => res(reader.result);
-    reader.onerror = rej;
-    reader.readAsDataURL(file);
-  });
-}
-
 async function addMember(){
 
   const file = document.getElementById("avatarFile").files[0];
@@ -227,10 +320,18 @@ async function addMember(){
   let avatar = "";
 
   if(file){
-    avatar = await fileToBase64(file);
-  } else if(url){
-    avatar = url;
+    const reader = new FileReader();
+    reader.onload = () => {
+      avatar = reader.result;
+      saveMember(avatar);
+    };
+    reader.readAsDataURL(file);
+  } else {
+    saveMember(url);
   }
+}
+
+function saveMember(avatar){
 
   const m = {
     name: document.getElementById("name").value.trim(),
@@ -244,12 +345,6 @@ async function addMember(){
   }
 
   team.push(m);
-
-  document.getElementById("name").value = "";
-  document.getElementById("role").value = "";
-  document.getElementById("avatarFile").value = "";
-  document.getElementById("avatarUrl").value = "";
-
   saveTeam();
 }
 
