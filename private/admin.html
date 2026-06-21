@@ -6,7 +6,7 @@
 
 <style>
 /* =========================
-   GLOBAL
+   BASE
 ========================= */
 
 * {
@@ -36,7 +36,7 @@ body {
   align-items: center;
 
   padding: 0 20px;
-  background: rgba(17,17,17,0.9);
+  background: rgba(20,20,20,0.85);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(255,255,255,0.06);
   z-index: 1000;
@@ -44,14 +44,15 @@ body {
 
 .header b {
   font-size: 16px;
+  letter-spacing: 0.5px;
 }
 
 .btn-danger {
   background: #e74c3c;
-  color: white;
   border: none;
   padding: 8px 12px;
-  border-radius: 8px;
+  border-radius: 10px;
+  color: white;
   cursor: pointer;
   transition: 0.2s;
 }
@@ -61,11 +62,11 @@ body {
 }
 
 /* =========================
-   LAYOUT
+   CONTAINER
 ========================= */
 
 .container {
-  max-width: 1000px;
+  max-width: 1100px;
   margin: auto;
   padding: 100px 20px 40px;
 }
@@ -76,15 +77,15 @@ body {
 
 .tabs {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   margin-bottom: 20px;
 }
 
 .tab {
   padding: 10px 14px;
-  background: #1c1c1c;
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 10px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
   cursor: pointer;
   transition: 0.2s;
   color: rgba(255,255,255,0.7);
@@ -102,17 +103,16 @@ body {
 }
 
 /* =========================
-   CARDS
+   GRID CARDS
 ========================= */
 
 .card {
   background: rgba(255,255,255,0.05);
   border: 1px solid rgba(255,255,255,0.08);
   padding: 16px;
-  border-radius: 14px;
+  border-radius: 16px;
   margin-bottom: 15px;
-  backdrop-filter: blur(10px);
-  transition: 0.25s ease;
+  transition: 0.2s;
 }
 
 .card:hover {
@@ -141,7 +141,7 @@ input:focus {
 }
 
 /* =========================
-   BUTTONS
+   BUTTON
 ========================= */
 
 button {
@@ -163,7 +163,7 @@ button {
 }
 
 /* =========================
-   TEAM IMAGE
+   TEAM AVATAR
 ========================= */
 
 .card img {
@@ -224,7 +224,7 @@ button {
     <input id="name" placeholder="Nom">
     <input id="role" placeholder="Rôle">
 
-    <input type="file" id="avatarFile" accept="image/*">
+    <input type="file" id="avatarFile">
     <input id="avatarUrl" placeholder="URL avatar">
 
     <button class="btn" onclick="addMember()">Ajouter</button>
@@ -245,14 +245,14 @@ function show(tab){
   document.getElementById("team").style.display = tab==="team"?"block":"none";
 }
 
-/* ===================== LOAD ===================== */
+/* LOAD */
 async function load(){
   convoys = await fetch("/api/convoys", { credentials:"include" }).then(r=>r.json());
   team = await fetch("/api/team", { credentials:"include" }).then(r=>r.json());
   render();
 }
 
-/* ===================== RENDER ===================== */
+/* RENDER */
 function render(){
 
   document.getElementById("convoyList").innerHTML =
@@ -275,19 +275,18 @@ function render(){
     `).join("");
 }
 
-/* ===================== CONVOY ===================== */
+/* CONVOY */
 function addConvoy(){
-
   const c = {
-    title: document.getElementById("title").value.trim(),
-    start: document.getElementById("start").value.trim(),
-    end: document.getElementById("end").value.trim(),
-    time: document.getElementById("time").value.trim(),
-    date: document.getElementById("date").value
+    title: title.value.trim(),
+    start: start.value.trim(),
+    end: end.value.trim(),
+    time: time.value.trim(),
+    date: date.value
   };
 
   if(!c.title || !c.start || !c.end){
-    alert("Remplis les champs convoi");
+    alert("Remplis tout");
     return;
   }
 
@@ -307,35 +306,33 @@ async function saveConvoys(){
     headers:{ "Content-Type":"application/json" },
     body: JSON.stringify(convoys)
   });
-
   load();
 }
 
-/* ===================== TEAM ===================== */
+/* TEAM */
 async function addMember(){
-
-  const file = document.getElementById("avatarFile").files[0];
-  const url = document.getElementById("avatarUrl").value.trim();
 
   let avatar = "";
 
+  const file = avatarFile.files[0];
   if(file){
-    const reader = new FileReader();
-    reader.onload = () => {
-      avatar = reader.result;
-      saveMember(avatar);
+    const r = new FileReader();
+    r.onload = () => {
+      saveMember(r.result);
     };
-    reader.readAsDataURL(file);
-  } else {
-    saveMember(url);
+    r.readAsDataURL(file);
+    return;
   }
+
+  avatar = avatarUrl.value.trim();
+  saveMember(avatar);
 }
 
 function saveMember(avatar){
 
   const m = {
-    name: document.getElementById("name").value.trim(),
-    role: document.getElementById("role").value.trim(),
+    name: name.value.trim(),
+    role: role.value.trim(),
     avatar
   };
 
@@ -360,11 +357,10 @@ async function saveTeam(){
     headers:{ "Content-Type":"application/json" },
     body: JSON.stringify(team)
   });
-
   load();
 }
 
-/* ===================== LOGOUT ===================== */
+/* LOGOUT */
 function logout(){
   fetch("/logout", { credentials:"include" })
     .then(()=>location.href="/");
