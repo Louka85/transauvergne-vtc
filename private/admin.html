@@ -175,7 +175,7 @@ function logout(){
 }
 
 /* CONVOY */
-function addConvoy(){
+async function addConvoy(){
 
     const c = {
         title: document.getElementById("title").value.trim(),
@@ -190,16 +190,27 @@ function addConvoy(){
         return;
     }
 
-    fetch("/api/convoys",{
+    const convoys = await fetch("/api/convoys", {
+        credentials:"include"
+    }).then(r => r.json());
+
+    const safe = Array.isArray(convoys) ? convoys : [];
+
+    safe.push(c);
+
+    await fetch("/api/convoys", {
         method:"POST",
         headers:{"Content-Type":"application/json"},
         credentials:"include",
-        body:JSON.stringify([c])
-    }).then(()=>location.reload());
+        body: JSON.stringify(safe)
+    });
+
+    location.reload();
 }
 
 /* DELETE SAFE (placeholder simple) */
-function addMember(){
+async function addMember(){
+
     const name = document.getElementById("name").value.trim();
     const role = document.getElementById("role").value.trim();
 
@@ -208,12 +219,23 @@ function addMember(){
         return;
     }
 
-    fetch("/api/team",{
+    // récupérer la liste existante
+    const team = await fetch("/api/team", {
+        credentials:"include"
+    }).then(r => r.json());
+
+    const safe = Array.isArray(team) ? team : [];
+
+    safe.push({ name, role });
+
+    await fetch("/api/team", {
         method:"POST",
         headers:{"Content-Type":"application/json"},
         credentials:"include",
-        body:JSON.stringify([{name,role}])
-    }).then(()=>location.reload());
+        body: JSON.stringify(safe)
+    });
+
+    location.reload();
 }
 
 </script>
