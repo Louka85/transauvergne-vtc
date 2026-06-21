@@ -48,27 +48,30 @@
 
 <script>
 async function loadTeam(){
-  const res = await fetch("/api/team");
-  const data = await res.json();
+  try {
+    const res = await fetch("/api/team", { credentials:"include" });
+    const data = await res.json();
 
-  const el = document.getElementById("team");
+    const el = document.getElementById("team");
 
-  if (!Array.isArray(data) || data.length === 0) {
-    el.innerHTML = "<p>Aucun membre</p>";
-    return;
-  }
+    if (!Array.isArray(data) || data.length === 0) {
+      el.innerHTML = "<p>Aucun membre</p>";
+      return;
+    }
 
-  el.innerHTML = data.map(m => `
-    <div class="card">
-      <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
+    el.innerHTML = data.map(m => `
+      <div class="card">
         <img src="${m.avatar || 'https://via.placeholder.com/120'}"
              style="width:80px;height:80px;border-radius:50%;object-fit:cover">
 
-        <h3 style="margin:0">${m.name || "?"}</h3>
-        <p style="margin:0;color:#aaa">${m.role || "?"}</p>
+        <h3>${m.name ?? "?"}</h3>
+        <p>${m.role ?? "?"}</p>
       </div>
-    </div>
-  `).join("");
+    `).join("");
+
+  } catch (e) {
+    console.log("API team error", e);
+  }
 }
 
 loadTeam();
