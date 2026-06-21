@@ -162,6 +162,8 @@ body {
     border-radius: 14px;
     backdrop-filter: blur(10px);
     transition: 0.25s ease;
+
+    width: 220px;
 }
 
 .card:hover {
