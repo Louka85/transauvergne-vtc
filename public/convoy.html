@@ -1,94 +1,74 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<link rel="stylesheet" href="/style.css">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Convois - TransAuvergne VTC</title>
+<title>Convois</title>
+<link rel="stylesheet" href="/style.css">
 </head>
 
 <body>
 
 <header class="header">
 
-    <a href="index.html" class="logo">
-        <img src="logo.jpeg">
-        <span>TransAuvergne VTC</span>
-    </a>
+<a href="index.html" class="logo">
+  <img src="logo.jpeg">
+  <span>TransAuvergne VTC</span>
+</a>
 
-    <nav class="nav">
-        <a href="index.html">Accueil</a>
-        <a href="about.html">Qui sommes-nous</a>
-        <a href="convoy.html">Convois</a>
-        <a href="contact.html">Contact</a>
-    </nav>
+<nav class="nav">
+  <a href="index.html">Accueil</a>
+  <a href="about.html">Qui sommes-nous</a>
+  <a href="convoy.html">Convois</a>
+  <a href="contact.html">Contact</a>
+</nav>
 
-    <div class="status">
-        <span class="dot"></span>
-        Convois actifs
-    </div>
+<div class="status">
+  <span class="dot"></span>
+  Convois actifs
+</div>
 
-    <div class="mobile-btn" onclick="toggleMenu()">☰</div>
+<div class="mobile-btn" onclick="toggleMenu()">☰</div>
 
 </header>
 
 <div id="mobileMenu" class="mobile-menu">
-    <a href="index.html">Accueil</a>
-    <a href="about.html">Qui sommes-nous</a>
-    <a href="convoy.html">Convois</a>
-    <a href="contact.html">Contact</a>
+  <a href="index.html">Accueil</a>
+  <a href="about.html">Qui sommes-nous</a>
+  <a href="convoy.html">Convois</a>
+  <a href="contact.html">Contact</a>
 </div>
 
 <div class="container">
-    <h1>Nos convois</h1>
-    <div id="convoyList" class="grid"></div>
+  <h1>Nos convois</h1>
+  <div id="convoyList" class="grid"></div>
 </div>
 
 <script>
 function toggleMenu(){
-    const m = document.getElementById("mobileMenu");
-    m.style.display = m.style.display === "flex" ? "none" : "flex";
+  const m = document.getElementById("mobileMenu");
+  m.style.display = m.style.display === "flex" ? "none" : "flex";
 }
 
-/* API CONVOIS (inchangée, on touche pas 👍) */
-function loadConvoys() {
-    fetch("/api/convoys", { credentials: "include" })
-    .then(r => r.json())
-    .then(data => {
+function loadConvoys(){
+  fetch("/api/convoys", { credentials:"include" })
+  .then(r=>r.json())
+  .then(data=>{
+    if(!Array.isArray(data)) data = [];
 
-        if (!Array.isArray(data)) data = [];
+    const el = document.getElementById("convoyList");
+    el.innerHTML = "";
 
-        const container = document.getElementById("convoyList");
-        container.innerHTML = "";
-
-        data.sort((a, b) => new Date(a.date) - new Date(b.date));
-
-        if (data.length === 0) {
-            container.innerHTML = "<p style='text-align:center;color:#777'>Aucun convoi</p>";
-            return;
-        }
-
-        data.forEach(c => {
-            container.innerHTML += `
-            <div class="card">
-                <h2>${c.title || "Sans titre"}</h2>
-                <p>📍 Départ : ${c.start || "-"}</p>
-                <p>🎯 Destination : ${c.end || "-"}</p>
-                <p>⏰ ${c.time || "-"}</p>
-                <p>📅 ${c.date || "non défini"}</p>
-
-                <span class="tag ${c.status || "ouvert"}">
-                    ${c.status || "ouvert"}
-                </span>
-            </div>
-            `;
-        });
-
-    })
-    .catch(() => {
-        document.getElementById("convoyList").innerHTML =
-            "<p style='color:red;text-align:center'>Erreur API</p>";
+    data.forEach(c=>{
+      el.innerHTML += `
+      <div class="card">
+        <h3>${c.title || ""}</h3>
+        <p>${c.start || ""} → ${c.end || ""}</p>
+        <p>${c.time || ""}</p>
+        <p>${c.date || ""}</p>
+      </div>`;
     });
+  });
 }
 
 loadConvoys();
