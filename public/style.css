@@ -1,3 +1,24 @@
+
+/* =========================
+   DESIGN SYSTEM
+========================= */
+
+:root {
+    --bg: #0b0f14;
+    --panel: rgba(255,255,255,0.04);
+    --panel-border: rgba(255,255,255,0.08);
+    --text: #ffffff;
+    --muted: rgba(255,255,255,0.65);
+
+    --primary: #5865F2;
+    --success: #2ecc71;
+    --warning: #f1c40f;
+    --danger: #e74c3c;
+
+    --radius: 14px;
+    --blur: 14px;
+}
+
 /* =========================
    BASE
 ========================= */
@@ -12,9 +33,10 @@ html {
 
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background: #0f0f0f;
-    color: white;
+    font-family: "Inter", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
 }
 
 /* =========================
@@ -22,14 +44,14 @@ body {
 ========================= */
 
 .container {
-    padding: 120px 20px 60px;
+    width: 100%;
     max-width: 1100px;
     margin: auto;
-    text-align: center;
+    padding: 120px 20px 60px;
 }
 
 /* =========================
-   HEADER
+   HEADER PRO
 ========================= */
 
 .header {
@@ -37,17 +59,18 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    padding: 14px 22px;
 
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    background: rgba(10,10,10,0.65);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    padding: 14px 24px;
 
-    border-bottom: 1px solid rgba(255,255,255,0.06);
+    background: rgba(10,10,10,0.6);
+    backdrop-filter: blur(var(--blur));
+    -webkit-backdrop-filter: blur(var(--blur));
+
+    border-bottom: 1px solid var(--panel-border);
     z-index: 1000;
 }
 
@@ -56,7 +79,7 @@ body {
     align-items: center;
     gap: 10px;
     text-decoration: none;
-    color: white;
+    color: var(--text);
     font-weight: 600;
 }
 
@@ -65,55 +88,62 @@ body {
 }
 
 /* NAV */
-.nav, .nav-inline {
+
+.nav,
+.nav-inline {
     display: flex;
     align-items: center;
     gap: 18px;
 }
 
-.nav a, .nav-links a {
-    text-decoration: none;
-    font-size: 14px;
-    color: rgba(255,255,255,0.6);
-    transition: 0.2s ease;
+.nav a,
+.nav-inline a {
     position: relative;
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 14px;
+    transition: 0.2s ease;
 }
 
-.nav a:hover, .nav-links a:hover {
-    color: #fff;
-    transform: translateY(2px);
+.nav a:hover,
+.nav-inline a:hover {
+    color: var(--text);
+    transform: translateY(-2px);
 }
 
-.nav a::after, .nav-links a::after {
+.nav a::after,
+.nav-inline a::after {
     content: "";
     position: absolute;
     left: 0;
-    bottom: -4px;
+    bottom: -5px;
     width: 0%;
     height: 2px;
-    background: #2ecc71;
+    background: var(--success);
     transition: 0.25s ease;
 }
 
-.nav a:hover::after, .nav-links a:hover::after {
+.nav a:hover::after,
+.nav-inline a:hover::after {
     width: 100%;
 }
 
 /* STATUS */
+
 .status {
     display: flex;
     align-items: center;
     gap: 8px;
     font-size: 13px;
-    color: rgba(255,255,255,0.75);
+    color: var(--muted);
 }
 
 .dot {
     width: 8px;
     height: 8px;
-    background: #2ecc71;
+    background: var(--success);
     border-radius: 50%;
-    box-shadow: 0 0 10px #2ecc71;
+    box-shadow: 0 0 10px var(--success);
 }
 
 /* =========================
@@ -125,9 +155,10 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    text-align: center;
 
     position: relative;
+    text-align: center;
+
     background: url("background.jpg") center/cover no-repeat;
 }
 
@@ -135,7 +166,7 @@ body {
     content: "";
     position: absolute;
     inset: 0;
-    background: rgba(0,0,0,0.55);
+    background: rgba(0,0,0,0.6);
 }
 
 .hero-content {
@@ -144,26 +175,27 @@ body {
 }
 
 .hero h1 {
-    font-size: 50px;
+    font-size: 56px;
+    margin: 0;
 }
 
 .hero p {
-    color: #ddd;
+    color: var(--muted);
+    font-size: 18px;
 }
 
 /* =========================
-   GRID (IMPORTANT FIX)
-   → 2 COLONNES MAX FIXES + RESPONSIVE
+   GRID SYSTEM (IMPORTANT)
 ========================= */
 
 .grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    gap: 22px;
     margin-top: 20px;
 }
 
-/* mobile -> 1 colonne */
+/* mobile */
 @media (max-width: 768px) {
     .grid {
         grid-template-columns: 1fr;
@@ -171,23 +203,25 @@ body {
 }
 
 /* =========================
-   CARDS (PROPRE + UNIFORME)
+   CARD SYSTEM PRO
 ========================= */
 
 .card {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.08);
-    padding: 15px;
-    border-radius: 14px;
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    border-radius: var(--radius);
 
-    backdrop-filter: blur(10px);
-    transition: 0.25s ease;
-
+    padding: 18px;
     text-align: left;
+
+    backdrop-filter: blur(var(--blur));
+    -webkit-backdrop-filter: blur(var(--blur));
+
+    transition: 0.25s ease;
 }
 
 .card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-6px);
     border-color: rgba(46,204,113,0.4);
 }
 
@@ -198,29 +232,30 @@ body {
 .tag {
     display: inline-block;
     margin-top: 10px;
-    padding: 5px 10px;
-    border-radius: 20px;
+    padding: 5px 12px;
+    border-radius: 999px;
     font-size: 12px;
 }
 
-.tag.ouvert { background: rgba(46,204,113,0.15); color:#2ecc71; }
-.tag.complet { background: rgba(241,196,15,0.15); color:#f1c40f; }
-.tag.annule { background: rgba(231,76,60,0.15); color:#e74c3c; }
+.tag.ouvert { background: rgba(46,204,113,0.15); color: var(--success); }
+.tag.complet { background: rgba(241,196,15,0.15); color: var(--warning); }
+.tag.annule { background: rgba(231,76,60,0.15); color: var(--danger); }
 
 /* =========================
    FORMS
 ========================= */
 
-input, textarea {
+input,
+textarea {
     width: 100%;
     padding: 12px;
-    margin: 6px 0;
+    margin-top: 8px;
 
-    border: none;
     border-radius: 10px;
+    border: 1px solid var(--panel-border);
 
-    background: rgba(255,255,255,0.08);
-    color: white;
+    background: rgba(255,255,255,0.05);
+    color: var(--text);
 
     outline: none;
 }
@@ -230,28 +265,59 @@ textarea {
     resize: none;
 }
 
+/* =========================
+   BUTTONS
+========================= */
+
 button {
     padding: 10px 14px;
     border: none;
     border-radius: 10px;
-    cursor: pointer;
 
-    background: #5865F2;
+    background: var(--primary);
     color: white;
+
+    cursor: pointer;
     transition: 0.2s ease;
 }
 
 button:hover {
-    background: #4752C4;
     transform: translateY(-2px);
+    background: #4752C4;
 }
 
 /* =========================
-   MOBILE MENU (si tu utilises)
+   CONTACT
+========================= */
+
+.contact {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contact-box {
+    width: 100%;
+    max-width: 550px;
+
+    padding: 35px;
+
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    border-radius: var(--radius);
+
+    backdrop-filter: blur(var(--blur));
+}
+
+/* =========================
+   MOBILE MENU
 ========================= */
 
 .mobile-btn {
     display: none;
+    font-size: 28px;
+    cursor: pointer;
 }
 
 .mobile-menu {
@@ -268,11 +334,13 @@ button:hover {
 }
 
 /* =========================
-   RESPONSIVE HEADER
+   RESPONSIVE
 ========================= */
 
 @media (max-width: 768px) {
-    .nav, .nav-inline {
+
+    .nav,
+    .nav-inline {
         display: none;
     }
 
@@ -281,6 +349,6 @@ button:hover {
     }
 
     .hero h1 {
-        font-size: 32px;
+        font-size: 34px;
     }
 }
