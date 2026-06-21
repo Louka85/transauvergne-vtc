@@ -53,18 +53,35 @@ function toggleMenu(){
 }
 
 async function loadTeam(){
-  const res = await fetch("/api/team");
-  const data = await res.json();
+  try {
+    const res = await fetch("/api/team", { credentials:"include" });
+    const data = await res.json();
 
-  const el = document.getElementById("team");
+    const el = document.getElementById("team");
 
-  el.innerHTML = data.map(m=>`
-    <div class="card">
-      <img src="${m.avatar || 'https://via.placeholder.com/150'}">
-      <h3>${m.name}</h3>
-      <p>${m.role}</p>
-    </div>
-  `).join("");
+    if (!Array.isArray(data)) {
+      el.innerHTML = "<p style='color:red'>Erreur API team</p>";
+      return;
+    }
+
+    if (data.length === 0) {
+      el.innerHTML = "<p style='color:gray'>Aucun membre</p>";
+      return;
+    }
+
+    el.innerHTML = data.map(m => `
+      <div class="card">
+        <img src="${m.avatar || 'https://via.placeholder.com/150'}">
+        <h3>${m.name || "Sans nom"}</h3>
+        <p>${m.role || "Sans rôle"}</p>
+      </div>
+    `).join("");
+
+  } catch (e) {
+    console.log("Team load error:", e);
+    document.getElementById("team").innerHTML =
+      "<p style='color:red'>Impossible de charger l'équipe</p>";
+  }
 }
 
 loadTeam();
