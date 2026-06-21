@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Qui sommes-nous - TransAuvergne VTC</title>
-
+<title>About</title>
 <link rel="stylesheet" href="/style.css">
 </head>
 
@@ -12,73 +11,60 @@
 
 <header class="header">
 
-    <a href="index.html" class="logo">
-        <img src="logo.jpeg" alt="logo">
-        <span>TransAuvergne VTC</span>
-    </a>
+<a href="index.html" class="logo">
+  <img src="logo.jpeg">
+  <span>TransAuvergne VTC</span>
+</a>
 
-    <nav class="nav">
-        <a href="index.html">Accueil</a>
-        <a href="about.html">Qui sommes-nous</a>
-        <a href="convoy.html">Convois</a>
-        <a href="contact.html">Contact</a>
-    </nav>
+<nav class="nav">
+  <a href="index.html">Accueil</a>
+  <a href="about.html">Qui sommes-nous</a>
+  <a href="convoy.html">Convois</a>
+  <a href="contact.html">Contact</a>
+</nav>
 
-    <div class="status">
-        <span class="dot"></span>
-        Recrutement ouvert
-    </div>
+<div class="status">
+  <span class="dot"></span>
+  Recrutement ouvert
+</div>
 
-    <div class="mobile-btn" onclick="toggleMenu()">☰</div>
+<div class="mobile-btn" onclick="toggleMenu()">☰</div>
 
 </header>
 
 <div id="mobileMenu" class="mobile-menu">
-    <a href="index.html" onclick="toggleMenu()">Accueil</a>
-    <a href="about.html" onclick="toggleMenu()">Qui sommes-nous</a>
-    <a href="convoy.html" onclick="toggleMenu()">Convois</a>
-    <a href="contact.html" onclick="toggleMenu()">Contact</a>
-</div>
-
-<div id="mobileMenu" class="mobile-menu">
-    <a href="index.html" onclick="toggleMenu()">Accueil</a>
-    <a href="about.html" onclick="toggleMenu()">Qui sommes-nous</a>
-    <a href="convoy.html" onclick="toggleMenu()">Convois</a>
-    <a href="contact.html" onclick="toggleMenu()">Contact</a>
+  <a href="index.html">Accueil</a>
+  <a href="about.html">Qui sommes-nous</a>
+  <a href="convoy.html">Convois</a>
+  <a href="contact.html">Contact</a>
 </div>
 
 <div class="container">
+  <h1>Qui sommes-nous</h1>
+  <p>Organisation virtuelle TruckersMP</p>
 
-    <h1>Qui sommes-nous</h1>
-    <p>TransAuvergne VTC est une organisation virtuelle sur TruckersMP.</p>
-
-    <div class="team-grid" id="team"></div>
-
+  <div class="team-grid" id="team"></div>
 </div>
 
 <script>
 function toggleMenu(){
-    const m = document.getElementById("mobileMenu");
-    m.style.display = m.style.display === "flex" ? "none" : "flex";
+  const m = document.getElementById("mobileMenu");
+  m.style.display = m.style.display === "flex" ? "none" : "flex";
 }
 
 async function loadTeam(){
-    try {
-        const res = await fetch("/api/team");
-        const data = await res.json();
+  const res = await fetch("/api/team");
+  const data = await res.json();
 
-        document.getElementById("team").innerHTML =
-        data.map(m => `
-            <div class="card">
-                <img src="${m.avatar || 'https://via.placeholder.com/150'}">
-                <h3>${m.name}</h3>
-                <p>${m.role}</p>
-            </div>
-        `).join("");
+  const el = document.getElementById("team");
 
-    } catch (e) {
-        console.log("API team error", e);
-    }
+  el.innerHTML = data.map(m=>`
+    <div class="card">
+      <img src="${m.avatar || 'https://via.placeholder.com/150'}">
+      <h3>${m.name}</h3>
+      <p>${m.role}</p>
+    </div>
+  `).join("");
 }
 
 loadTeam();
