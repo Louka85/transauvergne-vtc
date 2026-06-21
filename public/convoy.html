@@ -54,6 +54,7 @@ function loadConvoys(){
   fetch("/api/convoys", { credentials:"include" })
   .then(r=>r.json())
   .then(data=>{
+    console.log(data);
     if(!Array.isArray(data)) data = [];
 
     const el = document.getElementById("convoyList");
@@ -86,10 +87,6 @@ function loadConvoys(){
     });
   });
 }  
-loadConvoys();
-
-console.log(convoys);
-  
 </script>
   
 </body>
