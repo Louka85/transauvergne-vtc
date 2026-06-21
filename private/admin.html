@@ -2,66 +2,281 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin Panel</title>
 
-<link rel="stylesheet" href="style.css">
+<style>
+body {
+  margin:0;
+  font-family:Arial;
+  background:#0f0f0f;
+  color:white;
+}
+
+.header {
+  display:flex;
+  justify-content:space-between;
+  padding:15px;
+  background:#111;
+  position:fixed;
+  width:100%;
+  top:0;
+}
+
+.container {
+  padding:100px 20px;
+  max-width:1000px;
+  margin:auto;
+}
+
+.tabs {
+  display:flex;
+  gap:10px;
+  margin-bottom:20px;
+}
+
+.tab {
+  padding:10px 15px;
+  background:#222;
+  cursor:pointer;
+  border-radius:8px;
+}
+
+.tab.active {
+  background:#5865F2;
+}
+
+.card {
+  background:#1a1a1a;
+  padding:15px;
+  border-radius:10px;
+  margin-bottom:15px;
+}
+
+input {
+  width:100%;
+  padding:10px;
+  margin:5px 0;
+  background:#111;
+  border:none;
+  color:white;
+}
+
+button {
+  padding:10px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.btn { background:#5865F2; color:white; }
+.btn-danger { background:#e74c3c; color:white; }
+
+img {
+  object-fit:cover;
+}
+</style>
 </head>
 
 <body>
 
 <div class="header">
-    <div class="logo">Admin Panel</div>
-    <button class="btn-danger" onclick="logout()">Logout</button>
+  <b>Admin Panel</b>
+  <button onclick="logout()" class="btn-danger">Logout</button>
 </div>
 
 <div class="container">
 
-    <div class="tabs">
-        <div class="tab active" onclick="show('convoys')">Convois</div>
-        <div class="tab" onclick="show('team')">Équipe</div>
-    </div>
+<div class="tabs">
+  <div class="tab active" onclick="show('convoys')">Convois</div>
+  <div class="tab" onclick="show('team')">Équipe</div>
+</div>
 
-    <!-- CONVOYS -->
-    <div id="convoys">
+<!-- ===================== CONVOIS ===================== -->
+<div id="convoys">
 
-        <div class="card">
-            <h3>Nouveau convoi</h3>
+  <div class="card">
+    <h3>Nouveau convoi</h3>
 
-            <input id="title" placeholder="Titre">
-            <input id="start" placeholder="Départ">
-            <input id="end" placeholder="Destination">
-            <input id="time" placeholder="Heure">
-            <input id="date" type="date">
+    <input id="title" placeholder="Titre">
+    <input id="start" placeholder="Départ">
+    <input id="end" placeholder="Destination">
+    <input id="time" placeholder="Heure">
+    <input id="date" type="date">
 
-            <button class="btn" onclick="addConvoy()">Ajouter</button>
-        </div>
+    <button class="btn" onclick="addConvoy()">Ajouter</button>
+  </div>
 
-        <div id="convoyList" class="grid"></div>
-    </div>
+  <div id="convoyList"></div>
+</div>
 
-    <!-- TEAM -->
-    <div id="team" style="display:none">
+<!-- ===================== TEAM ===================== -->
+<div id="team" style="display:none">
 
-        <div class="card">
-            <h3>Ajouter membre</h3>
+  <div class="card">
+    <h3>Ajouter membre</h3>
 
-            <input id="name" placeholder="Nom">
-            <input id="role" placeholder="Rôle">
+    <input id="name" placeholder="Nom">
+    <input id="role" placeholder="Rôle">
 
-            <button class="btn" onclick="addMember()">Ajouter</button>
-        </div>
+    <input type="file" id="avatarFile" accept="image/*">
+    <input id="avatarUrl" placeholder="Ou URL Discord (optionnel)">
 
-        <div id="teamList" class="grid"></div>
-    </div>
+    <button class="btn" onclick="addMember()">Ajouter</button>
+  </div>
+
+  <div id="teamList"></div>
+</div>
 
 </div>
 
 <script>
+
+let convoys = [];
+let team = [];
+
 function show(tab){
-    document.getElementById("convoys").style.display = tab==="convoys"?"block":"none";
-    document.getElementById("team").style.display = tab==="team"?"block":"none";
+  document.getElementById("convoys").style.display = tab==="convoys"?"block":"none";
+  document.getElementById("team").style.display = tab==="team"?"block":"none";
 }
+
+/* ===================== LOAD ===================== */
+async function load(){
+  convoys = await fetch("/api/convoys", { credentials:"include" }).then(r=>r.json());
+  team = await fetch("/api/team", { credentials:"include" }).then(r=>r.json());
+  render();
+}
+
+/* ===================== RENDER ===================== */
+function render(){
+
+  document.getElementById("convoyList").innerHTML =
+    convoys.map((c,i)=>`
+      <div class="card">
+        <b>${c.title || "Sans titre"}</b><br>
+        ${c.start || ""} → ${c.end || ""}<br><br>
+        <button class="btn-danger" onclick="delConvoy(${i})">Supprimer</button>
+      </div>
+    `).join("");
+
+  document.getElementById("teamList").innerHTML =
+    team.map((m,i)=>`
+      <div class="card">
+        <img src="${m.avatar || 'https://via.placeholder.com/80'}"
+             width="60" height="60"
+             style="border-radius:50%;margin-bottom:10px;"><br>
+
+        <b>${m.name}</b><br>
+        ${m.role}<br><br>
+
+        <button class="btn-danger" onclick="delMember(${i})">Supprimer</button>
+      </div>
+    `).join("");
+}
+
+/* ===================== CONVOY ===================== */
+function addConvoy(){
+
+  const c = {
+    title: document.getElementById("title").value.trim(),
+    start: document.getElementById("start").value.trim(),
+    end: document.getElementById("end").value.trim(),
+    time: document.getElementById("time").value.trim(),
+    date: document.getElementById("date").value
+  };
+
+  if(!c.title || !c.start || !c.end){
+    alert("Remplis les champs convoi");
+    return;
+  }
+
+  convoys.push(c);
+  saveConvoys();
+}
+
+function delConvoy(i){
+  convoys.splice(i,1);
+  saveConvoys();
+}
+
+async function saveConvoys(){
+  await fetch("/api/convoys", {
+    method:"POST",
+    credentials:"include",
+    headers:{ "Content-Type":"application/json" },
+    body: JSON.stringify(convoys)
+  });
+
+  load();
+}
+
+/* ===================== TEAM ===================== */
+function fileToBase64(file){
+  return new Promise((res, rej)=>{
+    const reader = new FileReader();
+    reader.onload = () => res(reader.result);
+    reader.onerror = rej;
+    reader.readAsDataURL(file);
+  });
+}
+
+async function addMember(){
+
+  const file = document.getElementById("avatarFile").files[0];
+  const url = document.getElementById("avatarUrl").value.trim();
+
+  let avatar = "";
+
+  if(file){
+    avatar = await fileToBase64(file);
+  } else if(url){
+    avatar = url;
+  }
+
+  const m = {
+    name: document.getElementById("name").value.trim(),
+    role: document.getElementById("role").value.trim(),
+    avatar
+  };
+
+  if(!m.name || !m.role){
+    alert("Nom + rôle obligatoires");
+    return;
+  }
+
+  team.push(m);
+
+  document.getElementById("name").value = "";
+  document.getElementById("role").value = "";
+  document.getElementById("avatarFile").value = "";
+  document.getElementById("avatarUrl").value = "";
+
+  saveTeam();
+}
+
+function delMember(i){
+  team.splice(i,1);
+  saveTeam();
+}
+
+async function saveTeam(){
+  await fetch("/api/team", {
+    method:"POST",
+    credentials:"include",
+    headers:{ "Content-Type":"application/json" },
+    body: JSON.stringify(team)
+  });
+
+  load();
+}
+
+/* ===================== LOGOUT ===================== */
+function logout(){
+  fetch("/logout", { credentials:"include" })
+    .then(()=>location.href="/");
+}
+
+load();
+
 </script>
 
 </body>
