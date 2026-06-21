@@ -208,7 +208,7 @@ async function addConvoy(){
         body: JSON.stringify(safe)
     });
 
-    location.reload();
+    loadConvoys();
 }
 
 /* ===================== TEAM LOAD ===================== */
@@ -315,8 +315,56 @@ function fileToBase64(file){
     });
 }
 
+/* ===================== LOAD CONVOYS ===================== */
+async function loadConvoys(){
+
+    const res = await fetch("/api/convoys", { credentials:"include" });
+    const convoys = await res.json();
+
+    const el = document.getElementById("convoyList");
+
+    if (!Array.isArray(convoys) || convoys.length === 0){
+        el.innerHTML = "<p>Aucun convoi</p>";
+        return;
+    }
+
+    el.innerHTML = convoys.map((c, i) => `
+        <div class="card">
+            <h3>${c.title || "Sans titre"}</h3>
+            <p>📍 ${c.start || "-"} → ${c.end || "-"}</p>
+            <p>⏰ ${c.time || "-"}</p>
+            <p>📅 ${c.date || "-"}</p>
+
+            <button class="btn-danger" onclick="deleteConvoy(${i})">
+                Supprimer
+            </button>
+        </div>
+    `).join("");
+}
+
+/* ===================== DELETE CONVOY ===================== */
+async function deleteConvoy(index){
+
+    const res = await fetch("/api/convoys", { credentials:"include" });
+    const convoys = await res.json();
+
+    const safe = Array.isArray(convoys) ? convoys : [];
+
+    safe.splice(index, 1);
+
+    await fetch("/api/convoys", {
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        credentials:"include",
+        body: JSON.stringify(safe)
+    });
+
+    loadConvoys();
+}
+    
 /* INIT */
 loadTeam();
+loadConvoys();
 
 </script>
 
