@@ -1,4 +1,4 @@
-donc server.js : const express = require("express");
+const express = require("express");
 const path = require("path");
 const session = require("express-session");
 const db = require("./db");
@@ -183,15 +183,6 @@ app.get("/admin", adminOnly, (req, res) => {
 /* =========================
    CONVOYS
 ========================= */
-app.get("/api/convoys", async (req, res) => {
-  try {
-    const result = await db.query("SELECT * FROM convoys ORDER BY date ASC");
-    res.json(result.rows);
-  } catch {
-    res.json([]);
-  }
-});
-
 app.post("/api/convoys", adminOnly, async (req, res) => {
   try {
     const convoys = req.body;
@@ -200,13 +191,31 @@ app.post("/api/convoys", adminOnly, async (req, res) => {
 
     for (const c of convoys) {
       await db.query(
-        `INSERT INTO convoys (title, start, "end", time, date, status)
-         VALUES ($1,$2,$3,$4,$5,$6)`,
-        [c.title, c.start, c.end, c.time, c.date, c.status || "ouvert"]
+        `INSERT INTO convoys
+        (title, start, "end", time, date, status,
+         server, cargo, distance, meeting, "meetingTime", dlc, description)
+        VALUES
+        ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)`,
+        [
+          c.title,
+          c.start,
+          c.end,
+          c.time,
+          c.date,
+          c.status || "ouvert",
+          c.server || null,
+          c.cargo || null,
+          c.distance || null,
+          c.meeting || null,
+          c.meetingTime || null,
+          c.dlc || null,
+          c.description || null
+        ]
       );
     }
 
     res.json({ success: true });
+
   } catch (err) {
     console.error("CONVOY ERROR:", err);
     res.status(500).json({ success: false });
