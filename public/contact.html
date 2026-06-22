@@ -52,6 +52,10 @@
                 <input type="email" placeholder="Ton email">
                 <textarea placeholder="Ton message"></textarea>
                 <button type="submit">Envoyer</button>
+                <div class="captcha">
+    <span id="captchaText"></span>
+    <input type="text" id="captchaInput" placeholder="Recopie le code">
+</div>
             </form>
 
             <p class="contact-info">
@@ -67,9 +71,48 @@ function toggleMenu(){
     const menu = document.getElementById("mobileMenu");
     menu.style.display = menu.style.display === "flex" ? "none" : "flex";
 }
+
+    function showToast(msg){
+    const toast = document.getElementById("toast");
+    toast.textContent = msg;
+    toast.classList.add("show");
+
+    setTimeout(()=>{
+        toast.classList.remove("show");
+    }, 2500);
+}
+
+let captchaValue = "";
+
+function generateCaptcha(){
+    captchaValue = Math.random().toString(36).substring(2, 7).toUpperCase();
+    document.getElementById("captchaText").innerText = captchaValue;
+}
+
+generateCaptcha();
+
+    
+document.querySelector("form").addEventListener("submit", function(e){
+    e.preventDefault();
+
+    const input = document.getElementById("captchaInput").value.toUpperCase();
+
+    if(input !== captchaValue){
+        showToast("Captcha incorrect ❌");
+        generateCaptcha();
+        return;
+    }
+
+    showToast("Message envoyé ✅");
+
+    this.reset();
+    generateCaptcha();
+});
+    
 </script>
     
 </section>
 
 </body>
+    <div id="toast" class="toast">Message envoyé ✅</div>
 </html>
