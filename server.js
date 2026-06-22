@@ -5,6 +5,12 @@ const db = require("./db");
 const bcrypt = require("bcrypt");
 const axios = require("axios");
 const cheerio = require("cheerio");
+const validator = require("validator");
+
+function clean(v){
+  if(!v) return null;
+  return validator.escape(String(v)).trim();
+}
 
 const app = express();
 
@@ -166,28 +172,29 @@ app.post("/api/convoys", adminOnly, async (req, res) => {
     await db.query("DELETE FROM convoys");
 
     for (const c of convoys) {
-      await db.query(
-        `INSERT INTO convoys (
-          title, start, "end", time, date, status,
-          server, cargo, distance, meeting, "meetingTime", dlc, description
-        ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)`,
-        [
-          c.title,
-          c.start,
-          c.end,
-          c.time,
-          c.date,
-          c.status || "ouvert",
-          c.server || null,
-          c.cargo || null,
-          c.distance || null,
-          c.meeting || null,
-          c.meetingTime || null,
-          c.dlc || null,
-          c.description || null
-        ]
-      );
-    }
+  await db.query(
+    `INSERT INTO convoys (
+      title, start, "end", time, date, status,
+      server, cargo, distance, meeting, "meetingTime", dlc, description
+    ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)`,
+    [
+      clean(c.title),
+      clean(c.start),
+      clean(c.end),
+      clean(c.time),
+      clean(c.date),
+      c.status || "ouvert",
+
+      clean(c.server),
+      clean(c.cargo),
+      clean(c.distance),
+      clean(c.meeting),
+      clean(c.meetingTime),
+      clean(c.dlc),
+      clean(c.description)
+    ]
+  );
+}
 
     res.json({ success: true });
 

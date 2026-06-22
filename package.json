@@ -13,6 +13,7 @@
     "express": "^4.18.2",
     "express-session": "^1.17.3",
     "multer": "^2.2.0",
-    "pg": "^8.x"
+    "pg": "^8.x",
+    "validator": "^13.15.35"
   }
 }
