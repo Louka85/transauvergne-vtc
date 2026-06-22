@@ -201,7 +201,8 @@ async function addConvoy(){
     const safe = Array.isArray(data) ? data : [];
 
     safe.push(c);
-
+    console.log("📤 CONVOY ENVOYÉ :", c);
+    
     await fetch("/api/convoys",{
         method:"POST",
         headers:{"Content-Type":"application/json"},
