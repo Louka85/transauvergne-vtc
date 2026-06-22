@@ -8,40 +8,12 @@ const cheerio = require("cheerio");
 
 const app = express();
 
+console.log("🚀 SERVER STARTING...");
+
 app.set("trust proxy", 1);
 
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
-
-/* =========================
-   TRUCKSBOOK API (PROPRE)
-========================= */
-app.get("/api/trucksbook", async (req, res) => {
-  try {
-    const { data } = await axios.get(
-      "https://trucksbook.eu/components/app/company/game_overview.php?company=219466&game=1&stat=0"
-    );
-
-    const $ = cheerio.load(data);
-    const text = $("body").text().replace(/\s+/g, " ");
-
-    const extract = (regex) =>
-      text.match(regex)?.[1]?.trim() || "0";
-
-    res.json({
-      ets2: {
-        distance: extract(/Distance\s*([0-9\s,.]+ ?km)/i),
-        deliveries: extract(/livraisons\s*([0-9]+)/i)
-      }
-    });
-
-  } catch (err) {
-    console.error(err);
-    res.json({
-      ets2: { distance: "0 km", deliveries: "0" }
-    });
-  }
-});
 
 /* =========================
    SESSION
@@ -64,6 +36,34 @@ app.use(
 app.use(express.static(path.join(__dirname, "public")));
 
 /* =========================
+   TRUCKSBOOK API
+========================= */
+app.get("/api/trucksbook", async (req, res) => {
+  try {
+    const { data } = await axios.get(
+      "https://trucksbook.eu/components/app/company/game_overview.php?company=219466&game=1&stat=0"
+    );
+
+    const $ = cheerio.load(data);
+    const text = $("body").text().replace(/\s+/g, " ");
+
+    const extract = (regex) => text.match(regex)?.[1]?.trim() || "0";
+
+    res.json({
+      ets2: {
+        distance: extract(/Distance\s*([0-9\s,.]+ ?km)/i),
+        deliveries: extract(/livraisons\s*([0-9]+)/i)
+      }
+    });
+  } catch (err) {
+    console.error(err);
+    res.json({
+      ets2: { distance: "0 km", deliveries: "0" }
+    });
+  }
+});
+
+/* =========================
    DB INIT
 ========================= */
 db.query(`
@@ -80,7 +80,14 @@ CREATE TABLE IF NOT EXISTS convoys (
   "end" TEXT,
   time TEXT,
   date TEXT,
-  status TEXT
+  status TEXT,
+  server TEXT,
+  cargo TEXT,
+  distance TEXT,
+  meeting TEXT,
+  "meetingTime" TEXT,
+  dlc TEXT,
+  description TEXT
 );
 
 CREATE TABLE IF NOT EXISTS team (
@@ -94,11 +101,6 @@ CREATE TABLE IF NOT EXISTS team (
 /* =========================
    AUTH
 ========================= */
-function auth(req, res, next) {
-  if (req.session?.user) return next();
-  return res.status(401).json({ error: "not logged in" });
-}
-
 function adminOnly(req, res, next) {
   if (req.session?.user?.username?.toLowerCase() === "admin") return next();
   return res.status(403).json({ error: "forbidden" });
@@ -123,65 +125,39 @@ app.post("/login", async (req, res) => {
 
     if (!ok) return res.json({ success: false });
 
-    req.session.user = {
-      id: user.id,
-      username: user.username
-    };
+    req.session.user = user;
 
     res.json({ success: true });
-  } catch {
+  } catch (err) {
+    console.error(err);
     res.json({ success: false });
   }
 });
 
 /* =========================
-   REGISTER
-========================= */
-app.post("/register", async (req, res) => {
-  const { username, password } = req.body;
-
-  try {
-    const hash = await bcrypt.hash(password, 10);
-
-    await db.query(
-      "INSERT INTO users (username, password) VALUES ($1,$2)",
-      [username, hash]
-    );
-
-    res.json({ success: true });
-  } catch {
-    res.json({ success: false });
-  }
-});
-
-/* =========================
-   ME
-========================= */
-app.get("/api/me", (req, res) => {
-  if (!req.session?.user) return res.json({ logged: false });
-
-  res.json({
-    logged: true,
-    user: req.session.user.username
-  });
-});
-
-/* =========================
-   LOGOUT
-========================= */
-app.get("/logout", (req, res) => {
-  req.session.destroy(() => res.redirect("/"));
-});
-
-/* =========================
-   ADMIN
+   ADMIN PAGE
 ========================= */
 app.get("/admin", adminOnly, (req, res) => {
   res.sendFile(path.join(__dirname, "private", "admin.html"));
 });
 
 /* =========================
-   CONVOYS
+   CONVOYS GET (IMPORTANT FIX)
+========================= */
+app.get("/api/convoys", async (req, res) => {
+  try {
+    const result = await db.query(
+      "SELECT * FROM convoys ORDER BY id DESC"
+    );
+    res.json(result.rows);
+  } catch (err) {
+    console.error("GET CONVOYS ERROR:", err);
+    res.json([]);
+  }
+});
+
+/* =========================
+   CONVOYS POST
 ========================= */
 app.post("/api/convoys", adminOnly, async (req, res) => {
   try {
@@ -191,11 +167,10 @@ app.post("/api/convoys", adminOnly, async (req, res) => {
 
     for (const c of convoys) {
       await db.query(
-        `INSERT INTO convoys
-        (title, start, "end", time, date, status,
-         server, cargo, distance, meeting, "meetingTime", dlc, description)
-        VALUES
-        ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)`,
+        `INSERT INTO convoys (
+          title, start, "end", time, date, status,
+          server, cargo, distance, meeting, "meetingTime", dlc, description
+        ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)`,
         [
           c.title,
           c.start,
@@ -217,7 +192,7 @@ app.post("/api/convoys", adminOnly, async (req, res) => {
     res.json({ success: true });
 
   } catch (err) {
-    console.error("CONVOY ERROR:", err);
+    console.error("POST CONVOY ERROR:", err);
     res.status(500).json({ success: false });
   }
 });
@@ -230,22 +205,18 @@ app.get("/api/team", async (req, res) => {
     const result = await db.query("SELECT * FROM team ORDER BY id ASC");
     res.json(result.rows);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.json([]);
   }
 });
 
 app.post("/api/team", adminOnly, async (req, res) => {
   try {
-    const team = Array.isArray(req.body) ? req.body : req.body.team;
-
-    if (!Array.isArray(team)) {
-      return res.status(400).json({ success: false });
-    }
+    const team = Array.isArray(req.body) ? req.body : [];
 
     await db.query("DELETE FROM team");
 
     for (const m of team) {
-      if (!m?.name || !m?.role) continue;
+      if (!m.name || !m.role) continue;
 
       await db.query(
         "INSERT INTO team (name, role, avatar) VALUES ($1,$2,$3)",
@@ -254,8 +225,10 @@ app.post("/api/team", adminOnly, async (req, res) => {
     }
 
     res.json({ success: true });
+
   } catch (err) {
-    res.status(500).json({ success: false, error: err.message });
+    console.error(err);
+    res.status(500).json({ success: false });
   }
 });
 
@@ -276,17 +249,20 @@ async function createAdmin() {
       ["Admin", hash]
     );
 
-    console.log("Admin créé : Admin / Trans'Auvergne");
+    console.log("Admin créé");
   }
 }
 
 /* =========================
-   START
+   START SERVER
 ========================= */
 async function start() {
   await createAdmin();
+
   const port = process.env.PORT || 3000;
-  app.listen(port, () => console.log("Server running"));
+  app.listen(port, () =>
+    console.log("✅ SERVER RUNNING ON PORT", port)
+  );
 }
 
 start();
