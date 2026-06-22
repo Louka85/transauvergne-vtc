@@ -364,3 +364,51 @@ body{
     font-size:13px;
     color:#aaa;
 }
+
+.contact-box{
+    opacity:0;
+    transform:translateY(20px);
+    animation:fadeIn 0.6s ease forwards;
+}
+
+@keyframes fadeIn{
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.toast{
+    position:fixed;
+    bottom:20px;
+    left:50%;
+    transform:translateX(-50%);
+    background:#2ecc71;
+    color:black;
+    padding:12px 20px;
+    border-radius:10px;
+    font-weight:bold;
+    opacity:0;
+    pointer-events:none;
+    transition:0.3s;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateX(-50%) translateY(-10px);
+}
+
+.captcha{
+    margin:10px 0;
+    padding:10px;
+    background:#111;
+    border-radius:10px;
+    border:1px solid rgba(255,255,255,0.1);
+}
+
+#captchaText{
+    display:block;
+    margin-bottom:8px;
+    font-weight:bold;
+    color:#2ecc71;
+}
