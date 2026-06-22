@@ -160,6 +160,22 @@ app.get("/api/convoys", async (req, res) => {
     console.error("GET CONVOYS ERROR:", err);
     res.json([]);
   }
+
+  app.post("/api/convoys/status", adminOnly, async (req, res) => {
+  try {
+    const { id, status } = req.body;
+
+    await db.query(
+      "UPDATE convoys SET status=$1 WHERE id=$2",
+      [status, id]
+    );
+
+    res.json({ success: true });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false });
+  }
 });
 
 /* =========================
