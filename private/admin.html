@@ -348,8 +348,10 @@ async function deleteConvoy(id){
 /* ================= TEAM ================= */
 async function addMember(){
 
-    const file = avatarFile.files[0];
-    const url = avatarUrl.value.trim();
+    const nameEl = document.getElementById("name");
+    const roleEl = document.getElementById("role");
+    const file = document.getElementById("avatarFile").files[0];
+    const url = document.getElementById("avatarUrl").value.trim();
 
     let avatar = "";
 
@@ -361,8 +363,8 @@ async function addMember(){
 
     const member = {
         id: Date.now(),
-        name: name.value.trim(),
-        role: role.value.trim(),
+        name: nameEl.value.trim(),
+        role: roleEl.value.trim(),
         avatar
     };
 
