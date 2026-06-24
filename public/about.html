@@ -62,38 +62,64 @@
 
   <div class="team-grid" id="team"></div>
 
-  <div class="history-card">
-
+ <div class="history-card">
   <h2>📖 Une partie de notre histoire</h2>
 
-  <p>
-    TransAuvergne VTC ne s’est pas construit tout seul.
-    Depuis le début du projet, plusieurs personnes ont participé à son évolution, à son organisation et à son ambiance.
-  </p>
+  <div class="history-content">
 
-  <p>
-    Parmi elles, notre ancien directeur a joué un rôle important dans le développement de la VTC.
-    Présent depuis les débuts, il a contribué à poser les bases du projet et à faire évoluer la communauté.
-  </p>
+    <p>
+      TransAuvergne VTC n’est pas juste un groupe sur ETS2.
+      C’est une aventure construite petit à petit par des passionnés.
+    </p>
 
-  <p>
-    Aujourd’hui, il a dû prendre la décision de quitter ses fonctions pour des raisons personnelles importantes.
-    Même si son départ marque une étape, son passage restera une partie de l’histoire de TransAuvergne VTC.
-  </p>
+    <p>
+      Depuis le début, plusieurs personnes ont participé à faire évoluer la communauté :
+      organisation, convois, ambiance Discord, et moments de jeu.
+    </p>
 
-  <p>
-    Nous le remercions pour tout ce qu’il a apporté au projet et lui souhaitons le meilleur pour la suite.
-  </p>
+    <p>
+      Notre ancien directeur a fait partie de cette aventure dès les premières étapes.
+      Il a contribué à poser les bases du projet et à son développement.
+    </p>
 
-  <p class="signature">
-    — L’équipe TransAuvergne VTC 🚛
-  </p>
+    <p>
+      Aujourd’hui, il a dû quitter ses fonctions pour des raisons personnelles importantes.
+      Même si son départ marque une étape, son passage reste une partie de l’histoire du VTC.
+    </p>
 
-</div>
-  
+    <p>
+      On le remercie pour son implication et on lui souhaite le meilleur pour la suite.
+    </p>
+
+    <p class="signature">
+      — TransAuvergne VTC 🚛
+    </p>
+
+  </div>
 </div>
 
 <script>
+
+function toast(msg, type="success"){
+    const t = document.createElement("div");
+    t.textContent = msg;
+
+    t.style.position = "fixed";
+    t.style.bottom = "20px";
+    t.style.right = "20px";
+    t.style.padding = "12px 18px";
+    t.style.borderRadius = "10px";
+    t.style.color = "#fff";
+    t.style.zIndex = "9999";
+    t.style.fontFamily = "Arial";
+
+    t.style.background = type === "success" ? "#2ecc71" : "#e74c3c";
+
+    document.body.appendChild(t);
+
+    setTimeout(()=>t.remove(), 2500);
+}
+  
 async function loadTeam(){
   try {
     const res = await fetch("/api/team", { credentials:"include" });
