@@ -2,6 +2,7 @@
 <html lang="fr">
 
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -11,182 +12,146 @@
 
 </head>
 
+
 <body>
 
 
 <header class="header">
 
 <a href="index.html" class="logo">
-<img src="logo.jpeg">
-<span>TransAuvergne VTC</span>
+    <img src="logo.jpeg">
+    <span>TransAuvergne VTC</span>
 </a>
 
 
+<nav class="nav">
+
+<a href="index.html">Accueil</a>
+<a href="about.html">Qui sommes-nous</a>
+<a href="convoy.html">Convois</a>
+<a href="contact.html">Contact</a>
+
+</nav>
+
+
 <div class="status">
+
 <span class="dot"></span>
-Espace Conducteur
+Conducteur
+
 </div>
 
 
-<button class="btn-danger" onclick="logout()">
+<button class="logout" onclick="logout()">
 Déconnexion
 </button>
 
 
+<div class="mobile-btn" onclick="toggleMenu()">
+☰
+</div>
+
+
 </header>
 
-<div class="driver-menu">
 
-    <select id="categoryMenu" onchange="changeCategory()">
 
-        <option value="home">🏠 Accueil</option>
+<div class="mobile-menu" id="mobileMenu">
 
-        <option value="profile">👤 Mon profil</option>
-
-        <option value="convoys">📅 Mes convois</option>
-
-        <option value="truck">🚛 Mon camion</option>
-
-        <option value="stats">📊 Statistiques</option>
-
-        <option value="news">📢 Informations VTC</option>
-
-        <option value="support">🎫 Support</option>
-
-    </select>
+<a href="index.html">Accueil</a>
+<a href="about.html">Qui sommes-nous</a>
+<a href="convoy.html">Convois</a>
+<a href="contact.html">Contact</a>
 
 </div>
+
+
+
+
+<main class="driver-page">
+
+
+<div class="driver-card">
+
+<h1>
+🚛 Espace Conducteur
+</h1>
+
+
+<p>
+Bienvenue dans ton espace personnel TransAuvergne VTC.
+Ici tu retrouveras toutes les informations liées à ton activité.
+</p>
+
+
+</div>
+
+
+
+
+<div class="driver-card">
+
+
+<h2>
+📂 Catégories
+</h2>
+
+
+<select id="category" onchange="openCategory()">
+
+<option value="">
+Choisir une catégorie
+</option>
+
+
+<option value="profil">
+👤 Mon profil
+</option>
+
+
+<option value="convoys">
+🚛 Mes convois
+</option>
+
+
+<option value="stats">
+📊 Mes statistiques
+</option>
+
+
+<option value="planning">
+📅 Planning
+</option>
+
+
+<option value="rules">
+📜 Règlement conducteur
+</option>
+
+
+</select>
+
+
+</div>
+
+
+
 
 
 <div id="content">
 
-    <div id="home" class="category">
-        <h2>🏠 Accueil</h2>
-        <p>Bienvenue dans ton espace conducteur.</p>
-    </div>
 
+<div class="driver-card">
 
-    <div id="profile" class="category" style="display:none;">
-        <h2>👤 Mon profil</h2>
-        <p>Informations du conducteur.</p>
-    </div>
+<h2>
+Bienvenue conducteur 👋
+</h2>
 
-
-    <div id="convoys" class="category" style="display:none;">
-        <h2>📅 Mes convois</h2>
-        <p>Aucun convoi pour le moment.</p>
-    </div>
-
-
-    <div id="truck" class="category" style="display:none;">
-        <h2>🚛 Mon camion</h2>
-        <p>Configuration du véhicule.</p>
-    </div>
-
-
-    <div id="stats" class="category" style="display:none;">
-        <h2>📊 Statistiques</h2>
-        <p>Statistiques de conduite.</p>
-    </div>
-
-
-    <div id="news" class="category" style="display:none;">
-        <h2>📢 Informations VTC</h2>
-        <p>Actualités de TransAuvergne.</p>
-    </div>
-
-
-    <div id="support" class="category" style="display:none;">
-        <h2>🎫 Support</h2>
-        <p>Contact support Discord.</p>
-    </div>
-
-</div>
-
-<div class="container">
-
-
-<h1>🚛 Tableau de bord conducteur</h1>
-
-
-<div class="grid">
-
-
-<div class="card">
-
-<h2>👤 Profil</h2>
 
 <p>
-Nom :
-<span id="driverName">Chargement...</span>
+Sélectionne une catégorie pour afficher les informations.
 </p>
 
-<p>
-Statut :
-<span class="tag ouvert">
-Actif
-</span>
-</p>
-
-<p>
-Grade :
-Conducteur
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h2>📅 Prochain convoi</h2>
-
-<p>
-Aucun convoi prévu.
-</p>
-
-<p>
-Les prochains trajets apparaîtront ici.
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h2>🚚 Mes statistiques</h2>
-
-<p>
-Kilomètres parcourus :
-0 km
-</p>
-
-<p>
-Convois effectués :
-0
-</p>
-
-<p>
-Ancienneté :
-Nouveau
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h2>📢 Informations VTC</h2>
-
-<p>
-Bienvenue dans l'espace conducteur TransAuvergne VTC.
-</p>
-
-<p>
-Respect des règles, bonne ambiance et convois propres.
-</p>
 
 </div>
 
@@ -194,36 +159,151 @@ Respect des règles, bonne ambiance et convois propres.
 </div>
 
 
-</div>
+
+
+</main>
+
+
 
 
 
 <script>
 
+
+function toggleMenu(){
+
+let menu=document.getElementById("mobileMenu");
+
+menu.style.display =
+menu.style.display==="flex"
+?
+"none"
+:
+"flex";
+
+}
+
+
+
+
 function logout(){
 
-fetch("/logout",{
+fetch("/logout",
+{
 credentials:"include"
 })
 .then(()=>{
+
 location.href="/";
+
 });
 
 }
 
-    function changeCategory(){
 
-    let selected = document.getElementById("categoryMenu").value;
 
-    let pages = document.querySelectorAll(".category");
 
-    pages.forEach(page=>{
-        page.style.display = "none";
-    });
+function openCategory(){
 
-    document.getElementById(selected).style.display = "block";
+
+let value=document.getElementById("category").value;
+
+
+let content=document.getElementById("content");
+
+
+
+let pages={
+
+
+profil:`
+
+<div class="driver-card">
+
+<h2>👤 Profil conducteur</h2>
+
+<p>
+Informations personnelles du conducteur.
+</p>
+
+</div>
+
+`,
+
+
+
+convoys:`
+
+<div class="driver-card">
+
+<h2>🚛 Mes convois</h2>
+
+<p>
+Aucun convoi disponible.
+</p>
+
+</div>
+
+`,
+
+
+
+stats:`
+
+<div class="driver-card">
+
+<h2>📊 Statistiques</h2>
+
+<p>
+Les statistiques seront disponibles prochainement.
+</p>
+
+</div>
+
+`,
+
+
+
+planning:`
+
+<div class="driver-card">
+
+<h2>📅 Planning</h2>
+
+<p>
+Aucun événement prévu.
+</p>
+
+</div>
+
+`,
+
+
+
+rules:`
+
+<div class="driver-card">
+
+<h2>📜 Règlement</h2>
+
+<p>
+Respect, bonne conduite et pas de crash volontaire dans les ronds-points.
+</p>
+
+</div>
+
+`
+
+};
+
+
+
+content.innerHTML =
+pages[value] || "";
 
 }
+
+
 
 </script>
 
