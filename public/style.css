@@ -541,104 +541,74 @@ button {
   
 }
 
-/* ================= CONDUCTEUR STYLE ================= */
-
+/* ================= CONDUCTEUR ================= */
 
 .driver-page{
-
-    padding:120px 20px 60px;
-
-    max-width:1000px;
-
-    margin:auto;
-
+    max-width:1100px;
+    margin:0 auto;
+    padding:110px 25px 50px;
 }
 
-
-
-/* CARTES CONDUCTEUR */
+/* Cartes */
 
 .driver-card{
 
-    background:
+    background:#171717;
 
-    linear-gradient(
-        145deg,
-        rgba(46,204,113,0.12),
-        rgba(255,255,255,0.03)
-    );
+    border:1px solid rgba(255,255,255,.08);
 
-    border:
+    border-radius:18px;
 
-    1px solid rgba(46,204,113,0.25);
-
-    border-radius:22px;
-
-    padding:30px;
+    padding:28px;
 
     margin-bottom:25px;
 
-    backdrop-filter:blur(15px);
+    transition:.25s;
 
     box-shadow:
-
-    0 0 25px rgba(46,204,113,0.12);
-
-    transition:.3s;
-
-    animation:driverFade .5s ease;
+    0 10px 25px rgba(0,0,0,.35);
 
 }
-
-
 
 .driver-card:hover{
 
-    transform:translateY(-5px);
+    transform:translateY(-3px);
 
-    border-color:#2ecc71;
+    border-color:rgba(46,204,113,.45);
 
     box-shadow:
-
-    0 0 35px rgba(46,204,113,.35);
+    0 0 25px rgba(46,204,113,.18);
 
 }
-
-
 
 .driver-card h1{
 
-    color:#2ecc71;
+    margin:0 0 15px;
 
     font-size:34px;
 
-    text-shadow:
-
-    0 0 15px rgba(46,204,113,.7);
+    color:#2ecc71;
 
 }
 
-
-
 .driver-card h2{
+
+    margin-top:0;
 
     color:#2ecc71;
 
 }
 
-
-
 .driver-card p{
 
-    color:#ccc;
+    color:#d0d0d0;
 
     line-height:1.7;
 
 }
 
 
-
-/* MENU CATEGORIES */
+/* ================= SELECT ================= */
 
 #category{
 
@@ -646,117 +616,65 @@ button {
 
     padding:16px;
 
-    border-radius:15px;
+    background:#111;
 
-    background:
+    color:#fff;
 
-    linear-gradient(
-        145deg,
-        #151515,
-        #090909
-    );
+    border:1px solid rgba(255,255,255,.12);
 
-    color:white;
-
-    border:
-
-    1px solid rgba(46,204,113,.35);
+    border-radius:12px;
 
     font-size:16px;
 
     cursor:pointer;
 
-    transition:.3s;
+    transition:.25s;
 
 }
-
-
 
 #category:hover{
 
     border-color:#2ecc71;
 
     box-shadow:
-
-    0 0 20px rgba(46,204,113,.4);
+    0 0 15px rgba(46,204,113,.25);
 
 }
 
+#category:focus{
 
+    outline:none;
+
+    border-color:#2ecc71;
+
+    box-shadow:
+    0 0 20px rgba(46,204,113,.30);
+
+}
 
 #category option{
 
     background:#111;
 
-    color:white;
-
 }
-
-
-
-/* LOGOUT */
-
-.logout{
-
-    background:
-
-    linear-gradient(
-        135deg,
-        #e74c3c,
-        #c0392b
-    );
-
-    color:white;
-
-    border:none;
-
-    padding:12px 18px;
-
-    border-radius:12px;
-
-    font-weight:bold;
-
-    cursor:pointer;
-
-    transition:.3s;
-
-}
-
-
-
-.logout:hover{
-
-    transform:translateY(-3px);
-
-    box-shadow:
-
-    0 0 25px rgba(231,76,60,.5);
-
-}
-
 
 
 /* ================= REGLEMENT ================= */
 
-
 .rules-card{
 
-    max-width:900px;
-    margin:35px auto;
-    padding:35px;
-
-    background:#141414;
+    background:#171717;
 
     border:1px solid rgba(46,204,113,.35);
 
-    border-radius:20px;
+    border-radius:18px;
 
-    text-align:left;
+    padding:35px;
+
+    margin-top:25px;
 
     box-shadow:
     0 0 20px rgba(46,204,113,.15);
-
-    transition:.25s;
 
 }
 
@@ -765,9 +683,7 @@ button {
     border-color:#2ecc71;
 
     box-shadow:
-    0 0 30px rgba(46,204,113,.35);
-
-    transform:translateY(-3px);
+    0 0 30px rgba(46,204,113,.30);
 
 }
 
@@ -779,7 +695,7 @@ button {
 
     font-size:32px;
 
-    margin-bottom:30px;
+    margin-bottom:35px;
 
 }
 
@@ -788,7 +704,8 @@ button {
     color:#2ecc71;
 
     margin-top:30px;
-    margin-bottom:10px;
+
+    margin-bottom:12px;
 
     border-left:4px solid #2ecc71;
 
@@ -802,91 +719,73 @@ button {
 
     line-height:1.8;
 
-    font-size:15px;
+}
+
+.rules-card strong{
+
+    color:#2ecc71;
 
 }
 
 
+/* ================= BOUTON LOGOUT ================= */
 
-/* ANIMATIONS */
+.logout{
 
+    background:#d63b3b;
 
-@keyframes driverFade{
+    color:#fff;
 
-from{
+    border:none;
 
-opacity:0;
+    padding:11px 18px;
 
-transform:translateY(25px);
+    border-radius:10px;
 
-}
+    cursor:pointer;
 
-to{
+    font-weight:bold;
 
-opacity:1;
-
-transform:translateY(0);
-
-}
+    transition:.25s;
 
 }
 
+.logout:hover{
 
+    background:#ff4c4c;
 
-@keyframes rulesGlow{
-
-from{
-
-box-shadow:
-
-0 0 20px rgba(46,204,113,.2),
-
-inset 0 0 20px rgba(46,204,113,.05);
-
-}
-
-to{
-
-box-shadow:
-
-0 0 45px rgba(46,204,113,.5),
-
-inset 0 0 35px rgba(46,204,113,.15);
-
-}
+    box-shadow:
+    0 0 18px rgba(255,80,80,.35);
 
 }
 
 
-
-/* MOBILE */
+/* ================= RESPONSIVE ================= */
 
 @media(max-width:700px){
 
 .driver-page{
 
-padding:100px 15px 40px;
+    padding:95px 15px 30px;
 
 }
 
-
-.driver-card{
-
-padding:20px;
-
-}
-
-
+.driver-card,
 .rules-card{
 
-padding:25px;
+    padding:22px;
 
 }
 
+.driver-card h1{
+
+    font-size:28px;
+
+}
 
 .rules-card h2{
 
-font-size:25px;
+    font-size:26px;
 
 }
 
