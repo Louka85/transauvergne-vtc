@@ -1,420 +1,792 @@
-/* =========================
-   TRANS AUVERGNE VTC
-   STYLE GLOBAL
-========================= */
+* {
+  box-sizing: border-box;
+}
 
+html {
+  scroll-behavior: smooth;
+}
 
-/* =========================
-   VARIABLES
-========================= */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: radial-gradient(circle at top, #151515, #0f0f0f);
+  color: white;
+}
 
-:root{
+/* ================= HEADER ================= */
 
-    --bg:#0f0f0f;
-    --bg-soft:#151515;
-    --card:#171717;
-    --header:rgba(20,20,20,.85);
+.team-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px;
+}
 
-    --text:#ffffff;
-    --text-soft:#cfcfcf;
+@media(max-width:700px){
+  .team-grid{
+    grid-template-columns:1fr;
+  }
+}
 
-    --accent:#2ecc71;
-    --accent-hover:#27ae60;
+.card{
+  background:#161616;
+  border:1px solid rgba(255,255,255,0.06);
+  padding:15px;
+  border-radius:12px;
+}
 
-    --danger:#e74c3c;
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 64px;
 
-    --border:rgba(255,255,255,.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-    --shadow:
-    0 10px 30px rgba(0,0,0,.35);
+  padding: 0 22px;
 
+  background: rgba(20,20,20,0.85);
+  backdrop-filter: blur(14px);
+
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+
+  z-index: 1000;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+}
+
+.logo img {
+  height: 38px;
+}
+
+/* NAV */
+.nav {
+  display: flex;
+  gap: 18px;
+}
+
+.nav a {
+  text-decoration: none;
+  color: rgba(255,255,255,0.65);
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.nav a:hover {
+  color: white;
+  transform: translateY(2px);
+}
+
+/* STATUS */
+.status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  background: #2ecc71;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #2ecc71;
+}
+
+/* MOBILE MENU */
+.mobile-btn {
+  display: none;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  position: fixed;
+  top: 70px;
+  right: 15px;
+  background: rgba(10,10,10,0.95);
+  padding: 15px;
+  border-radius: 12px;
+  width: 200px;
+}
+
+.mobile-menu a {
+  color: white;
+  padding: 8px;
+  text-decoration: none;
+}
+
+/* ================= CONTAINER ================= */
+
+.container {
+  padding: 110px 20px 50px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+/* ================= GRID ================= */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 15px;
+}
+
+/* ================= CARDS ================= */
+
+.card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 18px;
+  border-radius: 16px;
+  transition: 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(46,204,113,0.4);
+}
+
+/* ================= TAG ================= */
+
+.tag {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+.tag.ouvert { background: rgba(46,204,113,0.15); color:#2ecc71; }
+.tag.complet { background: rgba(241,196,15,0.15); color:#f1c40f; }
+.tag.annule { background: rgba(231,76,60,0.15); color:#e74c3c; }
+
+.about-text{
+  margin:20px 0 30px;
+  padding:15px;
+  background:#161616;
+  border:1px solid rgba(255,255,255,0.05);
+  border-radius:12px;
+  line-height:1.6;
+  color:#ddd;
+}
+
+/* ================= TEAM ================= */
+
+.history-card{
+    margin-top:30px;
+    padding:25px;
+    border-radius:16px;
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(10px);
+}
+
+.history-card h2{
+    color:#2ecc71;
+    margin-bottom:15px;
+}
+
+.history-content p{
+    color:#d0d0d0;
+    line-height:1.6;
+    margin-bottom:12px;
+}
+
+.signature{
+    margin-top:15px;
+    color:#2ecc71;
+    font-weight:bold;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.team-grid img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* ================= BUTTONS ================= */
+
+button {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.btn {
+  background: #2ecc71;
+  color: black;
+}
+
+.btn-danger {
+  background: #e74c3c;
+  color: white;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 768px) {
+  .nav { display: none; }
+  .mobile-btn { display: block; }
+}
+
+/* ===================== CONTACT GAMING ===================== */
+
+.contact{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:120px 20px 50px;
+    background:
+    radial-gradient(circle at top,#2ecc7125,transparent 35%),
+    radial-gradient(circle at bottom,#00c3ff20,transparent 40%);
 }
 
 
-/* =========================
-   THEME LIGHT
-========================= */
-
-body.light{
-
-    --bg:#eeeeee;
-    --bg-soft:#dddddd;
-    --card:#ffffff;
-    --header:rgba(255,255,255,.85);
-
-    --text:#222;
-    --text-soft:#555;
-
-    --border:rgba(0,0,0,.12);
-
+.contact-wrapper{
+    width:100%;
+    max-width:550px;
 }
 
 
-/* =========================
-   THEME GREEN
-========================= */
-
-body.green{
-
-    --accent:#00ff88;
-    --accent-hover:#00cc66;
-
-}
-
-
-/* =========================
-   RESET
-========================= */
-
-*{
-
-    box-sizing:border-box;
-
-}
-
-
-html{
-
-    scroll-behavior:smooth;
-
-}
-
-
-body{
-
-    margin:0;
-
-    font-family:
-    Arial,
-    sans-serif;
+.contact-box{
 
     background:
-    radial-gradient(
-        circle at top,
-        var(--bg-soft),
-        var(--bg)
+    linear-gradient(
+        145deg,
+        rgba(255,255,255,0.08),
+        rgba(255,255,255,0.02)
     );
 
-    color:var(--text);
-
-    transition:.3s;
-
-}
-
-
-/* =========================
-   HEADER
-========================= */
-
-
-.header{
-
-    position:fixed;
-
-    top:0;
-    left:0;
-
-    width:100%;
-    height:64px;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:space-between;
-
-    padding:0 25px;
-
-
-    background:var(--header);
+    border:1px solid rgba(255,255,255,0.12);
 
     backdrop-filter:blur(15px);
 
+    border-radius:25px;
 
-    border-bottom:
-    1px solid var(--border);
+    padding:35px;
+
+    box-shadow:
+    0 0 40px rgba(46,204,113,0.15),
+    inset 0 0 20px rgba(255,255,255,0.03);
+
+    text-align:center;
+
+    opacity:0;
+    transform:translateY(40px);
+
+    animation:contactAppear .7s ease forwards;
+}
 
 
-    z-index:1000;
+@keyframes contactAppear{
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+
+.contact-box h1{
+
+    font-size:36px;
+
+    margin-bottom:25px;
+
+    color:#2ecc71;
+
+    text-shadow:
+    0 0 15px rgba(46,204,113,.7);
 
 }
 
 
 
-.logo{
+.contact-box input,
+.contact-box textarea{
 
-    display:flex;
+    width:100%;
 
-    align-items:center;
+    padding:14px;
 
-    gap:10px;
+    margin:8px 0;
 
-    text-decoration:none;
+    background:#090d12;
 
-    color:var(--text);
+    color:white;
 
-    font-weight:bold;
+    border-radius:14px;
 
-}
+    border:1px solid rgba(255,255,255,.1);
 
+    outline:none;
 
-.logo img{
-
-    height:38px;
-
-    border-radius:8px;
+    transition:.25s;
 
 }
 
 
 
-.status{
+.contact-box input:focus,
+.contact-box textarea:focus{
 
-    display:flex;
+    border-color:#2ecc71;
 
-    align-items:center;
+    box-shadow:
+    0 0 15px rgba(46,204,113,.4);
 
-    gap:8px;
+}
 
-    color:var(--text-soft);
+
+
+.contact-box textarea{
+
+    height:130px;
+
+    resize:none;
+
+}
+
+
+
+.contact-box button{
+
+    width:100%;
+
+    padding:14px;
+
+    margin-top:15px;
+
+    border-radius:14px;
+
+    border:none;
+
+    background:#2ecc71;
+
+    color:#050505;
+
+    font-weight:800;
+
+    font-size:16px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+    box-shadow:
+    0 0 20px rgba(46,204,113,.4);
+
+}
+
+
+
+.contact-box button:hover{
+
+    transform:translateY(-3px) scale(1.02);
+
+    box-shadow:
+    0 0 35px rgba(46,204,113,.7);
+
+}
+
+
+
+.contact-info{
+
+    margin-top:20px;
+
+    color:#aaa;
 
     font-size:14px;
 
 }
 
 
-.dot{
 
-    width:9px;
+/* ================= CAPTCHA ================= */
 
-    height:9px;
 
-    border-radius:50%;
+.captcha{
 
-    background:var(--accent);
+    margin-top:15px;
+
+    padding:15px;
+
+    background:#090d12;
+
+    border-radius:15px;
+
+    border:1px solid rgba(255,255,255,.08);
+
+}
+
+
+
+#captchaText{
+
+    font-size:22px;
+
+    letter-spacing:5px;
+
+    font-weight:900;
+
+    color:#2ecc71;
+
+    text-shadow:
+
+    0 0 12px #2ecc71;
+
+    margin-bottom:10px;
+
+}
+
+
+
+/* ================= TOAST ================= */
+
+
+.toast{
+
+    position:fixed;
+
+    bottom:30px;
+
+    left:50%;
+
+    transform:translateX(-50%) translateY(30px);
+
+    background:#2ecc71;
+
+    color:#050505;
+
+    padding:14px 25px;
+
+    border-radius:15px;
+
+    font-weight:bold;
 
     box-shadow:
-    0 0 12px var(--accent);
+
+    0 0 30px rgba(46,204,113,.5);
+
+    opacity:0;
+
+    transition:.35s;
+
+    z-index:2000;
 
 }
 
 
 
-/* =========================
-   THEME SELECT
-========================= */
+.toast.show{
 
+    opacity:1;
 
-#themeSelector{
-
-    background:var(--card);
-
-    color:var(--text);
-
-    border:
-
-    1px solid var(--border);
-
-    padding:8px 12px;
-
-    border-radius:10px;
-
-    cursor:pointer;
+    transform:
+    translateX(-50%)
+    translateY(0);
 
 }
 
 
-/* =========================
-   CONTAINER
-========================= */
+
+/* ================= MOBILE ================= */
 
 
-.container,
-.driver-page,
-.admin-page{
+@media(max-width:700px){
+
+    .contact{
+
+        padding:100px 15px 40px;
+
+    }
 
 
+    .contact-box{
+
+        padding:25px 18px;
+
+        border-radius:20px;
+
+    }
+
+
+    .contact-box h1{
+
+        font-size:30px;
+
+    }
+  
+}
+
+/* ================= CONDUCTEUR ================= */
+
+.driver-page{
     max-width:1100px;
-
-    margin:auto;
-
-    padding:
-
-    100px 20px 50px;
-
-
+    margin:0 auto;
+    padding:110px 25px 50px;
 }
 
+/* Cartes */
 
-/* =========================
-   CARDS
-========================= */
+.driver-card{
 
+    background:#171717;
 
-.card,
-.driver-card,
-.admin-card{
-
-
-    background:var(--card);
-
-    border:
-
-    1px solid var(--border);
-
+    border:1px solid rgba(255,255,255,.08);
 
     border-radius:18px;
 
+    padding:28px;
 
-    padding:25px;
-
-
-    margin-bottom:20px;
-
-
-    box-shadow:var(--shadow);
-
+    margin-bottom:25px;
 
     transition:.25s;
 
-}
-
-
-
-.card:hover,
-.driver-card:hover,
-.admin-card:hover{
-
-
-    transform:translateY(-4px);
-
-
-    border-color:
-
-    var(--accent);
-
+    box-shadow:
+    0 10px 25px rgba(0,0,0,.35);
 
 }
 
+.driver-card:hover{
 
+    transform:translateY(-3px);
 
-/* =========================
-   TEXT
-========================= */
+    border-color:rgba(46,204,113,.45);
 
-
-h1,
-h2{
-
-    color:var(--accent);
+    box-shadow:
+    0 0 25px rgba(46,204,113,.18);
 
 }
 
+.driver-card h1{
 
+    margin:0 0 15px;
 
-p{
+    font-size:34px;
 
-    color:var(--text-soft);
+    color:#2ecc71;
+
+}
+
+.driver-card h2{
+
+    margin-top:0;
+
+    color:#2ecc71;
+
+}
+
+.driver-card p{
+
+    color:#d0d0d0;
 
     line-height:1.7;
 
 }
 
 
-/* =========================
-   BUTTONS
-========================= */
+/* ================= SELECT ================= */
+
+#category{
+
+    width:100%;
+
+    padding:16px;
+
+    background:#111;
+
+    color:#fff;
+
+    border:1px solid rgba(255,255,255,.12);
+
+    border-radius:12px;
+
+    font-size:16px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+#category:hover{
+
+    border-color:#2ecc71;
+
+    box-shadow:
+    0 0 15px rgba(46,204,113,.25);
+
+}
+
+#category:focus{
+
+    outline:none;
+
+    border-color:#2ecc71;
+
+    box-shadow:
+    0 0 20px rgba(46,204,113,.30);
+
+}
+
+#category option{
+
+    background:#111;
+
+}
 
 
-button,
-.btn{
+/* ================= REGLEMENT ================= */
 
+.rules-card{
+
+    background:#171717;
+
+    border:1px solid rgba(46,204,113,.35);
+
+    border-radius:18px;
+
+    padding:35px;
+
+    margin-top:25px;
+
+    box-shadow:
+    0 0 20px rgba(46,204,113,.15);
+
+}
+
+.rules-card:hover{
+
+    border-color:#2ecc71;
+
+    box-shadow:
+    0 0 30px rgba(46,204,113,.30);
+
+}
+
+.rules-card h2{
+
+    text-align:center;
+
+    color:#2ecc71;
+
+    font-size:32px;
+
+    margin-bottom:35px;
+
+}
+
+.rules-card h3{
+
+    color:#2ecc71;
+
+    margin-top:30px;
+
+    margin-bottom:12px;
+
+    border-left:4px solid #2ecc71;
+
+    padding-left:12px;
+
+}
+
+.rules-card p{
+
+    color:#d8d8d8;
+
+    line-height:1.8;
+
+}
+
+.rules-card strong{
+
+    color:#2ecc71;
+
+}
+
+
+/* ================= BOUTON LOGOUT ================= */
+
+.logout{
+
+    background:#d63b3b;
+
+    color:#fff;
 
     border:none;
 
-    padding:12px 18px;
+    padding:11px 18px;
 
-    border-radius:12px;
+    border-radius:10px;
 
     cursor:pointer;
 
     font-weight:bold;
 
-
-    background:var(--accent);
-
-    color:#000;
-
-
     transition:.25s;
 
-
 }
-
-
-
-button:hover,
-.btn:hover{
-
-
-    background:var(--accent-hover);
-
-    transform:translateY(-2px);
-
-}
-
-
-
-/* =========================
-   LOGOUT
-========================= */
-
-
-.logout{
-
-
-    background:var(--danger);
-
-    color:white;
-
-
-}
-
 
 .logout:hover{
 
-    box-shadow:
+    background:#ff4c4c;
 
-    0 0 20px rgba(231,76,60,.4);
+    box-shadow:
+    0 0 18px rgba(255,80,80,.35);
 
 }
 
 
-
-/* =========================
-   RESPONSIVE
-========================= */
-
+/* ================= RESPONSIVE ================= */
 
 @media(max-width:700px){
 
+.driver-page{
 
-.header{
-
-    padding:0 15px;
-
-}
-
-
-.container,
-.driver-page,
-.admin-page{
-
-    padding:
-
-    90px 15px 40px;
+    padding:95px 15px 30px;
 
 }
 
+.driver-card,
+.rules-card{
+
+    padding:22px;
+
+}
+
+.driver-card h1{
+
+    font-size:28px;
+
+}
+
+.rules-card h2{
+
+    font-size:26px;
+
+}
 
 }
