@@ -1,244 +1,609 @@
-/* =========================
-   TRANS AUVERGNE VTC
-   STYLE COMPLET
-========================= */
-
-*{
-    box-sizing:border-box;
+* {
+  box-sizing: border-box;
 }
 
-html{
-    scroll-behavior:smooth;
+html {
+  scroll-behavior: smooth;
 }
 
-body{
-
-    margin:0;
-
-    font-family:Arial, sans-serif;
-
-    background:
-    radial-gradient(circle at top,#172417,#0b0b0b);
-
-    color:white;
-
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: radial-gradient(circle at top, #151515, #0f0f0f);
+  color: white;
 }
-
 
 /* ================= HEADER ================= */
 
+.team-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px;
+}
 
-.header{
+@media(max-width:700px){
+  .team-grid{
+    grid-template-columns:1fr;
+  }
+}
 
-    position:fixed;
+.card{
+  background:#161616;
+  border:1px solid rgba(255,255,255,0.06);
+  padding:15px;
+  border-radius:12px;
+}
 
-    top:0;
-    left:0;
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 64px;
 
-    width:100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-    height:70px;
+  padding: 0 22px;
 
+  background: rgba(20,20,20,0.85);
+  backdrop-filter: blur(14px);
+
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+
+  z-index: 1000;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+}
+
+.logo img {
+  height: 38px;
+}
+
+/* NAV */
+.nav {
+  display: flex;
+  gap: 18px;
+}
+
+.nav a {
+  text-decoration: none;
+  color: rgba(255,255,255,0.65);
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.nav a:hover {
+  color: white;
+  transform: translateY(2px);
+}
+
+/* STATUS */
+.status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  background: #2ecc71;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #2ecc71;
+}
+
+/* MOBILE MENU */
+.mobile-btn {
+  display: none;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  position: fixed;
+  top: 70px;
+  right: 15px;
+  background: rgba(10,10,10,0.95);
+  padding: 15px;
+  border-radius: 12px;
+  width: 200px;
+}
+
+.mobile-menu a {
+  color: white;
+  padding: 8px;
+  text-decoration: none;
+}
+
+/* ================= CONTAINER ================= */
+
+.container {
+  padding: 110px 20px 50px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+/* ================= GRID ================= */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 15px;
+}
+
+/* ================= CARDS ================= */
+
+.card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 18px;
+  border-radius: 16px;
+  transition: 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(46,204,113,0.4);
+}
+
+/* ================= TAG ================= */
+
+.tag {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+.tag.ouvert { background: rgba(46,204,113,0.15); color:#2ecc71; }
+.tag.complet { background: rgba(241,196,15,0.15); color:#f1c40f; }
+.tag.annule { background: rgba(231,76,60,0.15); color:#e74c3c; }
+
+.about-text{
+  margin:20px 0 30px;
+  padding:15px;
+  background:#161616;
+  border:1px solid rgba(255,255,255,0.05);
+  border-radius:12px;
+  line-height:1.6;
+  color:#ddd;
+}
+
+/* ================= TEAM ================= */
+
+.history-card{
+    margin-top:30px;
+    padding:25px;
+    border-radius:16px;
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(10px);
+}
+
+.history-card h2{
+    color:#2ecc71;
+    margin-bottom:15px;
+}
+
+.history-content p{
+    color:#d0d0d0;
+    line-height:1.6;
+    margin-bottom:12px;
+}
+
+.signature{
+    margin-top:15px;
+    color:#2ecc71;
+    font-weight:bold;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.team-grid img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* ================= BUTTONS ================= */
+
+button {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.btn {
+  background: #2ecc71;
+  color: black;
+}
+
+.btn-danger {
+  background: #e74c3c;
+  color: white;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 768px) {
+  .nav { display: none; }
+  .mobile-btn { display: block; }
+}
+
+/* ===================== CONTACT GAMING ===================== */
+
+.contact{
+    min-height:100vh;
     display:flex;
-
+    justify-content:center;
     align-items:center;
+    padding:120px 20px 50px;
+    background:
+    radial-gradient(circle at top,#2ecc7125,transparent 35%),
+    radial-gradient(circle at bottom,#00c3ff20,transparent 40%);
+}
 
-    justify-content:space-between;
 
-    padding:0 25px;
+.contact-wrapper{
+    width:100%;
+    max-width:550px;
+}
+
+
+.contact-box{
 
     background:
-    rgba(15,15,15,.85);
+    linear-gradient(
+        145deg,
+        rgba(255,255,255,0.08),
+        rgba(255,255,255,0.02)
+    );
+
+    border:1px solid rgba(255,255,255,0.12);
 
     backdrop-filter:blur(15px);
 
-    border-bottom:
-    1px solid rgba(46,204,113,.2);
+    border-radius:25px;
 
-    z-index:1000;
-
-}
-
-
-
-.logo{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:12px;
-
-    color:white;
-
-    text-decoration:none;
-
-    font-weight:bold;
-
-}
-
-
-.logo img{
-
-    width:42px;
-
-    height:42px;
-
-    border-radius:10px;
-
-}
-
-
-
-.status{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:8px;
-
-    color:#ddd;
-
-}
-
-
-.dot{
-
-    width:10px;
-
-    height:10px;
-
-    border-radius:50%;
-
-    background:#2ecc71;
-
-    box-shadow:0 0 15px #2ecc71;
-
-}
-
-
-/* ================= LOGOUT ================= */
-
-
-.logout{
-
-    background:
-    linear-gradient(135deg,#e74c3c,#c0392b);
-
-    color:white;
-
-    border:none;
-
-    padding:12px 18px;
-
-    border-radius:12px;
-
-    cursor:pointer;
-
-    font-weight:bold;
-
-    transition:.3s;
-
-}
-
-
-.logout:hover{
-
-    transform:translateY(-3px);
+    padding:35px;
 
     box-shadow:
-    0 0 25px rgba(231,76,60,.5);
+    0 0 40px rgba(46,204,113,0.15),
+    inset 0 0 20px rgba(255,255,255,0.03);
+
+    text-align:center;
+
+    opacity:0;
+    transform:translateY(40px);
+
+    animation:contactAppear .7s ease forwards;
+}
+
+
+@keyframes contactAppear{
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
 
 }
 
 
-/* ================= PAGE ================= */
+.contact-box h1{
 
-
-.driver-page{
-
-    max-width:1000px;
-
-    margin:auto;
-
-    padding:120px 20px 60px;
-
-}
-
-
-
-/* ================= CARTES ================= */
-
-
-.driver-card{
-
-
-    background:
-
-    linear-gradient(
-    145deg,
-    rgba(46,204,113,.13),
-    rgba(255,255,255,.03)
-    );
-
-
-    border:
-
-    1px solid rgba(46,204,113,.25);
-
-
-    border-radius:22px;
-
-
-    padding:30px;
-
+    font-size:36px;
 
     margin-bottom:25px;
 
+    color:#2ecc71;
 
-    backdrop-filter:blur(15px);
-
-
-    box-shadow:
-
-    0 0 25px rgba(46,204,113,.12);
-
-
-    animation:fade .5s ease;
-
-
-    transition:.3s;
+    text-shadow:
+    0 0 15px rgba(46,204,113,.7);
 
 }
 
 
 
-.driver-card:hover{
+.contact-box input,
+.contact-box textarea{
 
-    transform:translateY(-5px);
+    width:100%;
+
+    padding:14px;
+
+    margin:8px 0;
+
+    background:#090d12;
+
+    color:white;
+
+    border-radius:14px;
+
+    border:1px solid rgba(255,255,255,.1);
+
+    outline:none;
+
+    transition:.25s;
+
+}
+
+
+
+.contact-box input:focus,
+.contact-box textarea:focus{
 
     border-color:#2ecc71;
 
     box-shadow:
-
-    0 0 35px rgba(46,204,113,.3);
+    0 0 15px rgba(46,204,113,.4);
 
 }
 
+
+
+.contact-box textarea{
+
+    height:130px;
+
+    resize:none;
+
+}
+
+
+
+.contact-box button{
+
+    width:100%;
+
+    padding:14px;
+
+    margin-top:15px;
+
+    border-radius:14px;
+
+    border:none;
+
+    background:#2ecc71;
+
+    color:#050505;
+
+    font-weight:800;
+
+    font-size:16px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+    box-shadow:
+    0 0 20px rgba(46,204,113,.4);
+
+}
+
+
+
+.contact-box button:hover{
+
+    transform:translateY(-3px) scale(1.02);
+
+    box-shadow:
+    0 0 35px rgba(46,204,113,.7);
+
+}
+
+
+
+.contact-info{
+
+    margin-top:20px;
+
+    color:#aaa;
+
+    font-size:14px;
+
+}
+
+
+
+/* ================= CAPTCHA ================= */
+
+
+.captcha{
+
+    margin-top:15px;
+
+    padding:15px;
+
+    background:#090d12;
+
+    border-radius:15px;
+
+    border:1px solid rgba(255,255,255,.08);
+
+}
+
+
+
+#captchaText{
+
+    font-size:22px;
+
+    letter-spacing:5px;
+
+    font-weight:900;
+
+    color:#2ecc71;
+
+    text-shadow:
+
+    0 0 12px #2ecc71;
+
+    margin-bottom:10px;
+
+}
+
+
+
+/* ================= TOAST ================= */
+
+
+.toast{
+
+    position:fixed;
+
+    bottom:30px;
+
+    left:50%;
+
+    transform:translateX(-50%) translateY(30px);
+
+    background:#2ecc71;
+
+    color:#050505;
+
+    padding:14px 25px;
+
+    border-radius:15px;
+
+    font-weight:bold;
+
+    box-shadow:
+
+    0 0 30px rgba(46,204,113,.5);
+
+    opacity:0;
+
+    transition:.35s;
+
+    z-index:2000;
+
+}
+
+
+
+.toast.show{
+
+    opacity:1;
+
+    transform:
+    translateX(-50%)
+    translateY(0);
+
+}
+
+
+
+/* ================= MOBILE ================= */
+
+
+@media(max-width:700px){
+
+    .contact{
+
+        padding:100px 15px 40px;
+
+    }
+
+
+    .contact-box{
+
+        padding:25px 18px;
+
+        border-radius:20px;
+
+    }
+
+
+    .contact-box h1{
+
+        font-size:30px;
+
+    }
+
+/* ================= CONDUCTEUR STYLE ================= */
+
+.driver-page{
+    padding:120px 20px 60px;
+    max-width:1000px;
+    margin:auto;
+}
+
+
+/* INTRO */
+
+.driver-card{
+    background:
+    linear-gradient(
+        145deg,
+        rgba(46,204,113,0.12),
+        rgba(255,255,255,0.03)
+    );
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    border-radius:22px;
+
+    padding:30px;
+
+    margin-bottom:25px;
+
+    backdrop-filter:blur(15px);
+
+    box-shadow:
+    0 15px 40px rgba(0,0,0,.35);
+
+    animation:driverAppear .5s ease;
+}
+
+
+.driver-card:hover{
+
+    transform:translateY(-4px);
+
+    border-color:rgba(46,204,113,.4);
+
+    box-shadow:
+    0 0 30px rgba(46,204,113,.15);
+
+}
 
 
 .driver-card h1{
 
-    color:#2ecc71;
+    font-size:32px;
 
-    font-size:34px;
+    background:
+    linear-gradient(
+    90deg,
+    #2ecc71,
+    #00c3ff
+    );
 
-    text-shadow:
+    -webkit-background-clip:text;
 
-    0 0 15px #2ecc71;
+    color:transparent;
 
 }
+
 
 
 .driver-card h2{
@@ -248,51 +613,46 @@ body{
 }
 
 
+
 .driver-card p{
 
     color:#ccc;
 
-    line-height:1.7;
+    font-size:15px;
 
 }
 
 
-
-/* ================= MENU CATEGORIES ================= */
+/* MENU CATEGORIE */
 
 
 #category{
 
-    width:100%;
-
-    padding:16px;
-
-    border-radius:15px;
+    appearance:none;
 
     background:
 
     linear-gradient(
     145deg,
     #151515,
-    #090909
+    #0d1117
     );
-
 
     color:white;
 
-    border:
+    border:1px solid rgba(255,255,255,.12);
 
-    1px solid rgba(46,204,113,.3);
+    padding:16px;
 
+    border-radius:14px;
 
     font-size:16px;
 
     cursor:pointer;
 
-    transition:.3s;
+    transition:.25s;
 
 }
-
 
 
 #category:hover{
@@ -300,8 +660,7 @@ body{
     border-color:#2ecc71;
 
     box-shadow:
-
-    0 0 20px rgba(46,204,113,.4);
+    0 0 15px rgba(46,204,113,.25);
 
 }
 
@@ -317,305 +676,61 @@ body{
 
 
 
-/* ================= REGLEMENT ================= */
+/* HEADER CONDUCTEUR */
 
 
-.rules-card{
-
-
-    width:100%;
-
-
-    max-width:900px;
-
-
-    margin:40px auto;
-
-
-    padding:40px;
-
-
-    text-align:center;
-
+.logout{
 
     background:
-
 
     linear-gradient(
-    145deg,
-    rgba(46,204,113,.18),
-    rgba(10,10,10,.95)
+    135deg,
+    #e74c3c,
+    #c0392b
     );
 
-
-    border:
-
-    2px solid rgba(46,204,113,.5);
-
-
-    border-radius:28px;
-
-
-    backdrop-filter:blur(15px);
-
-
-    box-shadow:
-
-    0 0 30px rgba(46,204,113,.25),
-
-    inset 0 0 30px rgba(46,204,113,.08);
-
-
-    animation:glow 3s infinite alternate;
-
-
-}
-
-
-
-.rules-card:hover{
-
-
-    transform:translateY(-5px);
-
-
-    border-color:#2ecc71;
-
-
-    box-shadow:
-
-    0 0 50px rgba(46,204,113,.55),
-
-    inset 0 0 40px rgba(46,204,113,.15);
-
-
-}
-
-
-
-.rules-card h2{
-
-
-    color:#2ecc71;
-
-
-    font-size:34px;
-
-
-    text-shadow:
-
-    0 0 15px #2ecc71;
-
-
-}
-
-
-
-.rules-card h3{
-
-
     color:white;
 
+    border:none;
 
-    margin-top:35px;
-
-
-    font-size:22px;
-
-
-}
-
-
-
-.rules-card p{
-
-
-    color:#ddd;
-
-
-    max-width:750px;
-
-
-    margin:15px auto;
-
-
-    line-height:1.9;
-
-
-}
-
-
-
-.rules-card strong{
-
-    color:#2ecc71;
-
-}
-
-
-
-/* ================= CONTACT SI UTILISE ================= */
-
-
-.contact{
-
-    min-height:100vh;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    padding:120px 20px;
-
-}
-
-
-
-.contact-box{
-
-
-    background:
-
-    rgba(255,255,255,.05);
-
-
-    border:
-
-    1px solid rgba(46,204,113,.3);
-
-
-    border-radius:25px;
-
-
-    padding:35px;
-
-
-    max-width:550px;
-
-
-    width:100%;
-
-
-    text-align:center;
-
-
-    box-shadow:
-
-    0 0 35px rgba(46,204,113,.2);
-
-
-}
-
-
-
-.contact-box input,
-.contact-box textarea{
-
-
-    width:100%;
-
-
-    padding:14px;
-
-
-    margin:8px 0;
-
-
-    background:#090909;
-
-
-    color:white;
-
+    padding:12px 18px;
 
     border-radius:12px;
 
+    font-weight:bold;
 
-    border:
+    cursor:pointer;
 
-    1px solid rgba(255,255,255,.1);
-
+    transition:.25s;
 
 }
 
 
 
-.contact-box input:focus,
-.contact-box textarea:focus{
+.logout:hover{
 
-
-    border-color:#2ecc71;
-
+    transform:translateY(-2px);
 
     box-shadow:
-
-    0 0 15px rgba(46,204,113,.4);
-
+    0 0 20px rgba(231,76,60,.5);
 
 }
 
 
 
-/* ================= TOAST ================= */
+
+/* ANIMATION */
 
 
-.toast{
-
-
-    position:fixed;
-
-    bottom:30px;
-
-    left:50%;
-
-    transform:translateX(-50%);
-
-
-    background:#2ecc71;
-
-
-    color:black;
-
-
-    padding:14px 25px;
-
-
-    border-radius:15px;
-
-
-    opacity:0;
-
-
-    transition:.3s;
-
-
-}
-
-
-
-.toast.show{
-
-    opacity:1;
-
-}
-
-
-
-/* ================= ANIMATIONS ================= */
-
-
-@keyframes fade{
-
+@keyframes driverAppear{
 
 from{
 
 opacity:0;
 
-transform:translateY(30px);
+transform:translateY(25px);
 
 }
-
 
 to{
 
@@ -629,106 +744,199 @@ transform:translateY(0);
 
 
 
-@keyframes glow{
-
-
-from{
-
-box-shadow:
-
-0 0 20px rgba(46,204,113,.2);
-
-}
-
-
-to{
-
-
-box-shadow:
-
-0 0 45px rgba(46,204,113,.5);
-
-}
-
-
-}
-
-
-
-/* ================= MOBILE ================= */
-
+/* MOBILE */
 
 @media(max-width:700px){
 
-
-.header{
-
-    padding:0 15px;
-
-}
-
-
-.logo span{
-
-    display:none;
-
-}
-
-
-.status{
-
-    display:none;
-
-}
-
-
 .driver-page{
 
-    padding:100px 15px 40px;
+padding-top:100px;
 
 }
 
 
 .driver-card{
 
-    padding:20px;
+padding:20px;
 
 }
 
 
 .driver-card h1{
 
-    font-size:26px;
+font-size:25px;
 
 }
 
+/* ================= REGLEMENT CONDUCTEUR ================= */
 
 .rules-card{
 
-    padding:25px;
+    width:100%;
+    max-width:900px;
+
+    margin:40px auto;
+
+    padding:40px;
+
+    text-align:center;
+
+    background:
+    linear-gradient(
+        145deg,
+        rgba(46,204,113,0.18),
+        rgba(10,15,12,0.95)
+    );
+
+    border:2px solid rgba(46,204,113,0.5);
+
+    border-radius:28px;
+
+    backdrop-filter:blur(15px);
+
+    box-shadow:
+    0 0 25px rgba(46,204,113,0.25),
+    inset 0 0 30px rgba(46,204,113,0.08);
+
+    animation:rulesGlow 3s infinite alternate;
+
+    transition:.3s;
+}
+
+
+
+.rules-card:hover{
+
+    transform:translateY(-6px);
+
+    border-color:#2ecc71;
+
+    box-shadow:
+    0 0 50px rgba(46,204,113,0.55),
+    inset 0 0 40px rgba(46,204,113,0.15);
 
 }
 
+
+
+/* TITRE */
 
 .rules-card h2{
 
-    font-size:26px;
+    color:#2ecc71;
+
+    font-size:34px;
+
+    margin-bottom:30px;
+
+    text-shadow:
+    0 0 15px rgba(46,204,113,0.8);
 
 }
 
+
+
+/* SOUS TITRES */
 
 .rules-card h3{
 
-    font-size:18px;
+    margin-top:35px;
+
+    color:white;
+
+    font-size:22px;
+
+    text-shadow:
+    0 0 8px rgba(255,255,255,0.3);
 
 }
 
+
+
+/* TEXTE */
 
 .rules-card p{
 
-    font-size:14px;
+    max-width:750px;
+
+    margin:15px auto;
+
+    color:#d8d8d8;
+
+    font-size:16px;
+
+    line-height:1.9;
 
 }
 
+
+
+/* TEXTE IMPORTANT */
+
+.rules-card strong{
+
+    color:#2ecc71;
+
+}
+
+
+
+/* ANIMATION LUMIERE */
+
+@keyframes rulesGlow{
+
+    0%{
+
+        box-shadow:
+        0 0 20px rgba(46,204,113,0.2),
+        inset 0 0 20px rgba(46,204,113,0.05);
+
+    }
+
+
+    100%{
+
+        box-shadow:
+        0 0 45px rgba(46,204,113,0.5),
+        inset 0 0 35px rgba(46,204,113,0.12);
+
+    }
+
+}
+
+
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+    .rules-card{
+
+        padding:25px;
+
+        border-radius:20px;
+
+    }
+
+
+    .rules-card h2{
+
+        font-size:26px;
+
+    }
+
+
+    .rules-card h3{
+
+        font-size:19px;
+
+    }
+
+
+    .rules-card p{
+
+        font-size:14px;
+
+    }
 
 }
