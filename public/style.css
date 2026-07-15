@@ -539,4 +539,42 @@ button {
 
     }
 
+.driver-menu{
+    margin:100px auto 20px;
+    max-width:500px;
+    padding:0 20px;
+}
+
+
+.driver-menu select{
+
+    width:100%;
+    padding:15px;
+
+    background:#161616;
+    color:white;
+
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:12px;
+
+    font-size:16px;
+
+    cursor:pointer;
+
+}
+
+
+.category{
+
+    margin:20px auto;
+    max-width:1000px;
+
+    padding:25px;
+
+    background:rgba(255,255,255,.05);
+
+    border-radius:16px;
+
+    border:1px solid rgba(255,255,255,.08);
+
 }
