@@ -147,56 +147,21 @@ fetch("/logout",
 credentials:"include"
 })
 .then(()=>{
-
 location.href="/";
-
 });
 
 }
 
 
 
-
 function openCategory(){
 
-
 let value=document.getElementById("category").value;
-
 
 let content=document.getElementById("content");
 
 
-
 let pages={
-
-
-profil:`
-
-<div class="driver-card">
-
-<h2>👤 Profil conducteur</h2>
-
-<p>
-<strong>Nom :</strong> Conducteur<br>
-<strong>Grade :</strong> Conducteur VTC<br>
-<strong>Statut :</strong> 🟢 Actif<br>
-<strong>Date d'arrivée :</strong> Non renseignée
-</p>
-
-<hr>
-
-<h3>🚛 Informations transport</h3>
-
-<p>
-Camion principal : Non renseigné<br>
-Kilomètres parcourus : 0 km<br>
-Convois effectués : 0
-</p>
-
-</div>
-
-`,
-
 
 
 convoys:`
@@ -205,165 +170,118 @@ convoys:`
 
 <h2>🚛 Mes convois</h2>
 
-<div class="card">
+<div id="driverConvoyList">
 
-<h3>🏁 Aucun convoi enregistré</h3>
-
-<p>
-Tes prochains convois apparaîtront ici.
-</p>
+Chargement des convois...
 
 </div>
-
-
-</div>
-
-`,
-
-
-
-stats:`
-
-<div class="driver-card">
-
-<h2>📊 Mes statistiques</h2>
-
-
-<div class="card">
-
-<p>
-🚛 Convois réalisés : 0
-</p>
-
-<p>
-🛣️ Distance parcourue : 0 km
-</p>
-
-<p>
-⭐ Participation : 0%
-</p>
-
-<p>
-🏆 Réputation conducteur : Nouveau
-</p>
-
-</div>
-
-
-</div>
-
-`,
-
-
-
-planning:`
-
-<div class="driver-card">
-
-<h2>📅 Planning</h2>
-
-
-<div class="card">
-
-<h3>Prochain événement</h3>
-
-<p>
-Aucun événement prévu actuellement.
-</p>
-
-</div>
-
-
-<div class="card">
-
-<h3>Rappels</h3>
-
-<p>
-Pense à consulter régulièrement les annonces de la VTC.
-</p>
-
-</div>
-
-
-</div>
-
-`,
-
-
-
-rules:`
-
-<div class="rules-card">
-
-<h2>📜 Règlement conducteur</h2>
-
-
-<p>
-Bienvenue chez TransAuvergne VTC.
-Chaque conducteur représente la communauté lors des convois.
-</p>
-
-
-<h3>🚛 Comportement général</h3>
-
-<p>
-• Respect des autres conducteurs.<br>
-• Bonne attitude sur Discord et en jeu.<br>
-• Aucun comportement perturbateur.<br>
-• Respect des décisions du staff.
-</p>
-
-
-<h3>🛣️ Pendant les convois</h3>
-
-<p>
-• Être présent à l'heure.<br>
-• Respecter les organisateurs.<br>
-• Garder une distance de sécurité.<br>
-• Éviter les dépassements dangereux.
-</p>
-
-
-<h3>🎧 Discord</h3>
-
-<p>
-• Micro correctement réglé.<br>
-• Respect des salons.<br>
-• Bonne ambiance obligatoire.
-</p>
-
-
-<h3>⚠️ Sanctions</h3>
-
-<p>
-Les sanctions peuvent aller du rappel à l'ordre
-jusqu'à l'exclusion de la VTC selon la gravité.
-</p>
-
-
-<h3>🏁 Objectif</h3>
-
-<p>
-Créer une communauté sérieuse, organisée et agréable
-pour tous les passionnés du transport virtuel.
-</p>
-
-
-<p style="color:#2ecc71;font-weight:bold;">
-— Direction TransAuvergne VTC 🚛
-</p>
-
 
 </div>
 
 `
 
+
 };
 
 
+content.innerHTML = pages[value] || "";
 
-content.innerHTML =
-pages[value] || "";
+
+// Lancer le chargement après avoir créé la div
+if(value === "convoys"){
+    loadDriverConvoys();
+}
+
+
+}
+
+
+
+
+function loadDriverConvoys(){
+
+
+fetch("/api/convoys", {
+    credentials:"include"
+})
+
+.then(r => r.json())
+
+.then(data => {
+
+
+const el = document.getElementById("driverConvoyList");
+
+
+if(!data || data.length === 0){
+
+el.innerHTML = "Aucun convoi disponible.";
+
+return;
+
+}
+
+
+el.innerHTML = "";
+
+
+data.forEach(c => {
+
+
+el.innerHTML += `
+
+<div class="card">
+
+
+<h3>${c.title ?? "Sans titre"}</h3>
+
+
+<p>
+📍 ${c.start ?? "?"} → ${c.end ?? "?"}
+</p>
+
+
+<p>
+📅 ${c.date ?? "?"}
+</p>
+
+
+<p>
+⏰ ${c.time ?? "?"}
+</p>
+
+
+<p>
+🚛 Fret : ${c.cargo ?? "Non défini"}
+</p>
+
+
+<p>
+🖥️ Serveur : ${c.server ?? "Non défini"}
+</p>
+
+
+</div>
+
+
+`;
+
+
+});
+
+
+})
+
+
+.catch(err=>{
+
+console.error("Erreur convois conducteur :",err);
+
+document.getElementById("driverConvoyList").innerHTML =
+"Erreur de chargement.";
+
+});
+
 
 }
 
