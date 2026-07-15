@@ -539,44 +539,76 @@ button {
 
     }
 
-/* CONDUCTEUR */
+/* ================= CONDUCTEUR STYLE ================= */
 
 .driver-page{
-
-padding:120px 20px 50px;
-
-max-width:900px;
-
-margin:auto;
-
+    padding:120px 20px 60px;
+    max-width:1000px;
+    margin:auto;
 }
 
 
+/* INTRO */
 
 .driver-card{
+    background:
+    linear-gradient(
+        145deg,
+        rgba(46,204,113,0.12),
+        rgba(255,255,255,0.03)
+    );
 
-background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.08);
 
-border:1px solid rgba(255,255,255,0.08);
+    border-radius:22px;
 
-border-radius:18px;
+    padding:30px;
 
-padding:25px;
+    margin-bottom:25px;
 
-margin-bottom:20px;
+    backdrop-filter:blur(15px);
 
-backdrop-filter:blur(10px);
+    box-shadow:
+    0 15px 40px rgba(0,0,0,.35);
 
-animation:show .4s ease;
+    animation:driverAppear .5s ease;
+}
+
+
+.driver-card:hover{
+
+    transform:translateY(-4px);
+
+    border-color:rgba(46,204,113,.4);
+
+    box-shadow:
+    0 0 30px rgba(46,204,113,.15);
+
+}
+
+
+.driver-card h1{
+
+    font-size:32px;
+
+    background:
+    linear-gradient(
+    90deg,
+    #2ecc71,
+    #00c3ff
+    );
+
+    -webkit-background-clip:text;
+
+    color:transparent;
 
 }
 
 
 
-.driver-card h1,
 .driver-card h2{
 
-color:#2ecc71;
+    color:#2ecc71;
 
 }
 
@@ -584,47 +616,92 @@ color:#2ecc71;
 
 .driver-card p{
 
-color:#ccc;
+    color:#ccc;
 
-line-height:1.6;
+    font-size:15px;
 
 }
 
+
+/* MENU CATEGORIE */
 
 
 #category{
 
-width:100%;
+    appearance:none;
 
-padding:15px;
+    background:
 
-background:#111;
+    linear-gradient(
+    145deg,
+    #151515,
+    #0d1117
+    );
 
-color:white;
+    color:white;
 
-border-radius:12px;
+    border:1px solid rgba(255,255,255,.12);
 
-border:1px solid rgba(255,255,255,.1);
+    padding:16px;
 
-font-size:16px;
+    border-radius:14px;
 
-cursor:pointer;
+    font-size:16px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+
+#category:hover{
+
+    border-color:#2ecc71;
+
+    box-shadow:
+    0 0 15px rgba(46,204,113,.25);
 
 }
 
 
 
+#category option{
+
+    background:#111;
+
+    color:white;
+
+}
+
+
+
+/* HEADER CONDUCTEUR */
+
+
 .logout{
 
-background:#e74c3c;
+    background:
 
-color:white;
+    linear-gradient(
+    135deg,
+    #e74c3c,
+    #c0392b
+    );
 
-padding:10px 15px;
+    color:white;
 
-border-radius:10px;
+    border:none;
 
-font-weight:bold;
+    padding:12px 18px;
+
+    border-radius:12px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.25s;
 
 }
 
@@ -632,19 +709,26 @@ font-weight:bold;
 
 .logout:hover{
 
-box-shadow:0 0 15px #e74c3c;
+    transform:translateY(-2px);
+
+    box-shadow:
+    0 0 20px rgba(231,76,60,.5);
 
 }
 
 
 
-@keyframes show{
+
+/* ANIMATION */
+
+
+@keyframes driverAppear{
 
 from{
 
 opacity:0;
 
-transform:translateY(20px);
+transform:translateY(25px);
 
 }
 
@@ -660,12 +744,29 @@ transform:translateY(0);
 
 
 
-@media(max-width:768px){
+/* MOBILE */
 
-.logout{
+@media(max-width:700px){
 
-display:none;
+.driver-page{
+
+padding-top:100px;
 
 }
+
+
+.driver-card{
+
+padding:20px;
+
+}
+
+
+.driver-card h1{
+
+font-size:25px;
+
+}
+
 
 }
