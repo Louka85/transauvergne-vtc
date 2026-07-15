@@ -541,24 +541,34 @@ button {
 
 /* ================= CONDUCTEUR STYLE ================= */
 
+
 .driver-page{
+
     padding:120px 20px 60px;
+
     max-width:1000px;
+
     margin:auto;
+
 }
 
 
-/* INTRO */
+
+/* CARTES CONDUCTEUR */
 
 .driver-card{
+
     background:
+
     linear-gradient(
         145deg,
         rgba(46,204,113,0.12),
         rgba(255,255,255,0.03)
     );
 
-    border:1px solid rgba(255,255,255,0.08);
+    border:
+
+    1px solid rgba(46,204,113,0.25);
 
     border-radius:22px;
 
@@ -569,38 +579,40 @@ button {
     backdrop-filter:blur(15px);
 
     box-shadow:
-    0 15px 40px rgba(0,0,0,.35);
 
-    animation:driverAppear .5s ease;
+    0 0 25px rgba(46,204,113,0.12);
+
+    transition:.3s;
+
+    animation:driverFade .5s ease;
+
 }
+
 
 
 .driver-card:hover{
 
-    transform:translateY(-4px);
+    transform:translateY(-5px);
 
-    border-color:rgba(46,204,113,.4);
+    border-color:#2ecc71;
 
     box-shadow:
-    0 0 30px rgba(46,204,113,.15);
+
+    0 0 35px rgba(46,204,113,.35);
 
 }
 
 
+
 .driver-card h1{
 
-    font-size:32px;
+    color:#2ecc71;
 
-    background:
-    linear-gradient(
-    90deg,
-    #2ecc71,
-    #00c3ff
-    );
+    font-size:34px;
 
-    -webkit-background-clip:text;
+    text-shadow:
 
-    color:transparent;
+    0 0 15px rgba(46,204,113,.7);
 
 }
 
@@ -618,41 +630,44 @@ button {
 
     color:#ccc;
 
-    font-size:15px;
+    line-height:1.7;
 
 }
 
 
-/* MENU CATEGORIE */
 
+/* MENU CATEGORIES */
 
 #category{
 
-    appearance:none;
+    width:100%;
+
+    padding:16px;
+
+    border-radius:15px;
 
     background:
 
     linear-gradient(
-    145deg,
-    #151515,
-    #0d1117
+        145deg,
+        #151515,
+        #090909
     );
 
     color:white;
 
-    border:1px solid rgba(255,255,255,.12);
+    border:
 
-    padding:16px;
-
-    border-radius:14px;
+    1px solid rgba(46,204,113,.35);
 
     font-size:16px;
 
     cursor:pointer;
 
-    transition:.25s;
+    transition:.3s;
 
 }
+
 
 
 #category:hover{
@@ -660,7 +675,8 @@ button {
     border-color:#2ecc71;
 
     box-shadow:
-    0 0 15px rgba(46,204,113,.25);
+
+    0 0 20px rgba(46,204,113,.4);
 
 }
 
@@ -676,17 +692,16 @@ button {
 
 
 
-/* HEADER CONDUCTEUR */
-
+/* LOGOUT */
 
 .logout{
 
     background:
 
     linear-gradient(
-    135deg,
-    #e74c3c,
-    #c0392b
+        135deg,
+        #e74c3c,
+        #c0392b
     );
 
     color:white;
@@ -701,7 +716,7 @@ button {
 
     cursor:pointer;
 
-    transition:.25s;
+    transition:.3s;
 
 }
 
@@ -709,20 +724,111 @@ button {
 
 .logout:hover{
 
-    transform:translateY(-2px);
+    transform:translateY(-3px);
 
     box-shadow:
-    0 0 20px rgba(231,76,60,.5);
+
+    0 0 25px rgba(231,76,60,.5);
 
 }
 
 
 
+/* ================= REGLEMENT ================= */
 
-/* ANIMATION */
+
+.rules-card{
+
+    width:100%;
+
+    max-width:900px;
+
+    margin:40px auto;
+
+    padding:40px;
+
+    text-align:center;
+
+    background:
+
+    linear-gradient(
+        145deg,
+        rgba(46,204,113,.18),
+        rgba(10,10,10,.95)
+    );
 
 
-@keyframes driverAppear{
+    border:
+
+    2px solid rgba(46,204,113,.5);
+
+
+    border-radius:28px;
+
+
+    box-shadow:
+
+    0 0 30px rgba(46,204,113,.25),
+
+    inset 0 0 30px rgba(46,204,113,.08);
+
+
+    animation:rulesGlow 3s infinite alternate;
+
+}
+
+
+
+.rules-card h2{
+
+    color:#2ecc71;
+
+    font-size:32px;
+
+    text-shadow:
+
+    0 0 15px #2ecc71;
+
+}
+
+
+
+.rules-card h3{
+
+    margin-top:30px;
+
+    color:white;
+
+}
+
+
+
+.rules-card p{
+
+    color:#ddd;
+
+    line-height:1.8;
+
+    max-width:750px;
+
+    margin:15px auto;
+
+}
+
+
+
+.rules-card strong{
+
+    color:#2ecc71;
+
+}
+
+
+
+/* ANIMATIONS */
+
+
+@keyframes driverFade{
 
 from{
 
@@ -744,13 +850,39 @@ transform:translateY(0);
 
 
 
+@keyframes rulesGlow{
+
+from{
+
+box-shadow:
+
+0 0 20px rgba(46,204,113,.2),
+
+inset 0 0 20px rgba(46,204,113,.05);
+
+}
+
+to{
+
+box-shadow:
+
+0 0 45px rgba(46,204,113,.5),
+
+inset 0 0 35px rgba(46,204,113,.15);
+
+}
+
+}
+
+
+
 /* MOBILE */
 
 @media(max-width:700px){
 
 .driver-page{
 
-padding-top:100px;
+padding:100px 15px 40px;
 
 }
 
@@ -762,181 +894,17 @@ padding:20px;
 }
 
 
-.driver-card h1{
+.rules-card{
+
+padding:25px;
+
+}
+
+
+.rules-card h2{
 
 font-size:25px;
 
 }
-
-/* ================= REGLEMENT CONDUCTEUR ================= */
-
-.rules-card{
-
-    width:100%;
-    max-width:900px;
-
-    margin:40px auto;
-
-    padding:40px;
-
-    text-align:center;
-
-    background:
-    linear-gradient(
-        145deg,
-        rgba(46,204,113,0.18),
-        rgba(10,15,12,0.95)
-    );
-
-    border:2px solid rgba(46,204,113,0.5);
-
-    border-radius:28px;
-
-    backdrop-filter:blur(15px);
-
-    box-shadow:
-    0 0 25px rgba(46,204,113,0.25),
-    inset 0 0 30px rgba(46,204,113,0.08);
-
-    animation:rulesGlow 3s infinite alternate;
-
-    transition:.3s;
-}
-
-
-
-.rules-card:hover{
-
-    transform:translateY(-6px);
-
-    border-color:#2ecc71;
-
-    box-shadow:
-    0 0 50px rgba(46,204,113,0.55),
-    inset 0 0 40px rgba(46,204,113,0.15);
-
-}
-
-
-
-/* TITRE */
-
-.rules-card h2{
-
-    color:#2ecc71;
-
-    font-size:34px;
-
-    margin-bottom:30px;
-
-    text-shadow:
-    0 0 15px rgba(46,204,113,0.8);
-
-}
-
-
-
-/* SOUS TITRES */
-
-.rules-card h3{
-
-    margin-top:35px;
-
-    color:white;
-
-    font-size:22px;
-
-    text-shadow:
-    0 0 8px rgba(255,255,255,0.3);
-
-}
-
-
-
-/* TEXTE */
-
-.rules-card p{
-
-    max-width:750px;
-
-    margin:15px auto;
-
-    color:#d8d8d8;
-
-    font-size:16px;
-
-    line-height:1.9;
-
-}
-
-
-
-/* TEXTE IMPORTANT */
-
-.rules-card strong{
-
-    color:#2ecc71;
-
-}
-
-
-
-/* ANIMATION LUMIERE */
-
-@keyframes rulesGlow{
-
-    0%{
-
-        box-shadow:
-        0 0 20px rgba(46,204,113,0.2),
-        inset 0 0 20px rgba(46,204,113,0.05);
-
-    }
-
-
-    100%{
-
-        box-shadow:
-        0 0 45px rgba(46,204,113,0.5),
-        inset 0 0 35px rgba(46,204,113,0.12);
-
-    }
-
-}
-
-
-
-/* MOBILE */
-
-@media(max-width:700px){
-
-    .rules-card{
-
-        padding:25px;
-
-        border-radius:20px;
-
-    }
-
-
-    .rules-card h2{
-
-        font-size:26px;
-
-    }
-
-
-    .rules-card h3{
-
-        font-size:19px;
-
-    }
-
-
-    .rules-card p{
-
-        font-size:14px;
-
-    }
 
 }
