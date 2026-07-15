@@ -211,6 +211,19 @@ location.href="/";
 
 }
 
+    function changeCategory(){
+
+    let selected = document.getElementById("categoryMenu").value;
+
+    let pages = document.querySelectorAll(".category");
+
+    pages.forEach(page=>{
+        page.style.display = "none";
+    });
+
+    document.getElementById(selected).style.display = "block";
+
+}
 
 </script>
 
