@@ -768,96 +768,110 @@ font-size:25px;
 
 }
 
-  /* ================= REGLEMENT CONDUCTEUR ================= */
+/* ================= REGLEMENT CONDUCTEUR ================= */
 
 .rules-card{
+
+    width:100%;
+    max-width:900px;
+
+    margin:40px auto;
+
+    padding:40px;
+
+    text-align:center;
 
     background:
     linear-gradient(
         145deg,
-        rgba(46,204,113,0.15),
-        rgba(15,15,15,0.9)
+        rgba(46,204,113,0.18),
+        rgba(10,15,12,0.95)
     );
 
-    border:2px solid rgba(46,204,113,0.45);
+    border:2px solid rgba(46,204,113,0.5);
 
-    border-radius:25px;
+    border-radius:28px;
 
-    padding:35px;
-
-    margin:30px auto;
-
-    max-width:900px;
-
-    text-align:center;
+    backdrop-filter:blur(15px);
 
     box-shadow:
-    0 0 25px rgba(46,204,113,.25),
-    inset 0 0 30px rgba(46,204,113,.08);
+    0 0 25px rgba(46,204,113,0.25),
+    inset 0 0 30px rgba(46,204,113,0.08);
 
     animation:rulesGlow 3s infinite alternate;
 
     transition:.3s;
-
 }
+
 
 
 .rules-card:hover{
 
-    transform:translateY(-5px);
+    transform:translateY(-6px);
 
     border-color:#2ecc71;
 
     box-shadow:
-    0 0 45px rgba(46,204,113,.45),
-    inset 0 0 35px rgba(46,204,113,.15);
+    0 0 50px rgba(46,204,113,0.55),
+    inset 0 0 40px rgba(46,204,113,0.15);
 
 }
 
 
+
+/* TITRE */
 
 .rules-card h2{
 
     color:#2ecc71;
 
-    font-size:30px;
+    font-size:34px;
 
-    margin-bottom:25px;
+    margin-bottom:30px;
 
     text-shadow:
-    0 0 15px rgba(46,204,113,.7);
+    0 0 15px rgba(46,204,113,0.8);
 
 }
 
 
+
+/* SOUS TITRES */
 
 .rules-card h3{
 
+    margin-top:35px;
+
     color:white;
 
-    margin-top:25px;
+    font-size:22px;
 
-    font-size:20px;
+    text-shadow:
+    0 0 8px rgba(255,255,255,0.3);
 
 }
 
 
+
+/* TEXTE */
 
 .rules-card p{
 
-    color:#d5d5d5;
-
-    line-height:1.8;
-
-    font-size:15px;
-
-    margin:12px auto;
-
     max-width:750px;
+
+    margin:15px auto;
+
+    color:#d8d8d8;
+
+    font-size:16px;
+
+    line-height:1.9;
 
 }
 
 
+
+/* TEXTE IMPORTANT */
 
 .rules-card strong{
 
@@ -867,22 +881,62 @@ font-size:25px;
 
 
 
+/* ANIMATION LUMIERE */
+
 @keyframes rulesGlow{
 
-from{
+    0%{
 
-box-shadow:
-0 0 20px rgba(46,204,113,.2),
-inset 0 0 25px rgba(46,204,113,.05);
+        box-shadow:
+        0 0 20px rgba(46,204,113,0.2),
+        inset 0 0 20px rgba(46,204,113,0.05);
+
+    }
+
+
+    100%{
+
+        box-shadow:
+        0 0 45px rgba(46,204,113,0.5),
+        inset 0 0 35px rgba(46,204,113,0.12);
+
+    }
 
 }
 
-to{
 
-box-shadow:
-0 0 40px rgba(46,204,113,.45),
-inset 0 0 35px rgba(46,204,113,.12);
 
-}
+/* MOBILE */
+
+@media(max-width:700px){
+
+    .rules-card{
+
+        padding:25px;
+
+        border-radius:20px;
+
+    }
+
+
+    .rules-card h2{
+
+        font-size:26px;
+
+    }
+
+
+    .rules-card h3{
+
+        font-size:19px;
+
+    }
+
+
+    .rules-card p{
+
+        font-size:14px;
+
+    }
 
 }
