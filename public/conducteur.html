@@ -35,7 +35,73 @@ Déconnexion
 
 </header>
 
+<div class="driver-menu">
 
+    <select id="categoryMenu" onchange="changeCategory()">
+
+        <option value="home">🏠 Accueil</option>
+
+        <option value="profile">👤 Mon profil</option>
+
+        <option value="convoys">📅 Mes convois</option>
+
+        <option value="truck">🚛 Mon camion</option>
+
+        <option value="stats">📊 Statistiques</option>
+
+        <option value="news">📢 Informations VTC</option>
+
+        <option value="support">🎫 Support</option>
+
+    </select>
+
+</div>
+
+
+<div id="content">
+
+    <div id="home" class="category">
+        <h2>🏠 Accueil</h2>
+        <p>Bienvenue dans ton espace conducteur.</p>
+    </div>
+
+
+    <div id="profile" class="category" style="display:none;">
+        <h2>👤 Mon profil</h2>
+        <p>Informations du conducteur.</p>
+    </div>
+
+
+    <div id="convoys" class="category" style="display:none;">
+        <h2>📅 Mes convois</h2>
+        <p>Aucun convoi pour le moment.</p>
+    </div>
+
+
+    <div id="truck" class="category" style="display:none;">
+        <h2>🚛 Mon camion</h2>
+        <p>Configuration du véhicule.</p>
+    </div>
+
+
+    <div id="stats" class="category" style="display:none;">
+        <h2>📊 Statistiques</h2>
+        <p>Statistiques de conduite.</p>
+    </div>
+
+
+    <div id="news" class="category" style="display:none;">
+        <h2>📢 Informations VTC</h2>
+        <p>Actualités de TransAuvergne.</p>
+    </div>
+
+
+    <div id="support" class="category" style="display:none;">
+        <h2>🎫 Support</h2>
+        <p>Contact support Discord.</p>
+    </div>
+
+</div>
 
 <div class="container">
 
