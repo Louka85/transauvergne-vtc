@@ -1,1 +1,154 @@
+<!DOCTYPE html>
+<html lang="fr">
 
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Espace Conducteur - TransAuvergne VTC</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+
+<header class="header">
+
+<a href="index.html" class="logo">
+<img src="logo.jpeg">
+<span>TransAuvergne VTC</span>
+</a>
+
+
+<div class="status">
+<span class="dot"></span>
+Espace Conducteur
+</div>
+
+
+<button class="btn-danger" onclick="logout()">
+Déconnexion
+</button>
+
+
+</header>
+
+
+
+<div class="container">
+
+
+<h1>🚛 Tableau de bord conducteur</h1>
+
+
+<div class="grid">
+
+
+<div class="card">
+
+<h2>👤 Profil</h2>
+
+<p>
+Nom :
+<span id="driverName">Chargement...</span>
+</p>
+
+<p>
+Statut :
+<span class="tag ouvert">
+Actif
+</span>
+</p>
+
+<p>
+Grade :
+Conducteur
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h2>📅 Prochain convoi</h2>
+
+<p>
+Aucun convoi prévu.
+</p>
+
+<p>
+Les prochains trajets apparaîtront ici.
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h2>🚚 Mes statistiques</h2>
+
+<p>
+Kilomètres parcourus :
+0 km
+</p>
+
+<p>
+Convois effectués :
+0
+</p>
+
+<p>
+Ancienneté :
+Nouveau
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h2>📢 Informations VTC</h2>
+
+<p>
+Bienvenue dans l'espace conducteur TransAuvergne VTC.
+</p>
+
+<p>
+Respect des règles, bonne ambiance et convois propres.
+</p>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+<script>
+
+function logout(){
+
+fetch("/logout",{
+credentials:"include"
+})
+.then(()=>{
+location.href="/";
+});
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>
