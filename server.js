@@ -292,6 +292,46 @@ res.json([]);
 });
 
 /* =========================
+   DELETE DRIVER
+========================= */
+
+app.delete("/api/users/:id", adminOnly, async(req,res)=>{
+
+try{
+
+const id = req.params.id;
+
+
+await db.query(
+`
+DELETE FROM users
+WHERE id=$1
+AND role='driver'
+`,
+[id]
+);
+
+
+res.json({
+success:true
+});
+
+
+}
+
+catch(err){
+
+console.error("DELETE DRIVER ERROR:",err);
+
+res.status(500).json({
+success:false
+});
+
+}
+
+});
+
+/* =========================
    CONDUCTEUR PAGE
 ========================= */
 
