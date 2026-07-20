@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Connexion Conducteur</title>
+<title>Connexion Conducteur - TransAuvergne VTC</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -16,34 +16,79 @@
 <body>
 
 
-<div class="driver-card">
+<header class="header">
+
+<a href="index.html" class="logo">
+
+<img src="logo.jpeg" alt="Logo">
+
+<span>TransAuvergne VTC</span>
+
+</a>
+
+
+<div class="status">
+
+<span class="dot"></span>
+
+Espace Conducteur
+
+</div>
+
+</header>
+
+
+
+<main class="driver-page">
+
+
+<div class="driver-card login-card">
 
 
 <h1>
-🚛 Connexion conducteur
+🚛 Espace Conducteur
 </h1>
+
+
+<p>
+Connecte-toi pour accéder à ton espace personnel.
+</p>
+
+
+
+<div class="login-form">
 
 
 <input 
 id="username"
-placeholder="Pseudo">
+placeholder="👤 Identifiant">
 
 
 <input 
 id="password"
 type="password"
-placeholder="Mot de passe">
+placeholder="🔒 Mot de passe">
+
 
 
 <button onclick="login()">
+
 Connexion
+
 </button>
+
 
 
 <p id="message"></p>
 
 
 </div>
+
+
+</div>
+
+
+</main>
 
 
 
