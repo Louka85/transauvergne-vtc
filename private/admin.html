@@ -392,6 +392,46 @@ async function deleteConvoy(id){
     loadConvoys();
 }
 
+    /* LOAD DRIVERS */
+
+async function loadDrivers(){
+
+    const res = await fetch("/api/users",{
+        credentials:"include"
+    });
+
+    const data = await res.json();
+
+    const el = document.getElementById("driversList");
+
+    if(!Array.isArray(data)) return;
+
+
+    el.innerHTML = data.map(d=>`
+
+        <div class="card" style="margin-top:20px">
+
+            <h3>🚛 ${d.username}</h3>
+
+            <p>👤 Nom : ${d.name || "-"}</p>
+
+            <p>🎧 Discord : ${d.discord || "-"}</p>
+
+            <p>🚚 Camion : ${d.truck_name || "-"}</p>
+
+            <p>🟢 Statut : ${d.status || "-"}</p>
+
+
+            <button class="btn-danger" onclick="deleteDriver(${d.id})">
+                Supprimer
+            </button>
+
+        </div>
+
+    `).join("");
+
+}
+    
 /* ================= TEAM ================= */
 async function addMember(){
 
@@ -570,7 +610,7 @@ msg.innerHTML =
 /* INIT */
 loadConvoys();
 loadTeam();
-
+loadDrivers();
 </script>
 
 </body>
