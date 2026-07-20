@@ -194,6 +194,7 @@ object-fit:cover;
 <div class="tabs">
     <div class="tab active" onclick="show('convoys')">Convois</div>
     <div class="tab" onclick="show('team')">Équipe</div>
+    <div class="tab" onclick="show('drivers')">Conducteurs</div>
 </div>
 
 <!-- ================= CONVOYS ================= -->
@@ -241,14 +242,59 @@ object-fit:cover;
 
 </div>
 
+<!-- ================= DRIVERS ================= -->
+
+<div id="drivers" style="display:none">
+
+<div class="card">
+
+<h3>🚛 Ajouter un conducteur</h3>
+
+
+<input id="driverUsername" placeholder="Identifiant">
+
+
+<input id="driverPassword" type="password" placeholder="Mot de passe">
+
+
+<input id="driverName" placeholder="Nom">
+
+
+<input id="driverDiscord" placeholder="Discord">
+
+
+<input id="driverTruck" placeholder="Camion">
+
+
+<button class="btn" onclick="createDriver()">
+Créer le compte
+</button>
+
+
+<p id="driverMessage"></p>
+
+
+</div>
+
+
+</div>
+    
 </div>
 
 <script>
 
 /* NAV */
 function show(tab){
-    document.getElementById("convoys").style.display = tab==="convoys"?"block":"none";
-    document.getElementById("team").style.display = tab==="team"?"block":"none";
+
+document.getElementById("convoys").style.display =
+tab==="convoys" ? "block" : "none";
+
+document.getElementById("team").style.display =
+tab==="team" ? "block" : "none";
+
+document.getElementById("drivers").style.display =
+tab==="drivers" ? "block" : "none";
+
 }
 
 /* LOGOUT */
