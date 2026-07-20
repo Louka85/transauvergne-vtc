@@ -789,4 +789,81 @@ button {
 
 }
 
+.login-card{
+
+max-width:450px;
+
+margin:80px auto;
+
+text-align:center;
+
+}
+
+
+.login-form{
+
+display:flex;
+
+flex-direction:column;
+
+gap:15px;
+
+margin-top:30px;
+
+}
+
+
+.login-form input{
+
+padding:15px;
+
+border-radius:10px;
+
+border:1px solid #333;
+
+background:#111;
+
+color:white;
+
+font-size:16px;
+
+}
+
+
+.login-form button{
+
+padding:15px;
+
+border:none;
+
+border-radius:10px;
+
+background:#2ecc71;
+
+color:white;
+
+font-size:17px;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+
+.login-form button:hover{
+
+transform:scale(1.03);
+
+}
+
+
+#message{
+
+margin-top:15px;
+
+color:#ff5555;
+
+font-weight:bold;
+
 }
