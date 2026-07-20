@@ -96,20 +96,49 @@ CREATE TABLE IF NOT EXISTS convoys (
   description TEXT
 );
 
-CREATE TABLE IF NOT EXISTS team (
+CREATE TABLE IF NOT EXISTS users (
   id SERIAL PRIMARY KEY,
+  username TEXT UNIQUE,
+  password TEXT,
+  role TEXT DEFAULT 'driver',
   name TEXT,
-  role TEXT,
-  avatar TEXT
+  discord TEXT,
+  truck_name TEXT,
+  avatar TEXT,
+  status TEXT DEFAULT 'actif',
+  created_at TIMESTAMP DEFAULT NOW()
 );
 `);
 
 /* =========================
    AUTH
 ========================= */
-function adminOnly(req, res, next) {
-  if (req.session?.user?.username?.toLowerCase() === "admin") return next();
-  return res.status(403).json({ error: "forbidden" });
+function adminOnly(req,res,next){
+
+if(req.session?.user?.role === "admin"){
+return next();
+}
+
+return res.status(403).json({
+error:"forbidden"
+});
+
+}
+
+function driverOnly(req,res,next){
+
+if(
+req.session?.user?.role === "driver" ||
+req.session?.user?.role === "admin"
+){
+
+return next();
+
+}
+
+
+return res.redirect("/login-conducteur.html");
+
 }
 
 /* =========================
@@ -145,6 +174,72 @@ app.post("/login", async (req, res) => {
 ========================= */
 app.get("/admin", adminOnly, (req, res) => {
   res.sendFile(path.join(__dirname, "private", "admin.html"));
+});
+
+/* =========================
+   CREATE DRIVER
+========================= */
+
+app.post("/api/users", adminOnly, async(req,res)=>{
+
+try{
+
+const {
+username,
+password,
+name,
+discord,
+truck_name
+}=req.body;
+
+
+const hash = await bcrypt.hash(password,10);
+
+
+await db.query(
+`
+INSERT INTO users
+(
+username,
+password,
+role,
+name,
+discord,
+truck_name,
+status
+)
+
+VALUES
+($1,$2,'driver',$3,$4,$5,'actif')
+`,
+[
+username,
+hash,
+name,
+discord,
+truck_name
+]
+);
+
+
+res.json({
+success:true
+});
+
+
+}
+
+catch(err){
+
+console.error("CREATE DRIVER ERROR:",err);
+
+res.status(500).json({
+success:false
+});
+
+}
+
+
 });
 
 /* =========================
