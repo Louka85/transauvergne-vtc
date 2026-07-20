@@ -282,6 +282,18 @@ res.json([]);
 });
 
 /* =========================
+   CONDUCTEUR PAGE
+========================= */
+
+app.get("/conducteur", driverOnly, (req,res)=>{
+
+res.sendFile(
+path.join(__dirname,"public","conducteur.html")
+);
+
+});
+
+/* =========================
    CONVOYS GET (IMPORTANT FIX)
 ========================= */
 app.get("/api/convoys", async (req, res) => {
