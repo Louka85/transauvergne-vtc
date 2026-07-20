@@ -486,6 +486,86 @@ function toBase64(file){
     });
 }
 
+/* ================= DRIVERS ================= */
+
+async function createDriver(){
+
+
+const driver = {
+
+username:
+document.getElementById("driverUsername").value.trim(),
+
+
+password:
+document.getElementById("driverPassword").value.trim(),
+
+
+name:
+document.getElementById("driverName").value.trim(),
+
+
+discord:
+document.getElementById("driverDiscord").value.trim(),
+
+
+truck_name:
+document.getElementById("driverTruck").value.trim()
+
+};
+
+
+
+const res = await fetch("/api/users",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+credentials:"include",
+
+body:JSON.stringify(driver)
+
+});
+
+
+
+const data = await res.json();
+
+
+
+const msg =
+document.getElementById("driverMessage");
+
+
+
+if(data.success){
+
+msg.innerHTML =
+"✅ Conducteur créé avec succès";
+
+
+document.getElementById("driverUsername").value="";
+document.getElementById("driverPassword").value="";
+document.getElementById("driverName").value="";
+document.getElementById("driverDiscord").value="";
+document.getElementById("driverTruck").value="";
+
+
+}
+
+else{
+
+msg.innerHTML =
+"❌ Erreur création conducteur";
+
+}
+
+
+}
+    
 /* INIT */
 loadConvoys();
 loadTeam();
