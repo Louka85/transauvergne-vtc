@@ -37,8 +37,18 @@ app.use(
 );
 
 /* =========================
+   BLOCK DIRECT CONDUCTEUR
+========================= */
+
+app.get("/conducteur.html", (req,res)=>{
+    res.redirect("/conducteur");
+});
+
+
+/* =========================
    STATIC
 ========================= */
+
 app.use(express.static(path.join(__dirname, "public")));
 
 /* =========================
