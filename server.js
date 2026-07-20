@@ -243,6 +243,45 @@ success:false
 });
 
 /* =========================
+   GET DRIVERS
+========================= */
+
+app.get("/api/users", adminOnly, async(req,res)=>{
+
+try{
+
+const result = await db.query(
+`
+SELECT 
+id,
+username,
+name,
+discord,
+truck_name,
+status
+FROM users
+WHERE role='driver'
+ORDER BY id DESC
+`
+);
+
+
+res.json(result.rows);
+
+
+}
+
+catch(err){
+
+console.error("GET DRIVERS ERROR:",err);
+
+res.json([]);
+
+}
+
+});
+
+/* =========================
    CONVOYS GET (IMPORTANT FIX)
 ========================= */
 app.get("/api/convoys", async (req, res) => {
