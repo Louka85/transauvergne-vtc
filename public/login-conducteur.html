@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Connexion Conducteur</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<div class="driver-card">
+
+
+<h1>
+🚛 Connexion conducteur
+</h1>
+
+
+<input 
+id="username"
+placeholder="Pseudo">
+
+
+<input 
+id="password"
+type="password"
+placeholder="Mot de passe">
+
+
+<button onclick="login()">
+Connexion
+</button>
+
+
+<p id="message"></p>
+
+
+</div>
+
+
+
+<script>
+
+function login(){
+
+
+fetch("/login",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+username:
+document.getElementById("username").value,
+
+password:
+document.getElementById("password").value
+
+})
+
+})
+
+
+.then(r=>r.json())
+
+
+.then(data=>{
+
+
+if(data.success){
+
+window.location="/conducteur";
+
+}
+
+else{
+
+document.getElementById("message").innerHTML =
+"❌ Identifiants incorrects";
+
+}
+
+
+});
+
+
+}
+
+</script>
+
+
+</body>
+
+</html>
