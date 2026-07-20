@@ -431,6 +431,31 @@ async function loadDrivers(){
     `).join("");
 
 }
+
+/* DELETE DRIVER */
+
+async function deleteDriver(id){
+
+    if(!confirm("Supprimer ce conducteur ?")) return;
+
+
+    const res = await fetch("/api/users/" + id, {
+        method:"DELETE",
+        credentials:"include"
+    });
+
+
+    const data = await res.json();
+
+
+    if(data.success){
+        loadDrivers();
+    }
+    else{
+        alert("Erreur suppression");
+    }
+
+}
     
 /* ================= TEAM ================= */
 async function addMember(){
