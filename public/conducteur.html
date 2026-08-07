@@ -182,6 +182,24 @@ let content=document.getElementById("content");
 
 let pages={
 
+profil:`
+
+<div class="driver-card">
+
+<h2>👤 Mon profil</h2>
+
+<p>👤 Nom : <span id="driverName">Chargement...</span></p>
+
+<p>🎧 Discord : <span id="driverDiscord">...</span></p>
+
+<p>🚚 Camion : <span id="driverTruck">...</span></p>
+
+<p>🟢 Statut : <span id="driverStatus">...</span></p>
+
+</div>
+
+`,
+
 
 convoys:`
 
@@ -199,7 +217,6 @@ Chargement des convois...
 
 `
 
-
 };
 
 
@@ -207,8 +224,8 @@ content.innerHTML = pages[value] || "";
 
 
 // Lancer le chargement après avoir créé la div
-if(value === "convoys"){
-    loadDriverConvoys();
+if(value === "profil"){
+    loadDriverProfile();
 }
 
 
@@ -291,7 +308,44 @@ el.innerHTML += `
 
 })
 
+async function loadDriverProfile(){
 
+try{
+
+const res = await fetch("/api/me",{
+credentials:"include"
+});
+
+
+const user = await res.json();
+
+
+document.getElementById("driverName").textContent =
+user.name || user.username;
+
+
+document.getElementById("driverDiscord").textContent =
+user.discord || "-";
+
+
+document.getElementById("driverTruck").textContent =
+user.truck_name || "-";
+
+
+document.getElementById("driverStatus").textContent =
+user.status || "-";
+
+
+}
+
+catch(err){
+
+console.error("Erreur profil :",err);
+
+}
+
+}
+    
 .catch(err=>{
 
 console.error("Erreur convois conducteur :",err);
