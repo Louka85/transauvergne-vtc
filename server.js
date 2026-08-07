@@ -350,11 +350,11 @@ app.get("/api/me", driverOnly, async(req,res)=>{
             avatar,
             status,
             role
+            kilometers
+            deliveries
+            convoys
             FROM users
             WHERE id=$1
-            kilometers,
-            deliveries,
-            convoys
             `,
             [req.session.user.id]
         );
