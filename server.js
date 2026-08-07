@@ -393,6 +393,40 @@ path.join(__dirname,"public","conducteur.html")
 });
 
 /* =========================
+   RULES API
+========================= */
+
+app.get("/api/rules", async(req,res)=>{
+
+try{
+
+const result = await db.query(
+"SELECT content FROM rules LIMIT 1"
+);
+
+
+res.json(
+result.rows[0] || {
+content:"Aucun règlement disponible."
+}
+);
+
+
+}
+
+catch(err){
+
+console.error("RULES ERROR:",err);
+
+res.status(500).json({
+content:"Erreur chargement règlement."
+});
+
+}
+
+});
+
+/* =========================
    CONVOYS GET (IMPORTANT FIX)
 ========================= */
 app.get("/api/convoys", async (req, res) => {
