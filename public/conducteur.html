@@ -23,21 +23,10 @@
     <span>TransAuvergne VTC</span>
 </a>
 
-    <div class="card">
-    <h2>🚛 Espace Conducteur</h2>
-
-    <p>👤 Nom : <span id="driverName">Chargement...</span></p>
-    <p>🎧 Discord : <span id="driverDiscord">...</span></p>
-    <p>🚚 Camion : <span id="driverTruck">...</span></p>
-    <p>🟢 Statut : <span id="driverStatus">...</span></p>
-
-</div>
 
 <div class="status">
-
 <span class="dot"></span>
 Espace Conducteur
-
 </div>
 
 
@@ -48,33 +37,30 @@ Espace Conducteur
 
 </header>
 
+
+
 <main class="driver-page">
+
 
 
 <div class="driver-card">
 
-<h1>
-🚛 Espace Conducteur
-</h1>
-
+<h1>🚛 Espace Conducteur</h1>
 
 <p>
 Bienvenue dans ton espace personnel TransAuvergne VTC.
 Ici tu retrouveras toutes les informations liées à ton activité.
 </p>
 
-
 </div>
+
 
 
 
 
 <div class="driver-card">
 
-
-<h2>
-📂 Catégories
-</h2>
+<h2>📂 Catégories</h2>
 
 
 <select id="category" onchange="openCategory()">
@@ -83,26 +69,21 @@ Ici tu retrouveras toutes les informations liées à ton activité.
 Choisir une catégorie
 </option>
 
-
 <option value="profil">
 👤 Mon profil
 </option>
-
 
 <option value="convoys">
 🚛 Mes convois
 </option>
 
-
 <option value="stats">
 📊 Mes statistiques
 </option>
 
-
 <option value="planning">
 📅 Planning
 </option>
-
 
 <option value="rules">
 📜 Règlement conducteur
@@ -127,7 +108,6 @@ Choisir une catégorie
 Bienvenue conducteur 👋
 </h2>
 
-
 <p>
 Sélectionne une catégorie pour afficher les informations.
 </p>
@@ -140,8 +120,8 @@ Sélectionne une catégorie pour afficher les informations.
 
 
 
-
 </main>
+
 
 
 
@@ -149,22 +129,13 @@ Sélectionne une catégorie pour afficher les informations.
 
 <script>
 
-<div class="card">
-    <h2>🚛 Espace Conducteur</h2>
 
-    <p>👤 Nom : <span id="driverName">Chargement...</span></p>
-    <p>🎧 Discord : <span id="driverDiscord">...</span></p>
-    <p>🚚 Camion : <span id="driverTruck">...</span></p>
-    <p>🟢 Statut : <span id="driverStatus">...</span></p>
-
-</div>
-    
 function logout(){
 
-fetch("/logout",
-{
+fetch("/logout",{
 credentials:"include"
 })
+
 .then(()=>{
 location.href="/";
 });
@@ -173,14 +144,23 @@ location.href="/";
 
 
 
+
+
+
 function openCategory(){
 
-let value=document.getElementById("category").value;
 
-let content=document.getElementById("content");
+const value =
+document.getElementById("category").value;
 
 
-let pages={
+const content =
+document.getElementById("content");
+
+
+
+const pages = {
+
 
 profil:`
 
@@ -188,17 +168,44 @@ profil:`
 
 <h2>👤 Mon profil</h2>
 
-<p>👤 Nom : <span id="driverName">Chargement...</span></p>
 
-<p>🎧 Discord : <span id="driverDiscord">...</span></p>
+<p>
+👤 Nom :
+<span id="driverName">
+Chargement...
+</span>
+</p>
 
-<p>🚚 Camion : <span id="driverTruck">...</span></p>
 
-<p>🟢 Statut : <span id="driverStatus">...</span></p>
+<p>
+🎧 Discord :
+<span id="driverDiscord">
+...
+</span>
+</p>
+
+
+<p>
+🚚 Camion :
+<span id="driverTruck">
+...
+</span>
+</p>
+
+
+<p>
+🟢 Statut :
+<span id="driverStatus">
+...
+</span>
+</p>
+
 
 </div>
 
 `,
+
+
 
 
 convoys:`
@@ -207,25 +214,35 @@ convoys:`
 
 <h2>🚛 Mes convois</h2>
 
+
 <div id="driverConvoyList">
-
 Chargement des convois...
-
 </div>
+
 
 </div>
 
 `
 
+
+
 };
 
 
-content.innerHTML = pages[value] || "";
+
+content.innerHTML =
+pages[value] || "";
 
 
-// Lancer le chargement après avoir créé la div
+
 if(value === "profil"){
-    loadDriverProfile();
+loadDriverProfile();
+}
+
+
+
+if(value === "convoys"){
+loadDriverConvoys();
 }
 
 
@@ -234,42 +251,116 @@ if(value === "profil"){
 
 
 
-function loadDriverConvoys(){
 
 
-fetch("/api/convoys", {
-    credentials:"include"
-})
-
-.then(r => r.json())
-
-.then(data => {
 
 
-const el = document.getElementById("driverConvoyList");
+
+async function loadDriverProfile(){
+
+
+try{
+
+
+const res = await fetch("/api/me",{
+credentials:"include"
+});
+
+
+const user = await res.json();
+
+
+
+document.getElementById("driverName").textContent =
+user.name || user.username;
+
+
+
+document.getElementById("driverDiscord").textContent =
+user.discord || "-";
+
+
+
+document.getElementById("driverTruck").textContent =
+user.truck_name || "-";
+
+
+
+document.getElementById("driverStatus").textContent =
+user.status || "-";
+
+
+
+}
+
+
+catch(err){
+
+console.error(
+"Erreur profil conducteur :",
+err
+);
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+async function loadDriverConvoys(){
+
+
+try{
+
+
+const res = await fetch("/api/convoys",{
+credentials:"include"
+});
+
+
+const data = await res.json();
+
+
+const el =
+document.getElementById("driverConvoyList");
+
 
 
 if(!data || data.length === 0){
 
-el.innerHTML = "Aucun convoi disponible.";
+el.innerHTML =
+"Aucun convoi disponible.";
 
 return;
 
 }
 
 
+
 el.innerHTML = "";
 
 
-data.forEach(c => {
+
+data.forEach(c=>{
 
 
 el.innerHTML += `
 
+
 <div class="card">
 
 
-<h3>${c.title ?? "Sans titre"}</h3>
+<h3>
+${c.title ?? "Sans titre"}
+</h3>
 
 
 <p>
@@ -288,12 +379,14 @@ el.innerHTML += `
 
 
 <p>
-🚛 Fret : ${c.cargo ?? "Non défini"}
+🚛 Fret :
+${c.cargo ?? "Non défini"}
 </p>
 
 
 <p>
-🖥️ Serveur : ${c.server ?? "Non défini"}
+🖥️ Serveur :
+${c.server ?? "Non défini"}
 </p>
 
 
@@ -302,58 +395,27 @@ el.innerHTML += `
 
 `;
 
-
 });
-
-
-})
-
-async function loadDriverProfile(){
-
-try{
-
-const res = await fetch("/api/me",{
-credentials:"include"
-});
-
-
-const user = await res.json();
-
-
-document.getElementById("driverName").textContent =
-user.name || user.username;
-
-
-document.getElementById("driverDiscord").textContent =
-user.discord || "-";
-
-
-document.getElementById("driverTruck").textContent =
-user.truck_name || "-";
-
-
-document.getElementById("driverStatus").textContent =
-user.status || "-";
 
 
 }
+
 
 catch(err){
 
-console.error("Erreur profil :",err);
 
-}
+console.error(
+"Erreur convois conducteur :",
+err
+);
 
-}
-    
-.catch(err=>{
-
-console.error("Erreur convois conducteur :",err);
 
 document.getElementById("driverConvoyList").innerHTML =
 "Erreur de chargement.";
 
-});
+
+}
+
 
 
 }
