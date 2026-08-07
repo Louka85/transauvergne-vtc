@@ -352,6 +352,9 @@ app.get("/api/me", driverOnly, async(req,res)=>{
             role
             FROM users
             WHERE id=$1
+            kilometers,
+            deliveries,
+            convoys
             `,
             [req.session.user.id]
         );
