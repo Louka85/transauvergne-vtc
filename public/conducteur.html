@@ -224,7 +224,31 @@ Chargement des convois...
 
 `,
 
+stats:`
 
+<div class="driver-card">
+
+<h2>📊 Mes statistiques</h2>
+
+<p>
+🛣️ Kilomètres :
+<span id="driverKm">0</span> km
+</p>
+
+<p>
+📦 Livraisons :
+<span id="driverDeliveries">0</span>
+</p>
+
+<p>
+🚛 Convois réalisés :
+<span id="driverConvoys">0</span>
+</p>
+
+</div>
+
+`,
+    
 
 rules:`
 
@@ -253,7 +277,42 @@ if(value === "profil"){
 loadDriverProfile();
 }
 
+async function loadDriverStats(){
 
+try{
+
+const res = await fetch("/api/me",{
+credentials:"include"
+});
+
+const user = await res.json();
+
+
+document.getElementById("driverKm").textContent =
+user.kilometers || 0;
+
+
+document.getElementById("driverDeliveries").textContent =
+user.deliveries || 0;
+
+
+document.getElementById("driverConvoys").textContent =
+user.convoys || 0;
+
+
+}
+
+catch(err){
+
+console.error("Erreur stats :",err);
+
+}
+
+}
+    
+if(value === "stats"){
+loadDriverStats();
+}
 
 if(value === "convoys"){
 loadDriverConvoys();
