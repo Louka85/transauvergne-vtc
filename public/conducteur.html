@@ -226,6 +226,20 @@ Chargement des convois...
 
 
 
+rules:`
+
+<div class="driver-card">
+
+<h2>📜 Règlement conducteur</h2>
+
+<div id="rulesContent">
+Chargement du règlement...
+</div>
+
+</div>
+
+`,
+    
 };
 
 
@@ -245,7 +259,10 @@ if(value === "convoys"){
 loadDriverConvoys();
 }
 
-
+if(value === "rules"){
+loadRules();
+}
+    
 }
 
 
@@ -420,7 +437,33 @@ document.getElementById("driverConvoyList").innerHTML =
 
 }
 
+async function loadRules(){
 
+try{
+
+const res = await fetch("/api/rules",{
+credentials:"include"
+});
+
+const data = await res.json();
+
+
+document.getElementById("rulesContent").innerHTML =
+data.content.replace(/\n/g,"<br>");
+
+
+}
+
+catch(err){
+
+console.error("Erreur règlement :",err);
+
+document.getElementById("rulesContent").innerHTML =
+"Erreur de chargement du règlement.";
+
+}
+
+}
 
 </script>
 
