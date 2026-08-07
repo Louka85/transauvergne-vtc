@@ -332,6 +332,55 @@ success:false
 });
 
 /* =========================
+   CURRENT USER
+========================= */
+
+app.get("/api/me", driverOnly, async(req,res)=>{
+
+    try{
+
+        const result = await db.query(
+            `
+            SELECT 
+            id,
+            username,
+            name,
+            discord,
+            truck_name,
+            avatar,
+            status,
+            role
+            FROM users
+            WHERE id=$1
+            `,
+            [req.session.user.id]
+        );
+
+
+        if(!result.rows.length){
+            return res.status(404).json({
+                error:"user not found"
+            });
+        }
+
+
+        res.json(result.rows[0]);
+
+    }
+
+    catch(err){
+
+        console.error("ME ERROR:",err);
+
+        res.status(500).json({
+            error:"server error"
+        });
+
+    }
+
+});
+
+/* =========================
    CONDUCTEUR PAGE
 ========================= */
 
