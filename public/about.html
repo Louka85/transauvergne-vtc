@@ -160,6 +160,55 @@ loadTeam();
         <p>Chargement des conducteurs...</p>
     </div>
 </section>
-  
+
+
+<script>
+async function loadPublicDrivers() {
+    const container = document.getElementById("publicDrivers");
+
+    try {
+        const response = await fetch("/api/public-drivers");
+
+        if (!response.ok) {
+            throw new Error("Erreur lors du chargement");
+        }
+
+        const drivers = await response.json();
+        container.replaceChildren();
+
+        if (drivers.length === 0) {
+            container.textContent = "Aucun conducteur actif pour le moment.";
+            return;
+        }
+
+        drivers.forEach(driver => {
+            const card = document.createElement("div");
+            card.className = "driver-public-card";
+
+            const avatar = document.createElement("img");
+            avatar.className = "driver-public-avatar";
+            avatar.src = driver.avatar || "logo.jpeg";
+            avatar.alt = "Avatar de " + (driver.name || "conducteur");
+
+            const name = document.createElement("h3");
+            name.textContent = driver.name || "Conducteur";
+
+            const truck = document.createElement("p");
+            truck.textContent = "🚛 Camion : " + (driver.truck_name || "Non renseigné");
+
+            const discord = document.createElement("p");
+            discord.textContent = "Discord : " + (driver.discord || "Non renseigné");
+
+            card.append(avatar, name, truck, discord);
+            container.appendChild(card);
+        });
+    } catch (error) {
+        console.error(error);
+        container.textContent = "Impossible de charger les conducteurs.";
+    }
+}
+
+loadPublicDrivers();
+</script>
 </body>
 </html>
