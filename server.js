@@ -542,6 +542,29 @@ async function createAdmin() {
   }
 }
 
+/*==========================
+   CONDUCTEUR
+===========================*/
+
+app.get("/api/public-drivers", async (req, res) => {
+    try {
+        const result = await db.query(`
+            SELECT name, discord, truck_name, avatar
+            FROM users
+            WHERE role = 'driver'
+              AND status = 'actif'
+            ORDER BY name ASC
+        `);
+
+        res.json(result.rows);
+    } catch (err) {
+        console.error("PUBLIC DRIVERS ERROR:", err);
+        res.status(500).json({
+            error: "Impossible de charger les conducteurs"
+        });
+    }
+});
+
 /* =========================
    START SERVER
 ========================= */
