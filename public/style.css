@@ -867,3 +867,62 @@ color:#ff5555;
 font-weight:bold;
 
 }
+
+
+/* ================= CONDUCTEURS PUBLICS ================= */
+
+.drivers-section {
+    margin-top: 40px;
+    padding: 25px;
+}
+
+.drivers-section h2 {
+    color: #2ecc71;
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.drivers-section > p {
+    color: #aaa;
+    margin-bottom: 25px;
+}
+
+#publicDrivers {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+}
+
+.driver-public-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 22px;
+    text-align: center;
+    transition: 0.25s;
+}
+
+.driver-public-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(46,204,113,0.45);
+    box-shadow: 0 0 25px rgba(46,204,113,0.15);
+}
+
+.driver-public-avatar {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #2ecc71;
+    margin-bottom: 12px;
+}
+
+.driver-public-card h3 {
+    color: #2ecc71;
+    margin: 8px 0 15px;
+}
+
+.driver-public-card p {
+    color: #d0d0d0;
+    margin: 8px 0;
+}
