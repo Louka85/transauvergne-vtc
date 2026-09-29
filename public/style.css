@@ -868,6 +868,7 @@ font-weight:bold;
 
 }
 
+}
 
 /* ================= CONDUCTEURS PUBLICS ================= */
 
@@ -925,6 +926,4 @@ font-weight:bold;
 .driver-public-card p {
     color: #d0d0d0;
     margin: 8px 0;
-}
-
 }
